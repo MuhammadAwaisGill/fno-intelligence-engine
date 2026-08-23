@@ -1,0 +1,1618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>GeneralJournalAccountEntry_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+using System.Collections;
+/// <summary>
+/// The extensions for the <c>GeneralJournalAccounEntry</c> table.
+/// </summary>
+public static class GeneralJournalAccountEntry_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>deCompteAuxLib_Extension_FR</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Display the name from a transaction.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>
+    /// The name from the transaction or "*" when have multiple customer\vendor accounts.
+    /// </returns>
+    /// <remarks>
+    /// _entry method is used for Data Export for France.
+    /// </remarks>
+    public static CustVendName deCompteAuxLib_Extension_FR(GeneralJournalAccountEntry _entry)
+    {
+        CustVendName ret;
+        CustVendTable custVendTable = GeneralJournalAccountEntry_Extension::getCustVendTable_FR(_entry);
+
+        const CustVendName multiClients = 'multi-clients';
+        const CustVendName multiFournisseurs = 'multi-fournisseurs';
+
+        if (custVendTable)
+        {
+            ret = custVendTable.name();
+        }
+        else
+        {
+            switch (_entry.PostingType)
+            {
+                case LedgerPostingType::CustBalance:
+                    ret = multiClients;
+                    break;
+                case LedgerPostingType::VendBalance:
+                    ret = multiFournisseurs;
+                    break;
+            }
+        }
+
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deCompteAuxNum_Extension_FR</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Displays the account number from a transaction.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>
+    /// The account number from a transaction or "multi-clients"\ when have multiple customer accounts or "multi-fournisseurs" when have multiple vendor accounts
+    /// </returns>
+    /// <remarks>
+    /// _entry method is used for Data Export for France.
+    /// </remarks>
+    public static CustVendAC deCompteAuxNum_Extension_FR(GeneralJournalAccountEntry _entry)
+    {
+        CustVendAC ret;
+        CustVendTable custVendTable = GeneralJournalAccountEntry_Extension::getCustVendTable_FR(_entry);
+        
+        const CustVendAC star = '*';
+        
+        if (custVendTable)
+        {
+            ret = custVendTable.AccountNum;
+        }
+        else
+        {
+            switch (_entry.PostingType)
+            {
+                case LedgerPostingType::CustBalance:
+                case LedgerPostingType::VendBalance:
+                    ret = star;
+                    break;
+            }
+        }
+        
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deEcritureLib_FR</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Displays the text from the transaction.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>
+    /// A text from <c>GeneralJournalAccountEntry</c> record if found, or from connected <c>TransactionLog</c> record if found, or N/A.
+    /// </returns>
+    /// <remarks>
+    /// _entry method is used for Data Export for France.
+    /// </remarks>
+    public static display TransTxt deEcritureLib_FR(GeneralJournalAccountEntry _entry)
+    {
+        var ret = _entry.Text;
+        if (!ret)
+        {
+            ret = (select firstonly Txt from TransactionLog
+                where TransactionLog.CreatedTransactionId == _entry.createdTransactionId
+                ).Txt;
+        }
+        return ret ? ret : "@SYS180118";
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getCustVendTable_FR</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Find the related customer or vendor table if a transaction is unique.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>
+    /// The customer or vendor table if a customer or vendor transaction is unique for the current voucher and the date; otherwise an empty table buffer.
+    /// </returns>
+    /// <remarks>
+    /// _entry method is used for Data Export for France.
+    /// </remarks>
+    private static CustVendTable getCustVendTable_FR(GeneralJournalAccountEntry _entry)
+    {
+        SubledgerVoucherGeneralJournalEntry subledgerVoucherGeneralJournalEntry;
+        CustTrans custTrans;
+        VendTrans vendTrans;
+        GeneralJournalEntry generalJournalEntry;
+        container vouchers;
+        CustVendAC custVendAc;
+        QueryRun queryRun;
+        CustVendTable ret;
+
+        select firstonly RecId, SubledgerVoucher, AccountingDate, JournalCategory from generalJournalEntry
+            where generalJournalEntry.RecId == _entry.GeneralJournalEntry;
+        
+        if (generalJournalEntry.SubledgerVoucher == "")
+        {
+            while select Voucher from subledgerVoucherGeneralJournalEntry
+                where subledgerVoucherGeneralJournalEntry.GeneralJournalEntry == generalJournalEntry.RecId
+            {
+                vouchers += subledgerVoucherGeneralJournalEntry.Voucher;
+            }
+        }
+        else
+        {
+            vouchers += generalJournalEntry.SubledgerVoucher;
+        }
+        
+        if (_entry.PostingType == LedgerPostingType::CustBalance || _entry.PostingType == LedgerPostingType::CustSettlement)
+        {
+            queryRun = new QueryRun(GeneralJournalAccountEntry_Extension::queryCustVendTransAmount_FR(_entry, custTrans, vouchers, generalJournalEntry.AccountingDate));
+            while (queryRun.next())
+            {
+                if (custVendAc && custVendAc != custTrans.AccountNum)
+                {
+                    return ret;
+                }
+                custTrans = queryRun.get(tableNum(CustTrans));
+                custVendAc = custTrans.AccountNum;
+            }
+            ret = CustTable::find(custVendAc);
+        }
+        else if (_entry.PostingType == LedgerPostingType::VendBalance || _entry.PostingType == LedgerPostingType::VendSettlement)
+        {
+            queryRun = new QueryRun(GeneralJournalAccountEntry_Extension::queryCustVendTransAmount_FR(_entry, vendTrans, vouchers, generalJournalEntry.AccountingDate));
+            while (queryRun.next())
+            {
+                if (custVendAc && custVendAc != vendTrans.AccountNum)
+                {
+                    return ret;
+                }
+                vendTrans = queryRun.get(tableNum(VendTrans));
+                custVendAc = vendTrans.AccountNum;
+            }
+            ret = VendTable::find(custVendAc);
+        }
+        
+        if (!ret)
+        {
+            if (_entry.PostingType == LedgerPostingType::CustBalance || _entry.PostingType == LedgerPostingType::CustReimbursement)
+            {
+                queryRun = new QueryRun(GeneralJournalAccountEntry_Extension::queryCustVendTrans_FR(
+                    custTrans,
+                    vouchers,
+                    generalJournalEntry.AccountingDate));
+                while (queryRun.next())
+                {
+                    if (custVendAc)
+                    {
+                        return ret;
+                    }
+                    custTrans = queryRun.get(tableNum(CustTrans));
+                    custVendAc = custTrans.AccountNum;
+                }
+                ret = CustTable::find(custVendAc);
+            }
+            else if (_entry.PostingType == LedgerPostingType::VendBalance)
+            {
+                queryRun = new QueryRun(GeneralJournalAccountEntry_Extension::queryCustVendTrans_FR(
+                    vendTrans,
+                    vouchers,
+                    generalJournalEntry.AccountingDate));
+                while (queryRun.next())
+                {
+                    if (custVendAc)
+                    {
+                        return ret;
+                    }
+                    vendTrans = queryRun.get(tableNum(VendTrans));
+                    custVendAc = vendTrans.AccountNum;
+                }
+                ret = VendTable::find(custVendAc);
+            }
+            else if ((generalJournalEntry.JournalCategory == LedgerTransType::Cust
+                || generalJournalEntry.JournalCategory == LedgerTransType::Vend
+                || (generalJournalEntry.JournalCategory == LedgerTransType::None
+                    && FECConsiderJournalCategoryNoneForMSTDiffFlight::instance().isEnabled()))
+                && (_entry.PostingType == LedgerPostingType::MSTDiff || _entry.PostingType == LedgerPostingType::MSTDiffSecond))
+            {
+                boolean isCust;
+
+                if (generalJournalEntry.JournalCategory == LedgerTransType::None)
+                {
+                    GeneralJournalAccountEntry gjacCust;
+                    select firstonly RecId from gjacCust
+                        where gjacCust.GeneralJournalEntry == generalJournalEntry.RecId
+                            && gjacCust.PostingType == LedgerPostingType::CustSettlement;
+
+                    isCust = gjacCust.RecId != 0;
+                }
+                else
+                {
+                    isCust = generalJournalEntry.JournalCategory == LedgerTransType::Cust;
+                }
+
+                queryRun = new QueryRun(GeneralJournalAccountEntry_Extension::queryCustVendTrans_FR(
+                    isCust ? custTrans as CustVendTrans : vendTrans as CustVendTrans,
+                    vouchers,
+                    generalJournalEntry.AccountingDate));
+
+                CustVendTrans custVendTrans;
+                while (queryRun.next())
+                {
+                    if (custVendAc)
+                    {
+                        return ret;
+                    }
+                    custVendTrans = queryRun.getNo(1);
+                    custVendAc = custVendTrans.AccountNum;
+                }
+
+                ret = custVendTrans.TableId == tableNum(CustTrans) ? CustTable::find(custVendAc) as CustVendTable : VendTable::find(custVendAc) as CustVendTable;
+            }
+        }
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>displayIsReversed</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Checks if the journal line is reversed.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>true if reversed; otherwise, false.</returns>
+    public static display boolean displayIsReversed(GeneralJournalAccountEntry _entry)
+    {
+        return TransactionReversalTrans::findTransactionReversalTrans(tableNum(GeneralJournalAccountEntry), _entry.RecId).Reversed;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>displayTaxBranchDimension</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Displays the tax branch code depending on the ledger dimension.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>
+    /// Returns tax branch code getted by ledger dimension.
+    /// </returns>
+    display static TaxBranchCode displayTaxBranchDimension(GeneralJournalAccountEntry _entry)
+    {
+        return TaxBranchType::getTBDisplayValueByLedgerDimension(_entry.LedgerDimension);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>displayTraceNumber</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Checks the trace number for reversal lines.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>The trace number</returns>
+    public static  display TraceNum displayTraceNumber(GeneralJournalAccountEntry _entry)
+    {
+        return TransactionReversalTrans::findTransactionReversalTrans(tableNum(GeneralJournalAccountEntry), _entry.RecId).TraceNum;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>inventProfileType_RU</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Gets kind of activity.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>
+    /// Basic type of activity.
+    /// </returns>
+    /// <remarks>
+    /// Maintains similar intreface for LedgerCoverage.
+    /// </remarks>
+    public static InventProfileType_RU inventProfileType_RU(GeneralJournalAccountEntry _entry)
+    {
+        return InventProfileType_RU::General;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>postingProfile_RU</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Gets string value of posting profile
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>
+    /// Empty value for posting profile.
+    /// </returns>
+    /// <remarks>
+    /// Maintains similar intreface for LedgerCoverage.
+    /// </remarks>
+    public static  PostingProfile postingProfile_RU(GeneralJournalAccountEntry _entry)
+    {
+        return '';
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>queryCustVendTrans_FR</Name>
+				<Source><![CDATA[
+    private static Query queryCustVendTrans_FR(
+        CustVendTrans _CustVendTrans,
+        container _vouchers,
+        date _accountingDate)
+    {
+        Query query;
+        QueryBuildDataSource transQBDS;
+        Counter counter;
+
+        query = new Query();
+        transQBDS = query.addDataSource(_CustVendTrans.TableId);
+        transQBDS.addSelectionField(fieldname2id(_CustVendTrans.TableId, IdentifierStr(AccountNum)));
+        transQBDS.orderMode(OrderMode::GroupBy);
+        transQBDS.addSortField(fieldname2id(_CustVendTrans.TableId, IdentifierStr(AccountNum)));
+        for (counter = 1; counter <= conLen(_vouchers); counter++)
+        {
+            transQBDS.addRange(fieldname2id(_CustVendTrans.TableId, IdentifierStr(Voucher))).value(SysQuery::value(conPeek(_vouchers, counter)));
+        }
+        transQBDS.addRange(fieldname2id(_CustVendTrans.TableId, IdentifierStr(TransDate))).value(SysQuery::value(_accountingDate));
+
+        return query;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>queryCustVendTransAmount_FR</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Forms the query that is used to get the required customer or vendor transaction record.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <param name="_CustVendTrans">
+    /// current Cust or vend Trans record.
+    /// </param>
+    /// <param name="_vouchers">
+    /// current voucher.
+    /// </param>
+    /// <param name="_accountingDate">
+    /// current accounting date for Cust or vend Trans record.
+    /// </param>
+    /// <returns>
+    /// The query for a customer or vendor if a customer or vendor transaction is unique for the current voucher and the date.
+    /// </returns>
+    private static Query queryCustVendTransAmount_FR(GeneralJournalAccountEntry _entry, CustVendTrans _CustVendTrans, container _vouchers, date _accountingDate)
+    {
+        Query query;
+        QueryBuildDataSource transQBDS;
+        Counter counter;
+        
+        ;
+        query = new Query();
+        transQBDS = query.addDataSource(_CustVendTrans.TableId);
+        transQBDS.addSelectionField(fieldname2id(_CustVendTrans.TableId, IdentifierStr(AccountNum)));
+        transQBDS.orderMode(OrderMode::GroupBy);
+        transQBDS.addSortField(fieldname2id(_CustVendTrans.TableId, IdentifierStr(AccountNum)));
+        for (counter = 1; counter <= conLen(_vouchers); counter++)
+        {
+            transQBDS.addRange(fieldname2id(_CustVendTrans.TableId, IdentifierStr(Voucher))).value(SysQuery::value(conPeek(_vouchers, counter)));
+        }
+        transQBDS.addRange(fieldname2id(_CustVendTrans.TableId, IdentifierStr(TransDate))).value(SysQuery::value(_accountingDate));
+        
+            transQBDS.addRange(fieldname2id(_CustVendTrans.TableId, IdentifierStr(AmountMST))).value(SysQuery::value(_entry.AccountingCurrencyAmount));
+        
+        return query;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>reverseSettlement</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Reverses the settlement.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <param name = "_originalGeneralJournalAccountEntry">The original journal line.</param>
+    public static void reverseSettlement(GeneralJournalAccountEntry _entry, GeneralJournalAccountEntryRecId _originalGeneralJournalAccountEntry)
+    {
+        boolean isPartialSettlementParameterEnabled = LedgerTransSettlementAdvancedParameters::isPartialSettlementParameterEnabled();
+        boolean isPartialSettlementHandled;
+
+        // Short circuit if the ledger settlements feature is not enabled or partial settlement parameter is enabled. 
+        if (!LedgerTransSettlement::isLedgerSettlementsEnabled())
+        {
+            return;
+        }
+
+        Debug::assert(_entry.RecId != 0);
+        Debug::assert(_originalGeneralJournalAccountEntry != 0);
+        
+        GeneralJournalAccountEntryRecId offsetGJAERecId = _originalGeneralJournalAccountEntry;
+
+        ttsbegin;
+        
+        LedgerTransSettlement originalLedgerTransSettlement = LedgerTransSettlement::findTransRecId(offsetGJAERecId);
+        
+        // If the record already appears settled then it was either settled by a reverse transaction or manual settlement.
+        // We need to determine how the settlement was created.
+        if (originalLedgerTransSettlement != null)
+        {
+            LedgerTransSettlement previousLedgerTransSettlement;
+
+            select count(RecId) from previousLedgerTransSettlement
+                where previousLedgerTransSettlement.SettleId == originalLedgerTransSettlement.SettleId &&
+                        previousLedgerTransSettlement.TransRecId != offsetGJAERecId;
+
+            // Reversed transaction settlements will only have one other settlement record. More than one other settlement record
+            // per SettleId indicates that it was a manual entry and we can delete the settlement group without any other processing.
+            // A possible reversed settlement reference needs to be checked before deleting the settleId.
+            if (previousLedgerTransSettlement.RecId == 1)
+            {
+                select firstonly TransRecId from previousLedgerTransSettlement
+                    where previousLedgerTransSettlement.SettleId == originalLedgerTransSettlement.SettleId &&
+                            previousLedgerTransSettlement.TransRecId != offsetGJAERecId;
+
+                TransactionReversalTrans transactionReversalTrans;
+                TransactionReversalTrans transactionReversalTransOrig;
+
+                // See if the existing settlement record was created by a transaction reversal by checking to see if
+                // both account entries are in the same transaction group
+                select firstonly RecId from transactionReversalTrans
+                    where transactionReversalTrans.RefRecId == offsetGJAERecId &&
+                        transactionReversalTrans.RefTableId == tableNum(GeneralJournalAccountEntry)
+                join transactionReversalTransOrig
+                    where transactionReversalTransOrig.TraceNum == transactionReversalTrans.TraceNum &&
+                        transactionReversalTransOrig.RefRecId == previousLedgerTransSettlement.TransRecId &&
+                        transactionReversalTransOrig.RefTableId == tableNum(GeneralJournalAccountEntry);
+
+                // If settlement was created by a reversal we need to link the new settlement to the previous account entry
+                if (transactionReversalTrans.RecId)
+                {
+                    offsetGJAERecId = previousLedgerTransSettlement.TransRecId;
+                }
+            }
+
+            if (isPartialSettlementParameterEnabled)
+            {
+                LedgerTransSettlementOpen::createLedgerTransSettlementOpen(_entry.RecId, LedgerSettlementStatus::Settled);
+                GeneralJournalAccountEntry_Extension::createLedgerTransSettlement(_entry, offsetGJAERecId);
+                isPartialSettlementHandled = true;
+            }
+            else
+            {
+                LedgerTransSettlement::deleteSettled(originalLedgerTransSettlement.SettleId);
+            }
+        }
+
+        if (!isPartialSettlementHandled
+            && GeneralJournalAccountEntry_Extension::canProceedWithSettlement(_entry, _originalGeneralJournalAccountEntry))
+        {
+            // Create new settlement
+            Num settleId = NumberSeq::newGetNum(CompanyInfo::numRefParmId()).num();
+            TransDate settleDate = GeneralJournalAccountEntry_Extension::getAccountingDate(_entry.GeneralJournalEntry);
+            GeneralJournalEntry generalJournalEntry;
+            select firstonly SubledgerVoucher from generalJournalEntry where generalJournalEntry.RecId == _entry.GeneralJournalEntry;
+
+            ReasonComment reason = '';
+            if (LedgerSettleProcessorSettleMarkReverseFlight::instance().isEnabled())
+            {
+                reason = ReasonTableRef::find(_entry.ReasonRef).ReasonComment;
+            }
+
+            // Create settlement records for both transactions
+            GeneralJournalAccountEntry_Extension::createReverseSettlementRecord(
+                settleId,
+                settleDate,
+                generalJournalEntry.SubledgerVoucher,
+                offsetGJAERecId,
+                reason,
+                isPartialSettlementParameterEnabled);
+
+            GeneralJournalAccountEntry_Extension::createReverseSettlementRecord(
+                settleId,
+                settleDate,
+                generalJournalEntry.SubledgerVoucher,
+                _entry.RecId,
+                reason,
+                isPartialSettlementParameterEnabled);
+
+            if (isPartialSettlementParameterEnabled)
+            {
+                LedgerTransSettlementOpen::createLedgerTransSettlementOpen(offsetGJAERecId, LedgerSettlementStatus::Settled);
+                LedgerTransSettlementOpen::createLedgerTransSettlementOpen(_entry.RecId, LedgerSettlementStatus::Settled);
+            }
+        }
+
+        ttscommit;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>createLedgerTransSettlement</Name>
+				<Source><![CDATA[
+    private static void createLedgerTransSettlement(GeneralJournalAccountEntry _newEntry, RefRecId _offsetGJAERecId)
+    {
+        Num emptySettleId = '';
+        Num originalSettleId = LedgerTransSettlement::find(_offsetGJAERecId).SettleId;
+        TransDate settleDate = GeneralJournalAccountEntry_Extension::getAccountingDate(_newEntry.GeneralJournalEntry);
+        TransDate processedDate = DateTimeUtil::getSystemDate(DateTimeUtil::getUserPreferredTimeZone());
+        LedgerTransSettlement originalSettlement = LedgerTransSettlement::findSettleId(originalSettleId, _offsetGJAERecId);
+
+        GeneralJournalAccountEntry_Extension::manageLedgerTransSettlementWithoutSettleAmounts(originalSettlement);
+
+        LedgerTransSettlement::createRevereseLedgerTransSettlement(
+            emptySettleId, settleDate, processedDate, _newEntry.RecId, originalSettlement);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>createReverseSettlementRecord</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Creates a reverse settlement record for a given transaction.
+    /// </summary>
+    /// <param name="_settleId">The settlement ID.</param>
+    /// <param name="_settleDate">The settlement date.</param>
+    /// <param name="_voucher">The voucher number.</param>
+    /// <param name="_transRecId">The transaction record ID.</param>
+    /// <param name="_reason">The reason comment.</param>
+    /// <param name="_isPartialSettlementEnabled">Whether partial settlement is enabled.</param>
+    private static void createReverseSettlementRecord(
+        Num _settleId,
+        TransDate _settleDate,
+        Voucher _voucher,
+        RefRecId _transRecId,
+        ReasonComment _reason,
+        boolean _isPartialSettlementEnabled)
+    {
+        LedgerTransSettlement ledgerTransSettlement;
+        ledgerTransSettlement.SettleId = _settleId;
+        ledgerTransSettlement.TransRecId = _transRecId;
+        ledgerTransSettlement.SettleDate = _settleDate;
+        ledgerTransSettlement.DateProcessed = DateTimeUtil::getSystemDate(DateTimeUtil::getUserPreferredTimeZone());
+        ledgerTransSettlement.Voucher = _voucher;
+        ledgerTransSettlement.UserId = curUserId();
+        ledgerTransSettlement.Reason = _reason;
+
+        // Assign settled amounts from GeneralJournalAccountEntry when partial settlement is enabled
+        // Protected by flight check
+        if (_isPartialSettlementEnabled && LedgerTransSettlementPartialAmountsFlight::instance().isEnabled())
+        {
+            GeneralJournalAccountEntry accountEntry = GeneralJournalAccountEntry::find(_transRecId);
+            if (accountEntry)
+            {
+                ledgerTransSettlement.SettleTransactionCurrencyAmount = accountEntry.TransactionCurrencyAmount;
+                ledgerTransSettlement.SettleAccountingCurrencyAmount = accountEntry.AccountingCurrencyAmount;
+                ledgerTransSettlement.SettleReportingCurrencyAmount = accountEntry.ReportingCurrencyAmount;
+            }
+        }
+
+        ledgerTransSettlement.insert();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>manageLedgerTransSettlementWithoutSettleAmounts</Name>
+				<Source><![CDATA[
+    private static void manageLedgerTransSettlementWithoutSettleAmounts(LedgerTransSettlement _settlement)
+    {
+        if (_settlement.SettleTransactionCurrencyAmount == 0
+            && _settlement.SettleAccountingCurrencyAmount == 0
+            && _settlement.SettleReportingCurrencyAmount == 0
+            && _settlement.IsReversed == NoYes::No)
+        {
+            GeneralJournalAccountEntry trans = GeneralJournalAccountEntry::find(_settlement.TransRecId);
+
+            if (trans)
+            {
+                _settlement.selectForUpdate(true);
+                _settlement.SettleTransactionCurrencyAmount = trans.TransactionCurrencyAmount;
+                _settlement.SettleAccountingCurrencyAmount = trans.AccountingCurrencyAmount;
+                _settlement.SettleReportingCurrencyAmount = trans.ReportingCurrencyAmount;
+
+                ttsbegin;
+                _settlement.update();
+                ttscommit;
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getAccountingDate</Name>
+				<Source><![CDATA[
+    private static TransDate getAccountingDate(GeneralJournalEntryRecId _recId)
+    {
+        GeneralJournalEntry generalJournalEntry;
+        select firstonly AccountingDate from generalJournalEntry where generalJournalEntry.RecId == _recId;
+        
+        return generalJournalEntry.AccountingDate;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>canProceedWithSettlement</Name>
+				<Source><![CDATA[
+    private static boolean canProceedWithSettlement(GeneralJournalAccountEntry _entry, GeneralJournalAccountEntryRecId _originalGeneralJournalAccountEntry)
+    {
+        // can not proceed with settlement when the Advanced Awareness Options parameter is enabled
+        // when fiscal calendar year for entry and offset (reversal) are different
+        if (LedgerTransSettlementAdvancedParameters::isAwarenessParameterEnabled())
+        {
+            FiscalCalendarYearRecId entryYear = GeneralJournalAccountEntry_Extension::getFiscalCalendarYearRecId(_entry.RecId);
+            FiscalCalendarYearRecId offSetYear = GeneralJournalAccountEntry_Extension::getFiscalCalendarYearRecId(_originalGeneralJournalAccountEntry);
+            return entryYear == offSetYear;
+        }
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getFiscalCalendarYearRecId</Name>
+				<Source><![CDATA[
+    private static FiscalCalendarYearRecId getFiscalCalendarYearRecId(GeneralJournalAccountEntryRecId _recId)
+    {
+        GeneralJournalEntry generalJournalEntry;
+        GeneralJournalAccountEntry generalJournalAccountEntry;
+
+        select firstonly FiscalCalendarYear from generalJournalEntry
+            join generalJournalAccountEntry
+                where generalJournalEntry.RecId == generalJournalAccountEntry.GeneralJournalEntry
+                     && generalJournalAccountEntry.RecId == _recId;
+        return generalJournalEntry.FiscalCalendarYear;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>updateLedgerCov</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Update the ledger coverage.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <param name = "_generalJournalEntry">The journal header.</param>
+    /// <param name = "_ledgerCoverage">The cash flow forecasting calculations.</param>
+    public static void updateLedgerCov(GeneralJournalAccountEntry _entry, GeneralJournalEntry _generalJournalEntry, LedgerCoverage _ledgerCoverage)
+    {
+        LedgerAccountCov ledgerAccountCov;
+        LedgerCoverage cov = _ledgerCoverage;
+        TransDate paymentDate;
+        AmountCur amount;
+        boolean isFound;
+        
+        MainAccount             mainAccount;
+        DimensionDefault        dimensionDefault;
+        
+        // <GEERU>
+        #isoCountryRegionCodes
+        //</GEERU>
+        
+        mainAccount = LedgerDimensionFacade::getMainAccountFromLedgerDimension(_entry.LedgerDimension);
+        dimensionDefault = LedgerDimensionFacade::getDefaultDimensionFromLedgerDimension(_entry.LedgerDimension);
+        
+        cov.init(_entry);
+        // <GEERU>
+        if (SysCountryRegionCode::isLegalEntityInCountryRegion([#isoRU]))
+        {
+            cov.parmPostingProfile_RU(_entry.postingProfile_RU());
+            cov.parmInventProfileType_RU(_entry.inventProfileType_RU());
+        }
+        // </GEERU>
+        
+        while select Payment, Posting, ToMainAccount, Value from ledgerAccountCov
+            where ledgerAccountCov.TransBudget == TransBudget::Trans &&
+                ledgerAccountCov.FromMainAccount == mainAccount.RecId
+        {
+            paymentDate = PaymTerm::advanceDate(ledgerAccountCov.Payment, _generalJournalEntry.AccountingDate);
+            
+            if (paymentDate > DateTimeUtil::getSystemDate(DateTimeUtil::getUserPreferredTimeZone()))
+            {
+                amount = _entry.calculateCashFlowAmountForAccountEntry(ledgerAccountCov, mainAccount);
+                
+                if (amount != 0)
+                {
+                    isFound = true;
+                    
+                    cov.updateSum(
+                        paymentDate,
+                        ledgerAccountCov.Posting,
+                        ledgerAccountCov.ToMainAccount,
+                        dimensionDefault,
+                        _entry.TransactionCurrencyCode,
+                        amount);
+                }
+            }
+        }
+        
+        if (isFound)
+        {
+            cov.endCov();
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>calculateCashFlowAmountForAccountEntry</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Calculates the cash flow amount for the <c>GeneralJournalAccountEntry</c> table record.
+    /// </summary>
+    /// <param name = "_generalJournalAccountEntry">The <c>GeneralJournalAcountEntry</c> table record.</param>
+    /// <param name = "_ledgerAccountCov">The <c>LedgerAccountCov</c> table record.</param>
+    /// <param name = "_mainAccount">The <c>MainAccount</c> table record.</param>
+    /// <returns>The cash flow amount in transaction currency.</returns>
+    internal static AmountCur calculateCashFlowAmountForAccountEntry(
+        GeneralJournalAccountEntry _generalJournalAccountEntry,
+        LedgerAccountCov _ledgerAccountCov,
+        MainAccount _mainAccount)
+    {
+        AmountCur cashflowAmount;
+
+        cashflowAmount = CurrencyExchangeHelper::amount(_generalJournalAccountEntry.TransactionCurrencyAmount * _ledgerAccountCov.Value / 100);
+
+        if (GeneralJournalAccountEntryCashFlow::swapSignForMainAccountByType(_mainAccount))
+        {
+            cashflowAmount = cashflowAmount * -1;
+        }
+
+        return cashFlowAmount;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>findBySubledgerVoucherAccountingDate</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Finds a matching record in the GeneralJournalAccountEntry table.
+    /// </summary>
+    /// <param name="_subLedgerVoucher">
+    /// The subledger voucher.
+    /// </param>
+    /// <param name="_accountingDate">
+    /// The accounting date.
+    /// </param>
+    /// <param name="_forupdate">
+    /// A Boolean value that indicates whether to read the record for update; optional.
+    /// </param>
+    /// <param name="_concurrencyModel">
+    /// The concurrency model option to use when reading the record; optional.
+    /// </param>
+    /// <returns>
+    /// A record in the GeneralJournalAccountEntry table; otherwise, an empty record.
+    /// </returns>
+    /// <remarks>
+    /// Which GeneralJournalAccountEntry record is returned is undetermined.
+    /// </remarks>
+    public static GeneralJournalAccountEntry findBySubledgerVoucherAccountingDate(
+        Voucher _subLedgerVoucher,
+        TransDate _accountingDate,
+        boolean _forupdate = false,
+        ConcurrencyModel _concurrencyModel = ConcurrencyModel::Auto)
+    {
+        GeneralJournalAccountEntry generalJournalAccountEntry;
+        GeneralJournalEntry generalJournalEntry;
+        SubledgerVoucherGeneralJournalEntry subledgerVoucherGeneralJournalEntry;
+        
+        generalJournalAccountEntry.selectForUpdate(_forupdate);
+        
+        if (_forupdate  && _concurrencyModel != ConcurrencyModel::Auto)
+        {
+            generalJournalAccountEntry.concurrencyModel(_concurrencyModel);
+        }
+        
+        select firstonly * from generalJournalAccountEntry
+            exists join generalJournalEntry
+                where generalJournalEntry.RecId == generalJournalAccountEntry.GeneralJournalEntry
+                    && generalJournalEntry.Ledger == Ledger::current()
+            exists join subledgerVoucherGeneralJournalEntry
+                where subledgerVoucherGeneralJournalEntry.GeneralJournalEntry == generalJournalEntry.RecId
+                    && subledgerVoucherGeneralJournalEntry.Voucher == _subLedgerVoucher
+                    && subledgerVoucherGeneralJournalEntry.AccountingDate == _accountingDate;
+        
+        return generalJournalAccountEntry;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>initAmountsForLedgerTransferOpeningSumTmp</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Initializes the current record with the amounts from the specified <c>LedgerTransferOpeningSumTmp</c> record.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <param name = "_ledgerTransferOpeningSumTmp">
+    /// The <c>LedgerTransferOpeningSumTmp</c> record.
+    /// </param>
+    /// <param name = "_invertAmounts">
+    /// A boolean value that indicates whether the amounts should be inverted; optional.
+    /// </param>
+    public static void initAmountsForLedgerTransferOpeningSumTmp(GeneralJournalAccountEntry _entry, LedgerTransferOpeningSumTmp _ledgerTransferOpeningSumTmp, boolean _invertAmounts = false)
+    {
+        if (_invertAmounts)
+        {
+            _entry.TransactionCurrencyAmount = -_ledgerTransferOpeningSumTmp.TransactionCurrencyAmount;
+            _entry.AccountingCurrencyAmount = -_ledgerTransferOpeningSumTmp.AccountingCurrencyAmount;
+            _entry.ReportingCurrencyAmount = -_ledgerTransferOpeningSumTmp.ReportingCurrencyAmount;
+
+            _entry.Quantity = -_ledgerTransferOpeningSumTmp.Quantity;
+        }
+        else
+        {
+            _entry.TransactionCurrencyAmount = _ledgerTransferOpeningSumTmp.TransactionCurrencyAmount;
+            _entry.AccountingCurrencyAmount = _ledgerTransferOpeningSumTmp.AccountingCurrencyAmount;
+            _entry.ReportingCurrencyAmount = _ledgerTransferOpeningSumTmp.ReportingCurrencyAmount;
+
+            _entry.Quantity = _ledgerTransferOpeningSumTmp.Quantity;
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>canReverse</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Gets a value that indicates whether or not the current transaction can be reversed.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <param name="_ledgerEntry">The associated ledger entry record; optional.</param>
+    /// <returns>true if the entry can be reversed; otherwise false.</returns>
+    /// <remarks>
+    /// _entry method is provided to allow a single call from the client tier to loop over
+    /// all subledger voucher links and return a value without causing a large number
+    /// of remote calls.
+    /// </remarks>
+    public static boolean canReverse(GeneralJournalAccountEntry _entry, LedgerEntry _ledgerEntry = null)
+    {
+        GeneralJournalEntry                 generalJournalEntry = GeneralJournalEntry::find(_entry.GeneralJournalEntry);
+        SubledgerVoucherGeneralJournalEntry subledgerVoucherLink;
+        boolean                             canReverse = true;
+        
+        // Do not allow reversal transaction for Fixed Assets transaction from General ledger module
+        if (generalJournalEntry.JournalCategory == LedgerTranstype::FixedAssets)
+        {
+            // An exception would prevent the fixed asset plug-in from
+            // reversing the transaction.  Returning false silently will 
+            // cause GL to not reverse but allow FA plug-in to reverse.
+            return false;
+        }
+        
+        while select * from subledgerVoucherLink
+            where subledgerVoucherLink.GeneralJournalEntry == _entry.GeneralJournalEntry
+        {
+            canReverse = _entry.checkReversal(generalJournalEntry, subledgerVoucherLink, _ledgerEntry);
+            if (!canReverse)
+            {
+                break;
+            }
+        }
+        
+        return canReverse;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>checkGeneralJournalEntryAccountingDate</Name>
+				<Source><![CDATA[
+    /// <summary>
+        /// Verifies that no transactions exist in an opening period on a date later than the current date
+        /// </summary>
+        /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+        /// <param name="_generalJournalEntry">
+        /// The associated General journal entry record.
+        /// </param>
+        /// <param name="_showError">
+        /// A boolean value to show or hide the error message; optional.
+        /// </param>
+        /// <returns>
+        /// True if no transactions existed in an opening period on a later date; otherwise false.
+        /// </returns>
+    public static boolean checkGeneralJournalEntryAccountingDate(GeneralJournalAccountEntry _entry, GeneralJournalEntry _generalJournalEntry, boolean _showError = false)
+    {
+            FiscalCalendarPeriod fiscalCalendarPeriod;
+            GeneralJournalEntry generalJournalEntry;
+            boolean isValid = true;
+            container cachedResult;
+        
+            // Verify that no transactions exist in an opening period on a date
+            // later than the current date. This is the only way to check if the
+            // fiscal year end close process has been performed, which would then
+            // disallow reversal of the transaction.
+            cachedResult = LedgerCache::getValue(LedgerCacheScope::LastClosingDateByLedger, [Ledger::current()]);
+        
+            if (cachedResult == conNull())
+            {
+                // Find the latest transaction in an opening period
+                select firstonly AccountingDate from generalJournalEntry
+                    order by generalJournalEntry.AccountingDate desc
+                    where generalJournalEntry.Ledger == Ledger::current()
+                    join RecId from fiscalCalendarPeriod
+                        where fiscalCalendarPeriod.RecId == generalJournalEntry.FiscalCalendarPeriod
+                            && fiscalCalendarPeriod.Type == FiscalPeriodType::Opening;
+            
+                // Since this value only changes once per year, cache the result of the query
+                // to avoid doing the lookups until it changes
+                cachedResult = [generalJournalEntry.AccountingDate];
+                LedgerCache::insertValue(LedgerCacheScope::LastClosingDateByLedger, [Ledger::current()], cachedResult);
+        }
+        
+        if (conPeek(cachedResult, 1) > _generalJournalEntry.AccountingDate)
+        {
+            isValid = false;
+            if (_showError)
+            {
+                error("@SYS78730");
+            }
+        }
+        
+        return isValid;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>checkLedgerEntryJournalizing</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Verifies that the General Journal Account Entry is not yet journalized
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <param name="_showError">
+    /// A boolean value to show or hide the error message; optional.
+    /// </param>
+    /// <returns>
+    /// True if the General Journal Account Entry is not yet journalized; otherwise false.
+    /// </returns>
+    public static boolean checkLedgerEntryJournalizing(GeneralJournalAccountEntry _entry, boolean _showError = false)
+    {
+        LedgerEntryJournalizing ledgerEntryJournalizing;
+        boolean isValid = true;
+        
+        select firstonly RecId from ledgerEntryJournalizing
+            where ledgerEntryJournalizing.GeneralJournalAccountEntry == _entry.RecId;
+        
+        if (ledgerEntryJournalizing != null)
+        {
+            isValid = false;
+            
+            if (_showError)
+            {
+                error(strFmt("@SYS78729", LedgerDimensionFacade::getDisplayValueForLedgerDimension(_entry.LedgerDimension)));
+            }
+        }
+        
+        return isValid;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deLedgerJournalizeSeqNum</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Displays the Sequence number if journalizing information is available.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>
+    /// Returns the Sequence Number from <c>LedgerEntryJournalizing</c> record.
+    /// </returns>
+    public static display LedgerJournalizeSeqNum deLedgerJournalizeSeqNum(GeneralJournalAccountEntry _entry)
+    {
+        return (select firstOnly SequenceNumber from LedgerEntryJournalizing
+            where ledgerEntryJournalizing.GeneralJournalAccountEntry == _entry.RecId).SequenceNumber;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deOffsetAccounts</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Displays the offset accounts.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>
+    /// Returns the account list.
+    /// </returns>
+    public static display DirPartyName deOffsetAccounts(GeneralJournalAccountEntry _entry)
+    {
+        MainAccountNum accountNum;
+        Set accountSet = new Set(Types::String);
+        
+        GeneralJournalAccountEntry  line;
+        while select LedgerDimension,AccountingCurrencyAmount,TransactioncurrencyAmount from line
+            where line.GeneralJournalEntry == _entry.GeneralJournalEntry
+            && line.RecId != _entry.RecId
+        {
+            if (line.AccountingCurrencyAmount
+                && _entry.AccountingCurrencyAmount
+                && (sign(line.AccountingCurrencyAmount) != sign(_entry.AccountingCurrencyAmount)))
+            {
+                accountNum = MainAccount::findByLedgerDimension(line.LedgerDimension).MainAccountId;
+                accountSet.add(accountNum);
+            }
+            else if (line.TransactioncurrencyAmount
+                && _entry.TransactioncurrencyAmount
+                && (sign(line.TransactioncurrencyAmount) != sign(_entry.TransactioncurrencyAmount)))
+            {
+                accountNum = MainAccount::findByLedgerDimension(line.LedgerDimension).MainAccountId;
+                accountSet.add(accountNum);
+            }
+        }
+
+        accountNum  = MainAccount::findByLedgerDimension(_entry.LedgerDimension).MainAccountId;
+        accountSet.remove(accountNum);
+
+        DirPartyName partyName = strRem(accountSet.toString(), @'{\"}');
+
+        return partyName;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deTaxRefId</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Displays the recid of the <c>TaxTrans</c> record.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>
+    /// Recid of the <c>TaxTrans</c> record related to the <c>GeneralJournalAccountEntry</c> record.
+    /// </returns>
+    public static display RefRecId deTaxRefId(GeneralJournalAccountEntry _entry)
+    {
+        RefRecId result = 0;
+        TaxTransGeneralJournalAccountEntry taxTransGeneralJournalAccountEntry;
+
+        select firstOnly taxTransGeneralJournalAccountEntry
+            where taxTransGeneralJournalAccountEntry.GeneralJournalAccountEntry == _entry.RecId;
+
+        if (taxTransGeneralJournalAccountEntry)
+        {
+            result = taxTransGeneralJournalAccountEntry.getTaxRefId_DE();
+        }
+
+        return result;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>checkReversal</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Gets a value that indicates whether or not the current transaction can be reversed.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <param name="_generalJournalEntry">
+    /// The associated General journal entry record.
+    /// </param>
+    /// <param name="_subledgerVoucherLink">
+    /// The associated Subledger voucher General journal entry record.
+    /// </param>
+    /// <param name="_ledgerEntry">
+    /// The associated ledger entry record.
+    /// </param>
+    /// <param name="_showError">
+    /// A boolean value to show or hide the error message; optional.
+    /// </param>
+    /// <param name="_checkCustVend">
+    /// A boolean value to check if reversal is valid if Customer or Vendor transactions exist; optional.
+    /// </param>
+    /// <param name="_subledgerJournalAccountEntry">
+    /// The Subledger voucher general journal entry record; optional.
+    /// </param>
+    /// <param name="_checkFixedAssetsPostingType">
+    /// A boolean value to check if reversal is valid for transaction if Posting type is of Fixed assets type; optional.
+    /// </param>
+    /// <returns>
+    /// True if the entry can be reversed; otherwise false.
+    /// </returns>
+    public static boolean checkReversal(
+        GeneralJournalAccountEntry _entry,
+        GeneralJournalEntry _generalJournalEntry,
+        SubledgerVoucherGeneralJournalEntry _subledgerVoucherLink,
+        LedgerEntry _ledgerEntry,
+        boolean _showError = false,
+        boolean _checkCustVend = false,
+        RefRecId _subledgerJournalAccountEntry = 0,
+        boolean _checkFixedAssetsPostingType = false
+        )
+    {       
+        GeneralJournalEntry generalJournalEntry;
+        GeneralJournalAccountEntry generalJournalAccountEntry;        
+        SubledgerVoucherGeneralJournalEntry subledgerVoucherLink;
+        boolean isValid;        
+        LedgerJournalVoucherChanged ledgerJournalVoucherChanged;
+        LedgerAccount mainAccountId;        
+        LedgerTransModule ledgerTransModule;
+        LedgerTransModuleTmp transModuleTmp;
+        #ISOCountryRegionCodes
+        boolean countryRegion_RU = SysCountryRegionCode::isLegalEntityInCountryRegion([#isoRU]);
+        
+        // <GEERU>
+        if (countryRegion_RU)
+        {
+            ledgerTransModule = LedgerTransModule::construct();
+            ledgerTransModule.createTransModule(_entry.GeneralJournalEntry);
+            transModuleTmp = ledgerTransModule.transModule();
+
+            select firstonly transModuleTmp
+                where transModuleTmp.Module != SysModule::Ledger;
+
+            isValid = (transModuleTmp.RecId == 0);
+        }
+        else
+        {
+            // </GEERU>
+            if (_entry.PostingType == LedgerPostingType::None                     ||
+            _entry.PostingType == LedgerPostingType::InterCompany             ||
+            _entry.PostingType == LedgerPostingType::Tax                      ||
+            _entry.PostingType == LedgerPostingType::VATRoundOff              ||
+            _entry.PostingType == LedgerPostingType::Allocation               ||
+            _entry.PostingType == LedgerPostingType::InvestmentDuty           ||
+            _entry.PostingType == LedgerPostingType::Liquidity                ||
+            _entry.PostingType == LedgerPostingType::MSTDiffSecond            ||
+            _entry.PostingType == LedgerPostingType::ErrorAccount             ||
+            _entry.PostingType == LedgerPostingType::MSTDiff                  ||
+            _entry.PostingType == LedgerPostingType::YearResult               ||
+            _entry.PostingType == LedgerPostingType::Closing                  ||
+            _entry.PostingType == LedgerPostingType::LedgerJournal            ||
+            _entry.PostingType == LedgerPostingType::CashDiscount             ||
+            _entry.PostingType == LedgerPostingType::ConsolidateDiffBalance   ||
+            _entry.PostingType == LedgerPostingType::PaymentFee               ||
+            _entry.PostingType == LedgerPostingType::TaxReport                ||
+            _entry.PostingType == LedgerPostingType::TransferOpeningClosing   ||
+            _entry.PostingType == LedgerPostingType::SalesRoundOff            ||
+            _entry.PostingType == LedgerPostingType::InterunitDebit           ||
+            _entry.PostingType == LedgerPostingType::InterunitCredit          ||
+            _entry.PostingType == LedgerPostingType::ExchRateLoss             ||
+            _entry.PostingType == LedgerPostingType::ExchRateGain)
+            {
+                isValid = true;
+            }
+            
+            // Check if reverse is valid for Fixed assets posting type
+            if (_checkFixedAssetsPostingType)
+            {
+                if (_entry.PostingType == LedgerPostingType::FixedAssetsCredit
+                || _entry.PostingType == LedgerPostingType::FixedAssetsDebit)
+                {
+                    isValid = true;
+                }
+                // AP originated transactions cannot be reversed.  Instead, a credit note needs to be issued.
+                // Only Asset Transfer transactions based on the AP transactions can be reversed.
+                else if (_entry.PostingType == LedgerPostingType::PurchExpense
+                || _entry.PostingType == LedgerPostingType::PurchConsump)
+                {
+                    if (AssetTrans::findByVoucher(_subledgerVoucherLink.Voucher, _subledgerVoucherLink.AccountingDate)
+                        .TransType == AssetTransType::AssetTransfer)
+                    {
+                        isValid = true;
+                    }
+                }
+            }
+            
+            //<GIN>
+            if ((TaxParameters::checkTaxParameters_IN() || TaxWithholdParameters_IN::checkTaxParameters()) &&
+            (_entry.PostingType == LedgerPostingType::TDS_IN                                             ||
+             _entry.PostingType == LedgerPostingType::TCS_IN                                             ||
+             _entry.PostingType == LedgerPostingType::ServiceTax_IN                                      ||
+             _entry.PostingType == LedgerPostingType::Excise_IN                                          ||
+             _entry.PostingType == LedgerPostingType::VAT_IN                                             ||
+             _entry.PostingType == LedgerPostingType::SalesTax_IN                                        ||
+             _entry.PostingType == LedgerPostingType::Customs_IN										 ||
+             _entry.PostingType == LedgerPostingType::GST_IN))
+            {
+                isValid = true;
+            }
+            // </GIN>
+            if (isValid && !_checkCustVend)
+            {
+                if (CustTrans::findVoucherDate(_subledgerVoucherLink.Voucher, _subledgerVoucherLink.AccountingDate) ||
+                    VendTrans::findVoucherDate(_subledgerVoucherLink.Voucher, _subledgerVoucherLink.AccountingDate) ||
+                    BankAccountTrans::findByVoucher(_subledgerVoucherLink.Voucher, _subledgerVoucherLink.AccountingDate))
+                {
+                    isValid = false;
+                }
+                else
+                {
+                    isValid = true;
+                }
+            }
+            // <GEERU>
+        }
+        // </GEERU>
+        
+        mainAccountId = '';
+
+        LedgerInterCompany ledgerInterCompany;
+
+        while select OriginatingCreditLedgerDimension, OriginatingDebitLedgerDimension from ledgerInterCompany
+            where ledgerInterCompany.OriginatingCompany == curExt()
+        {
+            if (mainAccountId == '')
+            {
+                mainAccountId = LedgerDimensionFacade::getMainAccountIdFromLedgerDimension(_entry.LedgerDimension);
+            }
+            
+            if ((LedgerDimensionFacade::getMainAccountIdFromLedgerDimension(ledgerInterCompany.OriginatingDebitLedgerDimension) == mainAccountId ||
+                LedgerDimensionFacade::getMainAccountIdFromLedgerDimension(ledgerInterCompany.OriginatingCreditLedgerDimension) == mainAccountId) &&
+                (
+                    _entry.PostingType != LedgerPostingType::ExchRateLoss &&
+                    _entry.PostingType != LedgerPostingType::ExchRateGain)
+                )
+            {
+                if (_showError)
+                {
+                    error(strFmt("@GeneralLedger:TransactionReversalIntercompanyError", 
+                        _generalJournalEntry.SubledgerVoucher, 
+                        LedgerDimensionFacade::getDisplayValueForLedgerDimension(_entry.LedgerDimension)));
+                }
+                
+                isValid = false;
+                break;
+            }
+        }
+        
+        // <GEERU>
+        if (!countryRegion_RU)
+        {
+            // </GEERU>
+            isValid = _entry.checkLedgerEntryJournalizing(_showError) && isValid;
+            isValid = _entry.checkGeneralJournalEntryAccountingDate(_generalJournalEntry, _showError) && isValid;           
+            // <GEERU>
+        }
+        // </GEERU>
+        
+        // Bridged Posting
+        if (isValid)
+        {
+            if (_ledgerEntry.IsBridgingPosting)
+            {
+                isValid = false;
+            }
+        }
+        
+        if (isValid &&
+            !_checkCustVend &&
+            !_entry.canReverseForLedgerSettlement())
+        {
+            isValid = false;
+        }
+        
+        if (isValid)
+        {
+            select firstonly ledgerJournalVoucherChanged
+                where ledgerJournalVoucherChanged.ToVoucher == _subledgerVoucherLink.Voucher
+                    && ledgerJournalVoucherChanged.ToDate == _subledgerVoucherLink.AccountingDate;
+        }
+
+        
+        LedgerJournalType journalType = LedgerJournalTable::find(ledgerJournalVoucherChanged.JournalNum).JournalType;
+
+        // Test whether the general journal transaction is a sub-transaction of an accrual.
+        if (isValid && ledgerJournalVoucherChanged && GeneralJournalAccountEntry_Extension::isAccrualApplicable(journalType))
+        {                                                                                                                                   
+            select firstonly RecId from generalJournalAccountEntry
+                where generalJournalAccountEntry.TransactionCurrencyAmount > _entry.TransactionCurrencyAmount
+            exists join generalJournalEntry
+                where generalJournalEntry.RecId == generalJournalAccountEntry.GeneralJournalEntry
+                    && generalJournalEntry.Ledger == Ledger::current()
+            exists join subledgerVoucherLink
+                where subledgerVoucherLink.GeneralJournalEntry == generalJournalEntry.RecId
+                    && subledgerVoucherLink.AccountingDate == ledgerJournalVoucherChanged.FromDate
+                    && subledgerVoucherLink.Voucher == ledgerJournalVoucherChanged.FromVoucher;
+            
+            if (generalJournalAccountEntry != null)
+            {
+                isValid = false;
+            }
+        }
+        
+        return isValid;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>isAccrualApplicable</Name>
+				<Source><![CDATA[
+    private static boolean isAccrualApplicable(LedgerJournalType _journalType)
+    {
+        switch (_journalType)
+        {
+            case LedgerJournalType::Approval:
+                return false;
+            case LedgerJournalType::VendInvoicePool:
+                return false;
+        }
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>canReverseForLedgerSettlement</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Gets a value that indicates whether or not the current transaction can be reversed based on the ledger settlement status.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>true if the record can be reversed based on the ledger settlements status; otherwise, false.</returns>
+    internal static boolean canReverseForLedgerSettlement(GeneralJournalAccountEntry _entry)
+    {
+        boolean canReverse = true;
+
+        if (LedgerTransSettlementAdvancedParameters::isPostRealizedGainLossParameterEnabled())
+        {
+            GeneralJournalEntry generalJournalEntry;
+
+            select firstonly generalJournalEntry
+                where generalJournalEntry.JournalCategory == LedgerTransType::LedgerSettlement
+                    && generalJournalEntry.RecId == _entry.GeneralJournalEntry;
+
+            if (!generalJournalEntry)
+            {
+                if (LedgerTransSettlement::isLedgerSettlementsEnabled())
+                {
+                    if (LedgerTransSettlement::findTransRecId(_entry.RecId) &&
+                       !TransactionReversalTrans::findTransactionReversalTrans(tableNum(GeneralJournalAccountEntry), _entry.RecId).TraceNum)
+                    {
+                        canReverse = false;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (LedgerTransSettlement::isLedgerSettlementsEnabled())
+            {
+                if (LedgerTransSettlement::findTransRecId(_entry.RecId) &&
+                    !TransactionReversalTrans::findTransactionReversalTrans(tableNum(GeneralJournalAccountEntry), _entry.RecId).TraceNum)
+                {
+                    canReverse = false;
+                }
+            }
+        }
+
+        return canReverse;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getRelatedOriginalDocuments</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Gets the original documents related to the current journal account entry.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <returns>The original documents.</returns>
+    [SysClassNameAttribute(classStr(OriginalDocumentModel))]
+    public static List getRelatedOriginalDocuments(GeneralJournalAccountEntry _entry)
+    {
+        Originaldocuments originaldocuments = new Originaldocuments(_entry);
+        originaldocuments.findRelations();
+
+        TmpLedgerBase tmpLedgerBase;
+        tmpLedgerBase.setTmpData(originaldocuments.relations());
+
+        List ret = new List(Types::Class);
+        while select tmpLedgerBase
+        {
+            ret.addEnd(OriginalDocumentModel::constructFromTmpLedgerBase(tmpLedgerBase));
+        }
+        
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deDateLet_FR</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Retrieves the LastSettleDate for transaction <paramRef name="_entry"/>
+    /// inside of the period of the given parameters.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <param name="_fromDate">
+    /// parm _fromDate holds the from date value from FEC setup.
+    /// </param>
+    /// <param name="_toDate">
+    /// parm _toDate holds the to date value from FEC setup.
+    /// </param>
+    /// <returns>
+    /// The LastSettleDate if exists otherwise empty value.
+    /// </returns>
+    /// <remarks>
+    /// This method is used for Data Export for France.
+    /// </remarks>
+    public static TransDate deDateLet_FR(GeneralJournalAccountEntry _entry, TransDate _fromDate = datenull(), TransDate _toDate = datenull())
+    {
+        TransDate transDate;
+
+        if (_entry.PostingType != LedgerPostingType::VendBalance && _entry.PostingType != LedgerPostingType::CustBalance)
+        {
+            return transDate;
+        }
+
+        GeneralJournalEntry generalJournalEntry = GeneralJournalEntry::find(_entry.GeneralJournalEntry);
+        
+        if (generalJournalEntry.JournalCategory == LedgerTransType::Payment)
+        {
+            transDate =  generalJournalEntry.AccountingDate;
+        }
+        else
+        {
+            CustVendTrans custVendTrans = _entry.PostingType == LedgerPostingType::VendBalance 
+                ? VendTrans::findVoucherDate(generalJournalEntry.SubledgerVoucher, generalJournalEntry.AccountingDate) as CustVendTrans
+                : CustTrans::findVoucherDate(generalJournalEntry.SubledgerVoucher, generalJournalEntry.AccountingDate) as CustVendTrans;
+
+            if (custVendTrans)
+            {
+                using (var context = FECContext::construct())
+                {
+                    transDate = custVendTrans.CustVendTrans::getTransDate(_fromDate, _toDate);
+                }
+            }
+        }
+        return transDate;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deEcritureLet_FR</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Retrieves the LastSettleVoucher for the transaction <paramRef name="_entry"/>.
+    /// </summary>
+    /// <param name = "_entry">The <c>GeneralJournalAccountEntry</c> table record.</param>
+    /// <param name="_fromDate">
+    /// parm _fromDate holds the from date value from FEC setup.
+    /// </param>
+    /// <param name="_toDate">
+    /// parm _toDate holds the to date value from FEC setup.
+    /// </param>
+    /// <returns>
+    /// The LastSettleVoucher if exists otherwise empty value.
+    /// </returns>
+    /// <remarks>
+    /// This method is used for Data Export for France.
+    /// </remarks>
+    public static String255 deEcritureLet_FR(GeneralJournalAccountEntry _entry, TransDate _fromDate = datenull(), TransDate _toDate = datenull())
+    {
+        if (FeatureStateProvider::isFeatureEnabled(FECOneVoucherInEcritureLetFeature_FR::instance()))
+        {
+            return GeneralJournalAccountEntry_Extension::deEcritureLetLatest_FR(
+                _entry, 
+                _fromDate,
+                _toDate);
+        }
+        else
+        {
+            container voucher;
+            String255 voucherString;
+
+            GeneralJournalEntry generalJournalEntry = GeneralJournalEntry::find(_entry.GeneralJournalEntry);
+
+            if (_entry.PostingType == LedgerPostingType::VendBalance)
+            {
+                if (generalJournalEntry.JournalCategory == LedgerTransType::Payment)
+                {
+                    voucherString = generalJournalEntry.SubledgerVoucher;
+                }
+                else
+                {
+                    using (var context = FECContext::construct())
+                    {
+                        CustVendTrans custVendTrans = VendTrans::findVoucherDate(generalJournalEntry.SubledgerVoucher, generalJournalEntry.AccountingDate);
+                        voucher = custVendTrans.CustVendTrans::getOffsetVoucher(_fromDate, _toDate);
+                        voucherString = con2Str(voucher);
+                    }
+                }
+            }
+            else if (_entry.PostingType == LedgerPostingType::CustBalance)
+            {
+                if (generalJournalEntry.JournalCategory == LedgerTransType::Payment)
+                {
+                    voucherString = generalJournalEntry.SubledgerVoucher;
+                }
+                else
+                {
+                    using (var context = FECContext::construct())
+                    {
+                        CustVendTrans custVendTrans = CustTrans::findVoucherDate(generalJournalEntry.SubledgerVoucher, generalJournalEntry.AccountingDate);
+                        voucher = custVendTrans.CustVendTrans::getOffsetVoucher(_fromDate, _toDate);
+                        voucherString = con2Str(voucher);
+                    }
+                }
+            }
+
+            return voucherString;
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>deEcritureLetLatest_FR</Name>
+				<Source><![CDATA[
+    internal static Voucher deEcritureLetLatest_FR(
+        GeneralJournalAccountEntry _entry, 
+        TransDate _fromDate, 
+        TransDate _toDate)
+    {
+        if (_entry.PostingType != LedgerPostingType::VendBalance && _entry.PostingType != LedgerPostingType::CustBalance)
+        {
+            return '';
+        }
+
+        GeneralJournalEntry generalJournalEntry = GeneralJournalEntry::find(_entry.GeneralJournalEntry);
+
+        Voucher voucher;
+        if (generalJournalEntry.JournalCategory == LedgerTransType::Payment)
+        {
+            voucher = generalJournalEntry.SubledgerVoucher;
+        }
+        else
+        {
+            CustVendTrans custVendTrans = _entry.PostingType == LedgerPostingType::VendBalance 
+                ? VendTrans::findVoucherDate(generalJournalEntry.SubledgerVoucher, generalJournalEntry.AccountingDate) as CustVendTrans
+                : CustTrans::findVoucherDate(generalJournalEntry.SubledgerVoucher, generalJournalEntry.AccountingDate) as CustVendTrans;
+
+            if (custVendTrans)
+            {
+                voucher = custVendTrans.CustVendTrans::getOffsetVoucherLatestSettledInPeriod(_fromDate, _toDate);
+            }
+        }
+
+        return voucher;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

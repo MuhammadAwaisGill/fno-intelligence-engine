@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fno-intelligence-engine/table_schema.json",
+  "title": "AxTable parsed metadata",
+  "type": "object",
+  "required": ["object_type", "name", "fields", "relations"],
+  "properties": {
+    "object_type": {
+      "const": "table",
+      "description": "Discriminator so a downstream consumer (Part 2 loader) can tell table vs class objects apart without inspecting shape."
+    },
+    "name": {
+      "type": "string",
+      "description": "The AOT table name, e.g. VendTrans. Taken from the root <Name> tag."
+    },
+    "fields": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/field" }
+    },
+    "relations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relation" }
+    }
+  },
+  "$defs": {
+    "field": {
+      "type": "object",
+      "required": ["name", "xsi_type", "edt", "enum_type"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Field name from <Name> inside <AxTableField>."
+        },
+        "xsi_type": {
+          "type": "string",
+          "description": "The i:type attribute value, e.g. AxTableFieldString, AxTableFieldEnum. This is the field's base storage type, distinct from its EDT.",
+          "examples": ["AxTableFieldString", "AxTableFieldInt64", "AxTableFieldReal", "AxTableFieldDate", "AxTableFieldEnum", "AxTableFieldUtcDateTime", "AxTableFieldContainer", "AxTableFieldInt"]
+        },
+        "edt": {
+          "type": ["string", "null"],
+          "description": "Value of <ExtendedDataType> if present, else null. NULL DOES NOT MEAN 'NO TYPE INFO' -- check enum_type before treating a field as untyped. Confirmed real case: VendTrans.TransType has edt=null."
+        },
+        "enum_type": {
+          "type": ["string", "null"],
+          "description": "Value of <EnumType> if present, else null. Some enum fields carry both edt AND enum_type (e.g. VendTrans.Correct: edt='Correct', enum_type='NoYes'). Some carry ONLY enum_type (e.g. VendTrans.TransType: edt=null, enum_type='LedgerTransType'). A parser must check this field before concluding a field has no type information."
+        }
+      }
+    },
+    "relation": {
+      "type": "object",
+      "required": ["name", "related_table", "constraints"],
+      "properties": {
+        "name": { "type": "string" },
+        "related_table": { "type": "string" },
+        "constraints": {
+          "type": "array",
+          "description": "A single relation's constraint list may mix 'field' and 'fixed' kind constraints in the same relation. Confirmed real case: VendTrans's DataArea relation has one ConstraintField (LastSettleCompany==id) and one ConstraintRelatedFixed (isVirtual, no field, no value) in the same <Constraints> block.",
+          "items": { "$ref": "#/$defs/constraint" }
+        }
+      }
+    },
+    "constraint": {
+      "type": "object",
+      "required": ["kind", "related_field"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["field", "fixed"],
+          "description": "'field' = AxTableRelationConstraintField (column joins column). 'fixed' = AxTableRelationConstraintRelatedFixed (related column pinned to a literal value, or in some cases no value at all)."
+        },
+        "field": {
+          "type": ["string", "null"],
+          "description": "Source-side column name. ALWAYS null when kind='fixed' -- confirmed real case: FactureJourAmountDifference_RU's FactureType_Extern constraint and DataArea's isVirtual_Extern constraint both have no <Field> tag at all."
+        },
+        "related_field": {
+          "type": "string",
+          "description": "Target-side column name. Always present for both kinds."
+        },
+        "value": {
+          "type": ["string", "null"],
+          "description": "Present only for kind='fixed' when a <ValueStr> tag exists (e.g. 'FactureType_RU::AmoutDifference'). Confirmed real case: some fixed constraints (isVirtual_Extern) have NEITHER a Field NOR a ValueStr -- the fixed value is implicit/inherited, not explicit in this XML. Do not assume every fixed constraint has a value string."
+        }
+      }
+    }
+  }
+}

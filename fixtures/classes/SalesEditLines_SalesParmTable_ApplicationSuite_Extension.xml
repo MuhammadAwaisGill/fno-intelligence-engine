@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>SalesEditLines_SalesParmTable_ApplicationSuite_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+#ISOCountryRegionCodes
+[ExtensionOf(formdatasourcestr(SalesEditLines, SalesParmTable ))]
+internal final class SalesEditLines_SalesParmTable_ApplicationSuite_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>active</Name>
+				<Source><![CDATA[
+    public int active()
+    {
+        int ret = next active();
+
+        if (SysCountryRegionCode::isLegalEntityInCountryRegion([#isoBR]))
+        {
+            if (TaxBRReformSinief08FiscalNotesFlight::instance().isEnabled())
+            {
+                SalesParmTable salesParmTable = this.cursor();
+                boolean isTotalReturnVisible;
+                if (salesParmTable.Ordering == DocumentStatus::Invoice)
+                {
+                    isTotalReturnVisible = salesParmTable.salesTable().SalesType == SalesType::ReturnItem;
+                }
+                this.object(fieldNum(SalesParmTable, TotalReturn_BR)).visible(isTotalReturnVisible);
+            }
+            else
+            {
+                this.object(fieldNum(SalesParmTable, TotalReturn_BR)).visible(false);
+            }
+        }
+
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

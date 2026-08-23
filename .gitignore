@@ -1,5 +1,26 @@
-venv/
+# Python
 __pycache__/
 *.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Local index / DB artifacts (Part 2+, not built yet, but future-proofing)
 *.db
+*.sqlite3
+
+# Editor
 .vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Fixtures containing anything beyond standard Microsoft demo data or your
+# own from-scratch custom model. Per project scope: only USMF/DAT standard
+# fixtures and your own custom-model fixtures should ever be committed.
+# If you ever point this at a real client/organization environment,
+# uncomment the line below to stop fixtures from being committed at all.
+# fixtures/

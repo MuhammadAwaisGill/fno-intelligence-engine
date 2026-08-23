@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>RealControlPrecisionInventTransForm_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[ExtensionOf(formStr(InventTrans))]
+public final class RealControlPrecisionInventTransForm_Extension
+{
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>run</Name>
+				<Source><![CDATA[
+    public void run()
+    {
+        next run();
+
+        if (InventTransNewFormImprovementsFlight::instance().isEnabled())
+        {
+            RealControlPrecisionToggleControlRegistrar::addPrecisionButtonControlToSystemDefinedPersonalizeButtonGroup(this, methodStr(RealControlPrecisionInventTransForm_Extension, buttonClicked));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>buttonClicked</Name>
+				<Source><![CDATA[
+    private void buttonClicked(FormButtonControl _buttonControl)
+    {
+        RealControlPrecisionFormRunHelper::getRealControlPrecisionFormRunHelper(this, classStr(RealControlPrecisionInventTransForm_Extension)).showHighPrecision(_buttonControl.toggleValue());
+        RealControlPrecisionToggleControlRegistrar::flipPrecisionButtonText(_buttonControl);
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>RegNumCustTable_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Extension methods for the <c>CustTable</c> table.
+/// </summary>
+public static class RegNumCustTable_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getVatNumPrimaryRegistrationNumber</Name>
+				<Source><![CDATA[
+    public static TaxRegistrationNumber getVatNumPrimaryRegistrationNumber(CustTable _custTable)
+    {
+        return TaxRegistration::getPrimaryRegistrationNumber(_custTable, TaxRegistrationTypesList::TAXID);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getPrimaryRegistrationNumber</Name>
+				<Source><![CDATA[
+    public static TaxRegistrationNumber getPrimaryRegistrationNumber(CustTable                _custTable,
+                                                                     TaxRegistrationTypesList _type,
+                                                                     date                     _date  = DateTimeUtil::getSystemDate(DateTimeUtil::getUserPreferredTimeZone()))
+    {
+        return TaxRegistration::getPrimaryRegistrationNumber(_custTable, _type, _date);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>copyPrimaryRegistrationNumberToVATMap</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Gets the registration number for the primary address of the given customer.
+    /// And copies the primary registration number, record ID, table ID to a map.
+    /// </summary>
+    /// <param name = "_custTable">The data source to determine and copy from.</param>
+    /// <param name = "_vatMapDest">The destination table to copy to.</param>
+    /// <param name = "_date">The date to determine primary registration number.</param>
+    public static void copyPrimaryRegistrationNumberToVATMap(
+        CustTable _custTable,
+        TaxExemptVATNumMap _vatMapDest,
+        date _date  = DateTimeUtil::getSystemDate(DateTimeUtil::getUserPreferredTimeZone()))
+    {
+        if ((SysDictField::isFieldMapped(tableStr(TaxExemptVATNumMap), tableId2Name(_vatMapDest.TableId), fieldStr(TaxExemptVATNumMap, VATNumRecId))
+                && SysDictField::isFieldMapped(tableStr(TaxExemptVATNumMap), tableId2Name(_vatMapDest.TableId), fieldStr(TaxExemptVATNumMap, VATNumTableType)))
+            || _vatMapDest.TableId == tableNum(LedgerJournalTrans))
+        {
+            // When updating the tax-exempt number of a sales order and the free text invoice header from the delivery address,
+            // it should avoid copying the primary registration number, record ID, and table ID into a map containing the data from the customer's primary address.
+            if (!RegNumCustTable_Extension::isTaxExemptNumberUpdatedFromDeliveryAddress(_vatMapDest))
+            {
+                RegNumCustTable_Extension::updateTaxExemptNumberFromPrimaryAddress(_custTable, _vatMapDest, _date);
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>updateTaxExemptNumberFromPrimaryAddress</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Updates tax exempt number to the transaction table map from the primary address of a given customer account.
+    /// </summary>
+    /// <param name = "_custTable">The given customer account.</param>
+    /// <param name = "_vatMapDest">The destination transaction table map.</param>
+    /// <param name = "_date">The date to determine primary registration number.</param>
+    private static void updateTaxExemptNumberFromPrimaryAddress(CustTable _custTable, TaxExemptVATNumMap _vatMapDest, Date _date)
+    {
+        RefRecId vatNumRecId;
+        TaxExemptNumberSourceType vatNumSourceType;
+        LedgerJournalTransTaxExtension extensionTable;
+
+        // Initializes the vatNumJournal, vatNumRecId and vatNumSourceType with default values.
+        VATNumJournal vatNumJournal = _vatMapDest.VATNum;
+        if (_vatMapDest.TableId == tableNum(LedgerJournalTrans))
+        {
+            LedgerJournalTrans ledgerJournalTrans = _vatMapDest as LedgerJournalTrans;
+            extensionTable = ledgerJournalTrans.ledgerJournalTransTaxExtension();
+            vatNumRecId = extensionTable.VATNumRecId;
+            vatNumSourceType = extensionTable.VATNumTableType;
+        }
+        else
+        {
+            vatNumRecId = _vatMapDest.VATNumRecId;
+            vatNumSourceType = _vatMapDest.VATNumTableType;
+        }
+
+        // Sets the value for vatNumJournal, vatNumRecId and vatNumSourceType.
+        vatNumJournal = _custTable.getPrimaryRegistrationNumber(TaxRegistrationTypesList::TAXID, _date);
+        if (vatNumJournal)
+        {
+            // The registration number is set in the given customer,
+            // thus vatNumJournal, vatNumRecId and vatNumSourceType should be copied from given customer.
+            if (vatNumJournal == _custTable.VATNum)
+            {
+                vatNumRecId = _custTable.VATNumRecId;
+                vatNumSourceType = _custTable.VATNumTableType;
+            }
+
+            // The registration number is not set in the given customer,
+            // thus vatNumJournal, vatNumRecId and vatNumSourceType should be copied from primary address.
+            // Especially, for tax service, if the given customer doesn't have VATNumRecId and VATNumTableType,
+            // these variables should be copied from primary address even if VATNumJournal exists in given customer.
+            if (vatNumJournal != _custTable.VATNum
+                    || (TaxIntegrationUtils::isMultipleTaxIdEnabledForTaxService()
+                        && !vatNumRecId
+                        && !vatNumSourceType))
+            {
+                TaxRegistration taxRegistration = TaxRegistration::getPrimaryAddressTaxRegistration(
+                        _custTable,
+                        TaxRegistrationTypesList::TAXID,
+                        _date);
+
+                if (taxRegistration.RegistrationNumber)
+                {
+                    vatNumJournal = taxRegistration.RegistrationNumber;
+                    vatNumRecId = taxRegistration.RecId;
+                    vatNumSourceType = TaxExemptNumberSourceType::TaxRegistration;
+                }
+                else
+                {
+                    vatNumJournal = '';
+                    vatNumSourceType = TaxExemptNumberSourceType::None;
+                    vatNumRecId = 0;
+                }
+            }
+        }
+        else
+        {
+            vatNumSourceType = TaxExemptNumberSourceType::None;
+            vatNumRecId = 0;
+        }
+
+        // update the value to map or extension table
+        if (_vatMapDest.TableId == tableNum(LedgerJournalTrans))
+        {
+            _vatMapDest.VATNum = vatNumJournal;
+            extensionTable.VATNumRecId = vatNumRecId;
+            extensionTable.VATNumTableType = vatNumSourceType;
+            LedgerJournalTrans ledgerJournalTrans = _vatMapDest as LedgerJournalTrans;
+            ledgerJournalTrans.packExtensionTable(extensionTable);
+        }
+        else
+        {
+            _vatMapDest.VATNum = vatNumJournal;
+            _vatMapDest.VATNumRecId = vatNumRecId;
+            _vatMapDest.VATNumTableType = vatNumSourceType;
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getEnterpriseNumberPrimaryRegistrationNumber</Name>
+				<Source><![CDATA[
+    public static TaxRegistrationNumber getEnterpriseNumberPrimaryRegistrationNumber(CustTable _custTable)
+    {
+        return TaxRegistration::getPrimaryRegistrationNumber(_custTable, TaxRegistrationTypesList::UID);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>isTaxExemptNumberUpdatedFromDeliveryAddress</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Checks if the tax exempt number should be updated from delivery address. If yes, update.
+    /// </summary>
+    /// <param name = "_vatMapDest">The destination transaction table map.</param>
+    /// <returns>A boolean flag indicates whether the tax exempt number has been updated from delivery address. True, if updated; otherwise, false.</returns>
+    private static boolean isTaxExemptNumberUpdatedFromDeliveryAddress(TaxExemptVATNumMap _vatMapDest)
+    {
+        RefRecId deliveryPostalAddress;
+        AccountNum orderAccount;
+
+        boolean shouldUpdate = false;
+
+        if (CustParameters::find().UseFiscalInvoiceAccount != UseFiscalInvoiceAccount::Always)
+        {
+            if (_vatMapDest.TableId == tableNum(SalesTable)
+                && TaxIntegrationTaxIdUtility::isUpdateTaxExemptNumberFromCustomerAddressEnabledForBusinessProcess(TaxIntegrationBusinessProcess::Sales))
+            {
+                SalesTable salesTable = _vatMapDest as SalesTable;
+                deliveryPostalAddress = salesTable.DeliveryPostalAddress;
+                orderAccount = salesTable.CustAccount;
+                shouldUpdate = true;
+            }
+            else if (_vatMapDest.TableId == tableNum(CustInvoiceTable)
+                && TaxIntegrationTaxIdUtility::isUpdateTaxExemptNumberFromCustomerAddressEnabledForBusinessProcess(TaxIntegrationBusinessProcess::FTI))
+            {
+                CustInvoiceTable custInvoiceTable = _vatMapDest as CustInvoiceTable;
+                if (TaxUpdateTaxExemptNumberFromDeliveryAddressFlight::instance().isEnabled())
+                {
+                    deliveryPostalAddress = LogisticsPostalAddress::findByLocation(custInvoiceTable.DeliveryLocation).RecId;
+                }
+                else
+                {
+                    deliveryPostalAddress = custInvoiceTable.DeliveryPostalAddress;
+                }
+                orderAccount = custInvoiceTable.OrderAccount;
+                shouldUpdate = true;
+            }
+        }
+
+        if (shouldUpdate)
+        {
+            TaxIntegrationTaxIdUtility::updateTaxExemptNumberFromCustomerAddress(
+                _vatMapDest,
+                LogisticsPostalAddress::findRecId(deliveryPostalAddress),
+                orderAccount);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

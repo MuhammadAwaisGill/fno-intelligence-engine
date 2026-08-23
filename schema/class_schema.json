@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fno-intelligence-engine/class_schema.json",
+  "title": "AxClass parsed metadata (NOT YET VALIDATED against full real file -- built from grep-confirmed facts only)",
+  "type": "object",
+  "required": ["object_type", "name", "extension_of", "methods"],
+  "properties": {
+    "object_type": { "const": "class" },
+    "name": {
+      "type": "string",
+      "description": "Class name from root <Name> (or <n> -- see tag_variance note on Method below)."
+    },
+    "extension_of": {
+      "description": "null for non-CoC classes (confirmed real case: RegNumCustTable_Extension, GeneralJournalAccountEntry_Extension -- both are 'public static class' with no ExtensionOf attribute at all). Populated only when a real [ExtensionOf(...)] attribute is found.",
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/extension_target" }
+      ]
+    },
+    "methods": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/method" }
+    }
+  },
+  "$defs": {
+    "extension_target": {
+      "type": "object",
+      "required": ["target_kind", "target_name"],
+      "properties": {
+        "target_kind": {
+          "type": "string",
+          "enum": ["classStr", "tableStr", "formStr", "formdatasourcestr"],
+          "description": "Confirmed real target kinds seen across fixtures: classstr (SalesInvoiceDP), formStr (RealControlPrecisionInventTransForm), formdatasourcestr (SalesEditLines/SalesParmTable). tableStr not yet confirmed in fixtures -- still a gap per project notes."
+        },
+        "target_name": {
+          "type": "string",
+          "description": "The object being extended, e.g. 'SalesInvoiceDP'. For formdatasourcestr this may be a compound reference (form + datasource) -- needs confirming against real bytes, not yet done."
+        }
+      }
+    },
+    "method": {
+      "type": "object",
+      "required": ["name", "calls_next"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "TAG VARIANCE WARNING (confirmed real case, GeneralJournalAccountEntry_Extension.xml): some AxClass exports use <Name>method</Name>, this file specifically used <n>... wait -- reversed from table methods. CONFIRM DIRECTION BEFORE TRUSTING: parser must check both <Name> and <n> under <Method> and not assume one. This was flagged from an earlier grep session, not from full-file inspection -- treat as unconfirmed until re-checked against real bytes."
+        },
+        "calls_next": {
+          "type": "boolean",
+          "description": "True if the method's <Source> CDATA text contains a bare 'next <methodName>(' call, per confirmed real cases (SalesInvoiceDP: 8 of 20 methods matched this pattern)."
+        },
+        "is_new_method": {
+          "type": "boolean",
+          "description": "True if this method exists only in the extension (no next() call) -- i.e. a net-new method added by the CoC class rather than an override. Inferred as NOT calls_next -- this is an assumption, not yet confirmed against a real case where a method is verified to be genuinely new vs. an override that simply doesn't call next() (valid in real X++, e.g. a validateField override that fully replaces base logic)."
+        }
+      }
+    }
+  }
+}

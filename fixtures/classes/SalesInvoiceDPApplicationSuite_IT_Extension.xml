@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>SalesInvoiceDPApplicationSuite_IT_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[ExtensionOf(classstr(SalesInvoiceDP))]
+public final class SalesInvoiceDPApplicationSuite_IT_Extension
+{
+    private PackingSlipId packingSlipId;
+    private SalesParmTable salesParmTable;
+    public boolean printLine_IT = true;
+    public Map inventTransPackingSlipMap_IT, inventTransQtyMap_IT;
+    public int lineNum_IT;
+    public UnitOfMeasureSymbol itemUnit_IT;
+    public UnitOfMeasure unitOfMeasureItem_IT;
+    public UnitOfMeasure unitOfMeasureSales_IT;
+    public InventTable inventTable_IT;
+    public UnitOfMeasureConversion unitOfMeasureConversion_IT;
+    private UnitOfMeasureConverter salesUnitOfMeasureConverter;
+    private UnitOfMeasureConverter_Product  salesUnitOfMeasureConverterProduct;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>generateInvoiceLinesRelatedInformation</Name>
+				<Source><![CDATA[
+    public boolean generateInvoiceLinesRelatedInformation(CustInvoiceJour _custInvoiceJour, CustInvoiceTrans _custInvoiceTrans)
+    {
+        return next generateInvoiceLinesRelatedInformation(_custInvoiceJour, _custInvoiceTrans);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getTradeLoopTrans_IT</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Creates <c>QueryRun</c> object for trade loop transactions.
+    /// </summary>
+    /// <param name = "_custInvoiceJourLocal">Current<c>CustInvoiceJour</c> record.</param>
+    /// <returns>Initialized <c>QueryRun</c> object.</returns>
+    [SysObsolete(
+        'This method does is no longer used by Sales invoice lines sorting per packing slip feature.',
+        false,
+        21\04\2020)]
+    public QueryRun getTradeLoopTrans_IT(CustInvoiceJour _custInvoiceJourLocal)
+    {
+        Query transQuery = new TradeLoopTrans(_custInvoiceJourLocal, tableNum(CustInvoiceTrans)).buildQuery();
+
+        QueryBuildDataSource qbdsCustInvoiceTrans = transQuery.dataSourceTable(tableNum(custInvoiceTrans));
+        QueryBuildDataSource qbdsInventTransOrigin = qbdsCustInvoiceTrans.addDataSource(tableNum(InventTransOrigin));
+        qbdsInventTransOrigin.relations(true);
+
+        QueryBuildDataSource qbdsInventTrans = qbdsInventTransOrigin.addDataSource(tableNum(InventTrans));
+        qbdsInventTrans.relations(true);
+        qbdsInventTrans.fetchMode(QueryFetchMode::One2One);
+
+        SalesParmUpdate salesParmUpdate = SalesParmUpdate::find(_custInvoiceJourLocal.ParmId);
+
+        if (_custInvoiceJourLocal.isProforma() && salesParmUpdate && salesParmUpdate.SpecQty == SalesUpdate::PackingSlip)
+        {
+            QueryBuildDataSource qbdsLine = qbdsInventTransOrigin.addDataSource(tableNum(SalesParmLine));
+            qbdsLine.relations(false);
+            qbdsLine.joinMode(JoinMode::ExistsJoin);
+            qbdsLine.fetchMode(QueryFetchMode::One2One);
+            qbdsLine.addLink(fieldNum(InventTransOrigin, InventTransId),fieldNum(SalesParmLine, InventTransId));
+
+            if (salesParmUpdate.SumBy == AccountOrder::Journal)
+            {
+                qbdsLine.addRange(fieldnum(SalesParmLine, ParmId)).value(salesParmTable.ParmId);
+                qbdsLine.addRange(fieldnum(SalesParmLine, TableRefId)).value(salesParmTable.TableRefId);
+            }
+
+            QueryBuildDataSource qbdsSubline = qbdsLine.addDataSource(tableNum(SalesParmSubLine));
+            qbdsSubline.relations(false);
+            qbdsSubline.joinMode(JoinMode::ExistsJoin);
+            qbdsSubline.addLink(fieldNum(SalesParmLine, RecId), fieldNum(SalesParmSubLine, LineRefRecId));
+            qbdsSubline.addLink(fieldNum(InventTrans, PackingSlipId), fieldNum(SalesParmSubLine, DocumentId), qbdsInventTrans.name());
+            qbdsSubline.addRange(fieldnum(SalesParmSubLine, ParmId)).value(salesParmUpdate.ParmId);
+        }
+
+        if (_custInvoiceJourLocal.Qty >= 0)
+        {
+            QueryBuildRange statusIssueRange = qbdsInventTrans.addRange(fieldnum(InventTrans, StatusIssue));
+                
+            if (!_custInvoiceJourLocal.isProforma())
+            {
+                //invoiced
+                statusIssueRange.value(queryvalue(StatusIssue::Sold));
+            }
+            else
+            {
+                //proforma with packing slip
+                statusIssueRange.value(queryvalue(StatusIssue::Deducted));
+                //proforma without packing slip
+                if (salesParmUpdate && salesParmUpdate.SpecQty != SalesUpdate::PackingSlip)
+                {
+                    statusIssueRange = qbdsInventTrans.addRange(fieldnum(InventTrans, StatusIssue));
+                    statusIssueRange.value(queryvalue(StatusIssue::OnOrder));
+                    statusIssueRange = qbdsInventTrans.addRange(fieldnum(InventTrans, StatusIssue));
+                    statusIssueRange.value(queryvalue(StatusIssue::Picked));
+                    statusIssueRange = qbdsInventTrans.addRange(fieldnum(InventTrans, StatusIssue));
+                    statusIssueRange.value(queryvalue(StatusIssue::ReservPhysical));
+                    statusIssueRange = qbdsInventTrans.addRange(fieldnum(InventTrans, StatusIssue));
+                    statusIssueRange.value(queryvalue(StatusIssue::ReservOrdered));
+                }
+            }
+        }
+        else
+        {
+            QueryBuildRange statusReceiptRange = qbdsInventTrans.addRange(fieldnum(InventTrans, StatusReceipt));
+                
+            if (!_custInvoiceJourLocal.isProforma())
+            {
+                //invoiced
+                statusReceiptRange.value(queryvalue(StatusReceipt::Purchased));
+            }
+            else
+            {
+                //proforma with packing slip
+                statusReceiptRange.value(queryvalue(StatusReceipt::Received));
+                //proforma without packing slip
+                if (salesParmUpdate && salesParmUpdate.SpecQty != SalesUpdate::PackingSlip)
+                {
+                    statusReceiptRange = qbdsInventTrans.addRange(fieldnum(InventTrans, StatusReceipt));
+                    statusReceiptRange.value(queryvalue(StatusReceipt::Ordered));
+                }
+            }
+        }
+
+        qbdsInventTrans.addSortField(fieldnum(InventTrans, DatePhysical));
+        qbdsInventTrans.addSortField(fieldnum(InventTrans, PackingSlipId));
+
+        //Filter InventTrans by invoice
+        qbdsInventTrans.addRange(fieldnum(InventTrans, Voucher)).value(_custInvoiceJourLocal.LedgerVoucher);
+
+        if (!_custInvoiceJourLocal.isProforma())
+        {
+            qbdsInventTrans.addRange(fieldnum(InventTrans, DateFinancial)).value(queryValue(_custInvoiceJourLocal.InvoiceDate));
+        }
+
+        //Group by fields
+        qbdsInventTrans.addGroupByField(fieldnum(InventTrans, InventTransOrigin));
+        qbdsInventTrans.addGroupByField(fieldnum(InventTrans, InvoiceId));
+        qbdsInventTrans.addGroupByField(fieldnum(InventTrans, Voucher));
+        qbdsInventTrans.addGroupByField(fieldnum(InventTrans, DateFinancial));
+        qbdsInventTrans.addGroupByField(fieldnum(InventTrans, PackingSlipId));
+        qbdsInventTrans.addGroupByField(fieldnum(InventTrans, VoucherPhysical));
+        qbdsInventTrans.addGroupByField(fieldnum(InventTrans, DatePhysical));
+
+        DictTable dictTable = new sysDictTable(tableNum(CustInvoiceTrans));
+        FieldId fieldId = dictTable.fieldNext(0);
+
+        while (fieldId)
+        {
+            dictField dictField=dictTable.fieldObject(fieldId);
+
+            if (dictField.isSql() && !dictField.isSystem())
+            {
+                qbdsCustInvoiceTrans.addGroupByField(fieldId);
+            }
+
+            fieldId = dictTable.fieldNext(fieldId);
+        }
+
+        qbdsCustInvoiceTrans.addGroupByField(fieldnum(CustInvoiceTrans, RecId));
+
+        //Sum fields
+        qbdsInventTrans.addSelectionField(fieldnum(InventTrans, Qty), SelectionField::Sum);
+
+        return new QueryRun(transQuery);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getCustInvoiceTransQueryRun</Name>
+				<Source><![CDATA[
+    protected QueryRun getCustInvoiceTransQueryRun()
+    {
+        if (FeatureStateProvider::isFeatureEnabled(InvoicingPerPackingSlipFeature::instance()))
+        {
+            this.getTradeLoopTrans_IT(custInvoiceJour);//kept for compatibility purposes.
+        }
+
+        return next getCustInvoiceTransQueryRun();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>canInsertIntoSalesInvoiceTmp</Name>
+				<Source><![CDATA[
+    protected boolean canInsertIntoSalesInvoiceTmp(
+        CustInvoiceJour _custInvoiceJour,
+        CustInvoiceTrans _custInvoiceTrans,
+        TaxSpec _taxSpec,
+        CustPaymSchedLine _custPaymSchedLine,
+        CustTrans _prepaymentCustTrans,
+        TaxTrans _prepaymentTaxTrans)
+    {
+        return next canInsertIntoSalesInvoiceTmp(
+            _custInvoiceJour,
+            _custInvoiceTrans,
+            _taxSpec,
+            _custPaymSchedLine,
+            _prepaymentCustTrans,
+            _prepaymentTaxTrans);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateSalesInvoiceHeaderFooterTmp</Name>
+				<Source><![CDATA[
+    protected void populateSalesInvoiceHeaderFooterTmp(CustInvoiceJour _custInvoiceJour, CompanyInfo _companyInfo)
+    {
+        next populateSalesInvoiceHeaderFooterTmp(_custInvoiceJour, _companyInfo);
+
+        this.populateIntentLetterFields(_custInvoiceJour, _companyInfo);
+        
+        if (FeatureStateProvider::isFeatureEnabled(InvoicingPerPackingSlipFeature::instance()))
+        {
+            GlobalizationInstrumentationHelper::featureRun(GlobalizationConstants::FeatureReferenceIT00045, funcName());
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateIntentLetterFields</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Populates fields of Intent Letter feature.
+    /// </summary>
+    /// <param name = "_custInvoiceJour">An instance of the <c>CustInvoiceJour</c> class.</param>
+    /// <param name = "_companyInfo">An instance of the <c>CompanyInfo</c> class.</param>
+    protected void populateIntentLetterFields(CustInvoiceJour _custInvoiceJour, CompanyInfo _companyInfo)
+    {
+        if (FeatureStateProvider::isFeatureEnabled(IntentLettersFeature::instance()))
+        {
+            SalesInvoiceHeaderFooterTmp salesInvoiceHeaderFooterTmp = this.parmSalesInvoiceHeaderFooterTmp_IT();
+            CustIntentLetter_IT custIntentLetter;
+            
+            if(IntentLettersFetchViaInternalLetterIDFlight::instance().isEnabled())
+            {
+                custIntentLetter = CustIntentLetter_IT::findInternalId(_custInvoiceJour.IntentLetterInternalId_IT);
+            }
+            else
+            {
+                custIntentLetter = CustIntentLetter_IT::find(_custInvoiceJour.IntentLetterId_IT, _custInvoiceJour.InvoiceAccount);
+            }
+
+            salesInvoiceHeaderFooterTmp.IntentLetterId_IT = custIntentLetter.LetterId;
+            salesInvoiceHeaderFooterTmp.IntentLetterInternalId_IT = custIntentLetter.InternalLetterId;
+            salesInvoiceHeaderFooterTmp.IntentLetterDate_IT = custIntentLetter.DateLetter;
+            salesInvoiceHeaderFooterTmp.IntentLetterFromDate_IT = custIntentLetter.FromDate;
+            salesInvoiceHeaderFooterTmp.IntentLetterToDate_IT = custIntentLetter.ToDate;
+            salesInvoiceHeaderFooterTmp.IntentLetterPostingDate_IT = custIntentLetter.DateRegister;
+            salesInvoiceHeaderFooterTmp.IntentLetterProtocol_IT = custIntentLetter.Protocol;
+            this.parmSalesInvoiceHeaderFooterTmp_IT(salesInvoiceHeaderFooterTmp);
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmSalesInvoiceHeaderFooterTmp_IT</Name>
+				<Source><![CDATA[
+    public SalesInvoiceHeaderFooterTmp parmSalesInvoiceHeaderFooterTmp_IT(SalesInvoiceHeaderFooterTmp _salesInvoiceHeaderFooterTmp = salesInvoiceHeaderFooterTmp)
+    {
+        salesInvoiceHeaderFooterTmp = _salesInvoiceHeaderFooterTmp;
+        return salesInvoiceHeaderFooterTmp;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateSalesInvoiceTmp</Name>
+				<Source><![CDATA[
+    protected void populateSalesInvoiceTmp(
+        CustInvoiceJour _custInvoiceJour,
+        CustInvoiceTrans _custInvoiceTrans,
+        TaxSpec _taxSpec,
+        CustPaymSchedLine _custPaymSchedLine,
+        CustTrans _prepaymentCustTrans,
+        TaxTrans _prepaymentTaxTrans)
+    {
+
+        next populateSalesInvoiceTmp(
+            _custInvoiceJour,
+            _custInvoiceTrans,
+            _taxSpec,
+            _custPaymSchedLine,
+            _prepaymentCustTrans,
+            _prepaymentTaxTrans);
+        
+        this.correctFreeItemId(
+            _custInvoiceJour,
+            _custInvoiceTrans,
+            _taxSpec,
+            _custPaymSchedLine,
+            _prepaymentCustTrans,
+            _prepaymentTaxTrans);
+
+        this.sortingPerPackingSlip(
+            _custInvoiceJour,
+            _custInvoiceTrans,
+            _taxSpec,
+            _custPaymSchedLine,
+            _prepaymentCustTrans,
+            _prepaymentTaxTrans);
+
+        this.populateFreeNotes(
+            _custInvoiceJour,
+            _custInvoiceTrans,
+            _taxSpec,
+            _custPaymSchedLine,
+            _prepaymentCustTrans,
+            _prepaymentTaxTrans);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>correctFreeItemId</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Performs logic of Separate invoice for goods delivered for free feature.
+    /// </summary>
+    /// <param name = "_custInvoiceJour">Current record of <c>CustInvoiceJour</c> table.</param>
+    /// <param name = "_custInvoiceTrans">Current record of <c>CustInvoiceTrans</c> table.</param>
+    /// <param name = "_taxSpec">Current record of <c>TaxSpec</c> table.</param>
+    /// <param name = "_custPaymSchedLine">Current record of <c>CustPaymSchedLine</c> table.</param>
+    /// <param name = "_prepaymentCustTrans">Current record of <c>CustTrans</c> table.</param>
+    /// <param name = "_prepaymentTaxTrans">Current record of <c>TaxTrans</c> table.</param>
+    protected void correctFreeItemId(
+        CustInvoiceJour _custInvoiceJour,
+        CustInvoiceTrans _custInvoiceTrans,
+        TaxSpec _taxSpec,
+        CustPaymSchedLine _custPaymSchedLine,
+        CustTrans _prepaymentCustTrans,
+        TaxTrans _prepaymentTaxTrans)
+    {
+        SalesInvoiceTmp salesInvoiceTmp;
+
+        if (FeatureStateProvider::isFeatureEnabled(SeparateInvoiceOnGoodsDeliveredForFreeFeature::instance()) && _custInvoiceTrans.GoodsForFree_IT)
+        {
+            CustLanguageId custLanguageId = _custInvoiceJour.salesTable().LanguageId;
+            salesInvoiceTmp = this.parmSalesInvoiceTmp_IT();
+            salesInvoiceTmp.ItemId_W = strFmt(
+                '%1: %2',
+                SysLabel::labelId2String(literalStr("@ExtendedItallianLocalization:FreeItem"), custLanguageId),
+                this.itemId(_custInvoiceTrans));
+            salesInvoiceTmp.ItemId = salesInvoiceTmp.ItemId_W;
+            salesInvoiceTmp.GoodsForFree_IT = _custInvoiceTrans.GoodsForFree_IT;
+            this.parmSalesInvoiceTmp_IT(salesInvoiceTmp);
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>sortingPerPackingSlip</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Performs logic of Sales invoce lines sorting per packing slip feature.
+    /// </summary>
+    /// <param name = "_custInvoiceJour">Current record of <c>CustInvoiceJour</c> table.</param>
+    /// <param name = "_custInvoiceTrans">Current record of <c>CustInvoiceTrans</c> table.</param>
+    /// <param name = "_taxSpec">Current record of <c>TaxSpec</c> table.</param>
+    /// <param name = "_custPaymSchedLine">Current record of <c>CustPaymSchedLine</c> table.</param>
+    /// <param name = "_prepaymentCustTrans">Current record of <c>CustTrans</c> table.</param>
+    /// <param name = "_prepaymentTaxTrans">Current record of <c>TaxTrans</c> table.</param>
+    protected void sortingPerPackingSlip(
+        CustInvoiceJour _custInvoiceJour,
+        CustInvoiceTrans _custInvoiceTrans,
+        TaxSpec _taxSpec,
+        CustPaymSchedLine _custPaymSchedLine,
+        CustTrans _prepaymentCustTrans,
+        TaxTrans _prepaymentTaxTrans)
+    {
+        SalesInvoiceTmp salesInvoiceTmp;
+
+        if (FeatureStateProvider::isFeatureEnabled(InvoicingPerPackingSlipFeature::instance()))
+        {
+            salesInvoiceTmp = this.parmSalesInvoiceTmp_IT();
+            salesInvoiceTmp.SortPerPackingSlip_IT = NoYes::Yes;
+            ContextPackingSlipTrans_IT context = ContextPackingSlipTrans_IT::current();
+            CustPackingSlipTrans custPackingSlipTransLocal;
+
+            if (context)
+            {
+                custPackingSlipTransLocal = context.getCustPackingSlipTrans();
+            }
+
+            if (!_taxSpec
+                && custPackingSlipTransLocal.Qty)
+            {
+                salesInvoiceTmp.PackingSlipId = custPackingSlipTransLocal.PackingSlipId;
+                salesInvoiceTmp.Qty = custPackingSlipTransLocal.Qty;
+                salesInvoiceTmp.PackingSlipDeliveryDate = custPackingSlipTransLocal.DeliveryDate;
+
+                if (!SalesInvoiceDPUnitOfMeasureITFlight::instance().isEnabled())
+                {
+                    itemUnit_IT = InventTableModule::find(salesInvoiceTmp.ItemId, ModuleInventPurchSales::Invent).UnitId;
+                    unitOfMeasureConversion_IT.clear();
+
+                    if (_custInvoiceTrans.SalesUnit != itemUnit_IT)
+                    {
+                        unitOfMeasureItem_IT = UnitOfMeasure::findBySymbol(itemUnit_IT);
+                        unitOfMeasureSales_IT = UnitOfMeasure::findBySymbol(_custInvoiceTrans.SalesUnit);
+                        inventTable_IT = InventTable::find(salesInvoiceTmp.ItemId);
+                        unitOfMeasureConversion_IT = UnitOfMeasureConversion::findByConversion(unitOfMeasureSales_IT.RecId,unitOfMeasureItem_IT.RecId, inventTable_IT.Product);
+                    }
+
+                    if (unitOfMeasureConversion_IT.Factor != 0)
+                    {
+                        salesInvoiceTmp.Qty = salesInvoiceTmp.Qty / unitOfMeasureConversion_IT.Factor;
+                    }
+                }
+
+                if (_custInvoiceTrans.PriceUnit)
+                {
+                    salesInvoiceTmp.LineAmountInclTax = CurrencyExchangeHelper::amount(salesInvoiceTmp.SalesPrice * salesInvoiceTmp.Qty / _custInvoiceTrans.PriceUnit,
+                        _custInvoiceTrans.CurrencyCode);
+                }
+                else
+                {
+                    salesInvoiceTmp.LineAmountInclTax = CurrencyExchangeHelper::amount(salesInvoiceTmp.SalesPrice * salesInvoiceTmp.Qty,
+                        _custInvoiceTrans.CurrencyCode);
+                }
+
+                if (salesInvoiceTmp.DiscountAmount)
+                {
+                    if (_custInvoiceTrans.PriceUnit)
+                    {
+                        salesInvoiceTmp.LineAmountInclTax -= CurrencyExchangeHelper::amount(salesInvoiceTmp.DiscountAmount * salesInvoiceTmp.Qty / _custInvoiceTrans.PriceUnit,
+                            _custInvoiceTrans.CurrencyCode);
+                    }
+                    else
+                    {
+                        salesInvoiceTmp.LineAmountInclTax -= salesInvoiceTmp.DiscountAmount * salesInvoiceTmp.Qty;
+                    }
+                }
+
+                if (salesInvoiceTmp.DiscPercent)
+                {
+                    salesInvoiceTmp.LineAmountInclTax -= (salesInvoiceTmp.LineAmountInclTax * salesInvoiceTmp.DiscPercent) / 100;
+                }
+
+                salesInvoiceTmp.InvoiceReportLineType_IT = NoYes::Yes;
+            }
+
+            this.parmSalesInvoiceTmp_IT(salesInvoiceTmp);
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateFreeNotes</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Performs logic of Advanced notes feature for invoice lines.
+    /// </summary>
+    /// <param name = "_custInvoiceJour">Current record of <c>CustInvoiceJour</c> table.</param>
+    /// <param name = "_custInvoiceTrans">Current record of <c>CustInvoiceTrans</c> table.</param>
+    /// <param name = "_taxSpec">Current record of <c>TaxSpec</c> table.</param>
+    /// <param name = "_custPaymSchedLine">Current record of <c>CustPaymSchedLine</c> table.</param>
+    /// <param name = "_prepaymentCustTrans">Current record of <c>CustTrans</c> table.</param>
+    /// <param name = "_prepaymentTaxTrans">Current record of <c>TaxTrans</c> table.</param>
+    protected void populateFreeNotes(
+        CustInvoiceJour _custInvoiceJour,
+        CustInvoiceTrans _custInvoiceTrans,
+        TaxSpec _taxSpec,
+        CustPaymSchedLine _custPaymSchedLine,
+        CustTrans _prepaymentCustTrans,
+        TaxTrans _prepaymentTaxTrans)
+    {
+        SalesInvoiceTmp salesInvoiceTmp;
+
+        salesInvoiceTmp = this.parmSalesInvoiceTmp_IT();
+
+        if (salesInvoiceTmp)
+        {
+            DocuRefSearch docuRefSearch = DocuRefSearch::newTypeIdAndRestriction(
+                    _custInvoiceJour,
+                    custFormletterDocument.DocuTypeInvoice,
+                    DocuRestriction::External);
+
+            salesInvoiceTmp.HeaderNotes = Docu::concatDocuRefNotes(docuRefSearch);
+
+            DocuRefSearch docuRefSearchLine = DocuRefSearch::newTypeIdAndRestriction(
+                    _custInvoiceTrans,
+                    custFormletterDocument.DocuTypeInvoice,
+                    DocuRestriction::External);
+
+            salesInvoiceTmp.Notes = Docu::concatDocuRefNotes(docuRefSearchLine);
+
+            this.parmSalesInvoiceTmp_IT(salesInvoiceTmp);
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmSalesInvoiceTmp_IT</Name>
+				<Source><![CDATA[
+    public SalesInvoiceTmp parmSalesInvoiceTmp_IT(SalesInvoiceTmp _salesInvoiceTmp = salesInvoiceTmp)
+    {
+        this.salesInvoiceTmp = _salesInvoiceTmp;
+        return this.salesInvoiceTmp;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>insertTaxes</Name>
+				<Source><![CDATA[
+    public void insertTaxes(CustInvoiceJour _custInvoiceJour)
+    {
+        invoiceReportLineType_IT = NoYes::Yes;
+
+        next insertTaxes(_custInvoiceJour);
+
+        invoiceReportLineType_IT = NoYes::No;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>invoiceTxt</Name>
+				<Source><![CDATA[
+    protected str invoiceTxt(CustInvoiceJour _custInvoiceJour)
+    {
+        str invoiceTxt = next invoiceTxt(_custInvoiceJour);
+
+        if (FeatureStateProvider::isFeatureEnabled(SeparateInvoiceOnGoodsDeliveredForFreeFeature::instance()) && SalesTable::invoiceForFree_IT(_custInvoiceJour.salesTable()))
+        {
+            GlobalizationInstrumentationHelper::featureRun(GlobalizationConstants::FeatureReferenceIT00048, funcName());
+
+            boolean isCreditNote = _custInvoiceJour.InvoiceAmount < 0 || (custInvoiceJour.InvoiceAmount == 0 && custInvoiceJour.Qty < 0);
+
+            if (!isCreditNote)
+            {
+                if (printCopyOriginal == PrintCopyOriginal::Copy)
+                {
+                    if (!_custInvoiceJour.isProforma())
+                    {
+                        invoiceTxt = "@ExtendedItallianLocalization:FreeInvoiceCopy";
+                    }
+                }
+                else
+                {
+                    if (_custInvoiceJour.isProforma())
+                    {
+                        invoiceTxt = "@ExtendedItallianLocalization:ProFormaFreeInvoice";
+                    }
+                    else
+                    {
+                        invoiceTxt = "@ExtendedItallianLocalization:FreeInvoice";
+                    }
+                }
+            }
+        }
+
+        return invoiceTxt;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processCustInvoiceTransRecords</Name>
+				<Source><![CDATA[
+    protected void processCustInvoiceTransRecords(QueryRun _tradeLoopTrans)
+    {
+        if (FeatureStateProvider::isFeatureEnabled(InvoicingPerPackingSlipFeature::instance()))
+        {
+            this.processLinesPerPackingSlip(custInvoiceJour);
+        }
+
+        next processCustInvoiceTransRecords(_tradeLoopTrans);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processLinesPerPackingSlip</Name>
+				<Source><![CDATA[
+    private void processLinesPerPackingSlip(CustInvoiceJour _custInvoiceJour)
+    {
+        CustInvoiceTrans custInvoiceTrans;
+        while select custInvoiceTrans
+            where custInvoiceTrans.InvoiceId == custInvoiceJour.InvoiceId
+                && custInvoiceTrans.InvoiceDate == custInvoiceJour.InvoiceDate
+                && custInvoiceTrans.NumberSequenceGroup == custInvoiceJour.NumberSequenceGroup
+                && custInvoiceTrans.SalesId == custInvoiceJour.SalesId
+        {
+            if (custInvoiceTrans.isStocked())
+            {
+                UnitOfMeasureSymbol itemUnit = InventTableModule::find(custInvoiceTrans.ItemId, ModuleInventPurchSales::Invent).UnitId;
+                UnitOfMeasure unitOfMeasureItem = UnitOfMeasure::findBySymbol(itemUnit);
+                UnitOfMeasure unitOfMeasureSales = UnitOfMeasure::findBySymbol(custInvoiceTrans.SalesUnit);
+                salesUnitOfMeasureConverterProduct = UnitOfMeasureConverter_Product::construct();
+                salesUnitOfMeasureConverterProduct.parmProduct(InventTable::find(custInvoiceTrans.ItemId).Product);
+                salesUnitOfMeasureConverterProduct.parmFromUnitOfMeasure(unitOfMeasureItem.RecId);
+                salesUnitOfMeasureConverterProduct.parmToUnitOfMeasure(unitOfMeasureSales.RecId);
+            }
+
+            if (_custInvoiceJour.isProforma())
+            {
+                this.processProformaInvoiceLine(_custInvoiceJour, custInvoiceTrans);
+            }
+            else
+            {
+                this.processInvoiceLine(_custInvoiceJour, custInvoiceTrans);
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processInvoiceLine</Name>
+				<Source><![CDATA[
+    private void processInvoiceLine(CustInvoiceJour _custInvoiceJour, CustInvoiceTrans _custInvoiceTrans)
+    {
+        CustPackingSlipTrans custPackingSlipTrans;
+        Qty packedQty;
+
+        if (_custInvoiceTrans.isStocked())
+        {
+            InventTrans inventTrans;
+            InventTransOrigin inventTransOrigin;
+
+            while select custPackingSlipTrans
+                group by RecId, PackingSlipId, DeliveryDate
+                where custPackingSlipTrans.InventTransId == _custInvoiceTrans.InventTransId
+                join TableId from inventTransOrigin
+                    where inventTransOrigin.InventTransId == custPackingSlipTrans.InventTransId
+                join sum(Qty) from inventTrans
+                    where inventTrans.InventTransOrigin == inventTransOrigin.RecId
+                        && inventTrans.PackingSlipId == custPackingSlipTrans.PackingSlipId
+                        && inventTrans.InvoiceId == _custInvoiceJour.InvoiceId
+            {
+                custPackingSlipTrans.Qty = salesUnitOfMeasureConverterProduct.convertValue(-inventTrans.Qty);
+                
+                this.processLine(
+                    _custInvoiceJour,
+                    _custInvoiceTrans,
+                    custPackingSlipTrans);
+                packedQty += custPackingSlipTrans.Qty;
+            }
+        }
+        else
+        {
+            CustPackingSlipSalesLink custPackingSlipSalesLink;
+
+            while select custPackingSlipTrans
+                where custPackingSlipTrans.InventTransId == _custInvoiceTrans.InventTransId
+                    && custPackingSlipTrans.FullyMatched == NoYes::Yes
+                exists join custPackingSlipSalesLink
+                    where custPackingSlipTrans.PackingSlipId == custPackingSlipSalesLink.PackingSlipId
+            {
+                this.processLine(
+                    _custInvoiceJour,
+                    _custInvoiceTrans,
+                    custPackingSlipTrans);
+                packedQty += custPackingSlipTrans.Qty;
+            }
+        }
+
+        this.processNonPackedQty(
+            _custInvoiceJour,
+            _custInvoiceTrans,
+            _custInvoiceTrans.Qty - packedQty);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processProformaInvoiceLine</Name>
+				<Source><![CDATA[
+    private void processProformaInvoiceLine(CustInvoiceJour _custInvoiceJour, CustInvoiceTrans _custInvoiceTrans)
+    {
+        SalesParmUpdate salesParmUpdate = SalesParmUpdate::find(_custInvoiceJour.ParmId);
+        boolean summaryUpdateByPackingSlip = (salesParmUpdate 
+            && salesParmUpdate.SpecQty == SalesUpdate::PackingSlip
+            && (salesParmUpdate.SumBy == AccountOrder::Journal
+                || salesParmUpdate.SumBy == AccountOrder::None
+                || salesParmUpdate.SumBy == AccountOrder::Auto));
+
+        if (summaryUpdateByPackingSlip)
+        {
+            if (salesParmUpdate.SumBy == AccountOrder::Journal)
+            {
+                CustPackingSlipTrans custPackingSlipTransLocal;
+
+                while select custPackingSlipTransLocal
+                    where custPackingSlipTransLocal.InvoiceTransRefRecId == _custInvoiceTrans.RecId
+                {
+                    this.processLine(
+                        _custInvoiceJour,
+                        _custInvoiceTrans,
+                        custPackingSlipTranslocal);
+                }
+            }
+            else
+            {
+                CustPackingSlipTrans custPackingSlipTransLocal;
+                SalesParmSubLine salesParmSubLine;
+
+                while select custPackingSlipTransLocal
+                    where custPackingSlipTransLocal.InventTransId == _custInvoiceTrans.InventTransId
+                    exists join salesParmSubLine
+                        where salesParmSubLine.DocumentId == custPackingSlipTransLocal.PackingSlipId
+                            && salesParmSubLine.ParmId == salesParmUpdate.ParmId
+                {
+                    this.processLine(
+                        _custInvoiceJour,
+                        _custInvoiceTrans,
+                        custPackingSlipTranslocal);
+                }
+            }
+        }
+        else
+        {
+            //Adjustments considering the Update value is changed by user
+            SalesParmLine salesParmLine;
+            SalesParmTable salesParmTableLocal;
+            select firstonly DeliverNow from salesParmLine
+                where salesParmLine.InventTransId == _custInvoiceTrans.InventTransId
+                    && salesParmLine.ParmId == _custInvoiceJour.ParmId
+                    && salesParmLine.OrigSalesId == _custInvoiceTrans.OrigSalesId
+                exists join salesParmTableLocal
+                    where salesParmLine.ParmId == salesParmTableLocal.ParmId
+                        && salesParmLine.TableRefId == salesParmTableLocal.TableRefId;
+
+            Qty packedQty;
+
+            if (_custInvoiceTrans.isStocked())
+            {
+                CustPackingSlipTrans custPackingSlipTransLocal;
+                CustPackingSlipJour custPackingSlipJourLocal;
+                InventTransOrigin inventTransOrigin;
+                InventTrans inventTrans;
+                boolean isCancelEnabled, isCorrectionEnabled;
+
+                while select custPackingSlipTransLocal
+                    where custPackingSlipTransLocal.InventTransId == _custInvoiceTrans.InventTransId
+                        && custPackingSlipTransLocal.ItemId == _custInvoiceTrans.ItemId
+                        && custPackingSlipTransLocal.OrigSalesId == _custInvoiceTrans.OrigSalesId
+                    join RecId from inventTransOrigin
+                        where inventTransOrigin.InventTransId == custPackingSlipTransLocal.InventTransId
+                    join Qty from inventTrans
+                        where inventTrans.InventTransOrigin == inventTransOrigin.RecId
+                            && inventTrans.PackingSlipId == custPackingSlipTransLocal.PackingSlipId
+                            && !inventTrans.InvoiceId
+                    join custPackingSlipJourLocal
+                        where custPackingSlipJourLocal.PackingSlipId == custPackingSlipTransLocal.PackingSlipId
+                {
+                    [isCancelEnabled, isCorrectionEnabled] = CustPackingSlipJourFormHelper::areCancelCorrectButtonsEnabled(custPackingSlipJourLocal);
+                    if (!isCorrectionEnabled)
+                    {
+                        continue;
+                    }
+
+                    SalesQty inventConvertedQty;
+                    
+                    inventConvertedQty = salesUnitOfMeasureConverterProduct.convertValue(-inventTrans.Qty);
+
+                    if (salesParmLine.DeliverNow - packedQty >= inventConvertedQty)
+                    {
+                        custPackingSlipTransLocal.Qty = inventConvertedQty;
+
+                        this.processLine(
+                            _custInvoiceJour,
+                            _custInvoiceTrans,
+                            custPackingSlipTranslocal);
+
+                        packedQty += custPackingSlipTranslocal.Qty;
+                    }
+                    else
+                    {
+                        custPackingSlipTransLocal.Qty = salesParmLine.DeliverNow - packedQty;
+
+                        this.processLine(
+                            _custInvoiceJour,
+                            _custInvoiceTrans,
+                            custPackingSlipTranslocal);
+
+                        packedQty += custPackingSlipTranslocal.Qty;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                CustPackingSlipTrans custPackingSlipTransLocal;
+                CustPackingSlipSalesLink custPackingSlipSalesLink;
+                CustInvoiceTrans custInvoiceTransLocal;
+
+                while select custPackingSlipTransLocal
+                    where custPackingSlipTransLocal.InventTransId == _custInvoiceTrans.InventTransId
+                        && custPackingSlipTransLocal.ItemId == _custInvoiceTrans.ItemId
+                        && custPackingSlipTransLocal.OrigSalesId == _custInvoiceTrans.OrigSalesId
+                        && !custPackingSlipTransLocal.FullyMatched
+                    exists join custPackingSlipSalesLink
+                        where custPackingSlipTransLocal.PackingSlipId == custPackingSlipSalesLink.PackingSlipId
+                    notexists join custInvoiceTransLocal
+                        where custInvoiceTransLocal.RecId == custPackingSlipTransLocal.InvoiceTransRefRecId
+                {
+                    this.processLine(
+                        _custInvoiceJour,
+                        _custInvoiceTrans,
+                        custPackingSlipTranslocal);
+
+                    packedQty += custPackingSlipTranslocal.Qty;
+                }
+            }
+
+            this.processNonPackedQty(
+                _custInvoiceJour,
+                _custInvoiceTrans,
+                salesParmLine.DeliverNow - packedQty);
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processNonPackedQty</Name>
+				<Source><![CDATA[
+    private void processNonPackedQty(
+        CustInvoiceJour _custInvoiceJour,
+        CustInvoiceTrans _custInvoiceTrans,
+        Qty _qty)
+    {
+        if (_qty)
+        {
+            CustPackingSlipTrans custPackingSlipTranslocal;
+            custPackingSlipTranslocal.Qty = _qty;
+            this.processLine(
+                _custInvoiceJour,
+                _custInvoiceTrans,
+                custPackingSlipTranslocal);
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processLine</Name>
+				<Source><![CDATA[
+    private void processLine(
+        CustInvoiceJour _custInvoiceJour,
+        CustInvoiceTrans _custInvoiceTrans,
+        CustPackingSlipTrans _custPackingSlipTrans)
+    {
+        using (ContextPackingSlipTrans_IT context = new ContextPackingSlipTrans_IT())
+        {
+            context.addCustPackingSlipTrans(_custPackingSlipTrans);
+            this.processRecord(_custInvoiceJour, _custInvoiceTrans);
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
