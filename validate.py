@@ -19,28 +19,26 @@ def main():
     with open(os.path.join("schema", "table_schema.json")) as f:
         schema = json.load(f)
 
-    result = parse_table_xml(os.path.join("fixtures", "tables", "VendTrans.xml"))
+    fixtures_dir = os.path.join("fixtures", "tables")
+    filenames = sorted(f for f in os.listdir(fixtures_dir) if f.endswith(".xml"))
 
-    try:
-        validate(instance=result, schema=schema)
-        print("PASS: parser output matches table_schema.json")
-        print(f"  - {result['name']}: {len(result['fields'])} fields, {len(result['relations'])} relations")
+    all_passed = True
+    for filename in filenames:
+        filepath = os.path.join(fixtures_dir, filename)
+        result = parse_table_xml(filepath)
+        try:
+            validate(instance=result, schema=schema)
+            print(f"PASS: {filename} ({result['name']}) -- {len(result['fields'])} fields, {len(result['relations'])} relations")
+        except ValidationError as e:
+            all_passed = False
+            print(f"FAIL: {filename}")
+            print(f"  Path: {list(e.path)}")
+            print(f"  Reason: {e.message}")
 
-        # Explicitly surface the two edge cases so they're visible in output,
-        # not just silently "passing" without proof they were exercised.
-        enum_only = [f for f in result["fields"] if f["edt"] is None and f["enum_type"]]
-        mixed_relations = [
-            r for r in result["relations"]
-            if len({c["kind"] for c in r["constraints"]}) > 1
-        ]
-        print(f"  - fields with enum_type but no edt (edge case 1): {[f['name'] for f in enum_only]}")
-        print(f"  - relations mixing field+fixed constraints (edge case 2): {[r['name'] for r in mixed_relations]}")
-
-    except ValidationError as e:
-        print("FAIL: parser output does NOT match schema")
-        print(f"  Path: {list(e.path)}")
-        print(f"  Reason: {e.message}")
-        raise
+    if all_passed:
+        print("\nAll fixtures validate against table_schema.json.")
+    else:
+        raise SystemExit("One or more fixtures failed schema validation -- see above.")
 
 
 if __name__ == "__main__":

@@ -33,25 +33,22 @@ def parse_field(field_el):
     }
 
 
-def parse_constraint(constraint_el):
-    """
-    Extract one AxTableRelationConstraint, tagging it by its real xsi:type
-    rather than assuming every constraint is a field-to-field join.
+CONSTRAINT_KIND_MAP = {
+    "AxTableRelationConstraintField": "column_join",
+    "AxTableRelationConstraintRelatedFixed": "target_value",
+    "AxTableRelationConstraintFixed": "source_value",
+}
 
-    Why: confirmed real case (VendTrans's DataArea relation) has a
-    ConstraintRelatedFixed constraint (isVirtual_Extern) with NEITHER a
-    <Field> NOR a <ValueStr> tag. If this function assumed every constraint
-    has a Field, it would return None silently and look like a parse bug
-    later instead of a documented, expected shape.
-    """
+
+def parse_constraint(constraint_el):
     xsi_type = constraint_el.get(XSI_NS, "")
-    kind = "fixed" if xsi_type == "AxTableRelationConstraintRelatedFixed" else "field"
+    kind = CONSTRAINT_KIND_MAP.get(xsi_type)
 
     return {
         "kind": kind,
-        "field": constraint_el.findtext("Field"),          # None is valid when kind == "fixed"
+        "field": constraint_el.findtext("Field"),
         "related_field": constraint_el.findtext("RelatedField"),
-        "value": constraint_el.findtext("ValueStr"),        # None is valid -- not every fixed constraint has one
+        "value": constraint_el.findtext("ValueStr"),
     }
 
 
@@ -86,5 +83,29 @@ if __name__ == "__main__":
     import json
     import os
 
-    result = parse_table_xml(os.path.join("fixtures", "tables", "VendTrans.xml"))
-    print(json.dumps(result, indent=2))
+    fixtures_dir = os.path.join("fixtures", "tables")
+    filenames = sorted(os.listdir(fixtures_dir))
+
+    for filename in filenames:
+        if not filename.endswith(".xml"):
+            continue
+        filepath = os.path.join(fixtures_dir, filename)
+        print(f"=== {filename} ===")
+        try:
+            result = parse_table_xml(filepath)
+            field_count = len(result["fields"])
+            relation_count = len(result["relations"])
+            missing_xsi = [f["name"] for f in result["fields"] if f["xsi_type"] is None]
+            missing_name = [i for i, f in enumerate(result["fields"]) if f["name"] is None]
+
+            print(f"  table_name: {result['name']}")
+            print(f"  fields: {field_count}, relations: {relation_count}")
+            if missing_xsi:
+                print(f"  WARNING - fields with no xsi_type detected: {missing_xsi}")
+            if missing_name:
+                print(f"  WARNING - fields with no name at index(es): {missing_name}")
+            if result["name"] is None:
+                print(f"  WARNING - table name is None, check root <Name> tag")
+        except Exception as e:
+            print(f"  FAILED TO PARSE: {type(e).__name__}: {e}")
+        print()
