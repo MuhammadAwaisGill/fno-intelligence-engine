@@ -18,6 +18,14 @@ venv/
 .DS_Store
 Thumbs.db
 
+real_model_test/**/bin/
+real_model_test/**/XppMetadata/
+real_model_test/**/Build*.log
+real_model_test/**/Build*.xml
+real_model_test/**/Build*.err.xml
+real_model_test/**/CompileLabels.xml
+*.delete
+
 # Fixtures containing anything beyond standard Microsoft demo data or your
 # own from-scratch custom model. Per project scope: only USMF/DAT standard
 # fixtures and your own custom-model fixtures should ever be committed.
