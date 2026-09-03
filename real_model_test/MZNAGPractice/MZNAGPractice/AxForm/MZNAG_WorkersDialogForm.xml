@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxForm xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V6">
+	<Name>MZNAG_WorkersDialogForm</Name>
+	<SourceCode>
+		<Methods xmlns="">
+			<Method>
+				<Name>classDeclaration</Name>
+				<Source><![CDATA[
+[Form]
+public class MZNAG_WorkersDialogForm extends FormRun
+{
+
+}
+]]></Source>
+			</Method>
+		</Methods>
+		<DataSources xmlns="">
+			<DataSource>
+				<Name>MZNAG_WorkersTable</Name>
+				<Methods>
+					<Method>
+						<Name>executeQuery</Name>
+						<Source><![CDATA[
+        public void executeQuery()
+        {
+            if(element.args())
+            {
+                MZNAG_WorkersTable callerRecord = element.args().record();
+                
+                if(callerRecord.RecId != 0)
+                {
+                    this.query()
+                        .dataSourceTable(tableNum(MZNAG_WorkersTable))
+                        .addRange(fieldNum(MZNAG_WorkersTable,RecId))
+                        .value(queryValue(callerRecord.RecId));
+                }
+            }
+
+            super();
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+				<Fields />
+			</DataSource>
+		</DataSources>
+		<DataControls xmlns="">
+			<Control>
+				<Name>OkButtonControl</Name>
+				<Type>Button</Type>
+				<Methods>
+					<Method>
+						<Name>clicked</Name>
+						<Source><![CDATA[
+        public void clicked()
+        {
+            MZNAG_WorkersTable workersTable;
+            MZNAG_WorkersTrans workersTrans;
+            real adjustment = MZNAG_WorkersTable_AdjustmentAmount.realValue();
+
+            ttsbegin;
+
+            workersTable = MZNAG_WorkersTable::find(MZNAG_WorkersTable.WorkerId, true);
+            real previousSalary = workersTable.Salary;
+            workersTable.Salary += adjustment;
+            workersTable.update();
+
+            workersTrans.WorkerId = workersTable.WorkerId;
+            workersTrans.WorkerName = workersTable.WorkerName;
+            workersTrans.Designation = workersTable.Designation;
+            workersTrans.PreviousSalary = previousSalary;
+            workersTrans.NewSalary = workersTable.Salary;
+            workersTrans.AdjustmentAmount = adjustment;
+            workersTrans.TransDate = systemDateGet();
+            workersTrans.insert();
+
+            ttscommit;
+
+            MZNAG_WorkersTable.reread();
+
+            if(element.args() && element.args().caller())
+            {
+                FormRun callerForm = element.args().caller() as FormRun;
+                if(callerForm)
+                {
+                    callerForm.dataSource(formDataSourceStr(MZNAG_WorkersSimpleListForm, MZNAG_WorkersTable)).research(true);
+                }
+            }
+
+            element.closeOk();
+
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+			</Control>
+			<Control>
+				<Name>CancelButtonControl</Name>
+				<Type>Button</Type>
+				<Methods>
+					<Method>
+						<Name>clicked</Name>
+						<Source><![CDATA[
+        public void clicked()
+        {
+            element.closeCancel();
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+			</Control>
+		</DataControls>
+		<Members xmlns="" />
+	</SourceCode>
+	<DataSources>
+		<AxFormDataSource xmlns="">
+			<Name>MZNAG_WorkersTable</Name>
+			<Table>MZNAG_WorkersTable</Table>
+			<Fields>
+				<AxFormDataSourceField>
+					<DataField>Address</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>AdjustmentAmount</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>DataAreaId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Designation</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Partition</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>RecId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Salary</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>TableId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>WorkerId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>WorkerName</DataField>
+				</AxFormDataSourceField>
+			</Fields>
+			<ReferencedDataSources />
+			<LinkType>Passive</LinkType>
+			<AllowCreate>No</AllowCreate>
+			<DataSourceLinks />
+			<DerivedDataSources />
+		</AxFormDataSource>
+	</DataSources>
+	<Design>
+		<Pattern xmlns="">Dialog</Pattern>
+		<PatternVersion xmlns="">1.2</PatternVersion>
+		<Style xmlns="">Dialog</Style>
+		<Controls xmlns="">
+			<AxFormControl xmlns=""
+				i:type="AxFormGroupControl">
+				<Name>FieldsGroup</Name>
+				<HeightMode>SizeToAvailable</HeightMode>
+				<Pattern>FieldsFieldGroups</Pattern>
+				<PatternVersion>1.1</PatternVersion>
+				<Type>Group</Type>
+				<WidthMode>SizeToAvailable</WidthMode>
+				<FormControlExtension
+					i:nil="true" />
+				<Controls>
+					<AxFormControl xmlns=""
+						i:type="AxFormStringControl">
+						<Name>MZNAG_WorkersTable_WorkerId</Name>
+						<AllowEdit>No</AllowEdit>
+						<Type>String</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<DataField>WorkerId</DataField>
+						<DataSource>MZNAG_WorkersTable</DataSource>
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormStringControl">
+						<Name>MZNAG_WorkersTable_WorkerName</Name>
+						<AllowEdit>No</AllowEdit>
+						<Type>String</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<DataField>WorkerName</DataField>
+						<DataSource>MZNAG_WorkersTable</DataSource>
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormRealControl">
+						<Name>MZNAG_WorkersTable_Salary</Name>
+						<AllowEdit>No</AllowEdit>
+						<Type>Real</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<DataField>Salary</DataField>
+						<DataSource>MZNAG_WorkersTable</DataSource>
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormRealControl">
+						<Name>MZNAG_WorkersTable_AdjustmentAmount</Name>
+						<AutoDeclaration>Yes</AutoDeclaration>
+						<Type>Real</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<DataField>AdjustmentAmount</DataField>
+						<DataSource>MZNAG_WorkersTable</DataSource>
+					</AxFormControl>
+				</Controls>
+				<ColumnsMode>Fill</ColumnsMode>
+				<Style>DialogContent</Style>
+			</AxFormControl>
+			<AxFormControl xmlns=""
+				i:type="AxFormButtonGroupControl">
+				<Name>ButtonGroup</Name>
+				<Type>ButtonGroup</Type>
+				<WidthMode>SizeToAvailable</WidthMode>
+				<FormControlExtension
+					i:nil="true" />
+				<Controls>
+					<AxFormControl xmlns=""
+						i:type="AxFormButtonControl">
+						<Name>OkButtonControl</Name>
+						<Type>Button</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<SaveRecord>No</SaveRecord>
+						<Text>Ok</Text>
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormButtonControl">
+						<Name>CancelButtonControl</Name>
+						<Type>Button</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<Text>Cancel</Text>
+					</AxFormControl>
+				</Controls>
+				<ArrangeMethod>HorizontalRight</ArrangeMethod>
+				<Style>DialogCommitContainer</Style>
+			</AxFormControl>
+		</Controls>
+	</Design>
+	<Parts />
+</AxForm>

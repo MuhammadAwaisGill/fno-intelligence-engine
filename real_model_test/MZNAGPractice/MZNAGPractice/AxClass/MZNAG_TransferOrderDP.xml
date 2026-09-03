@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_TransferOrderDP</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class MZNAG_TransferOrderDP extends SRSReportDataProviderBase
+{
+    MZNAG_TransferOrderTable tmpTable;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getTmpTable</Name>
+				<Source><![CDATA[
+    [SrsReportDataSetAttribute(tableStr(MZNAG_TransferOrderTable))]
+    public MZNAG_TransferOrderTable getTmpTable()
+    {
+        select tmpTable;
+        return tmpTable;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processReport</Name>
+				<Source><![CDATA[
+    public void processReport()
+    {
+        InventTransferTable inventTransferTable;
+        InventTransferLine inventTransferLine;
+        InventLocation inventLocationFrom;
+        InventLocation inventLocationTo;
+        InventDim inventDim;
+        InventTransferJour      inventTransferJour;
+        InventTransferJourLine  inventTransferJourLine;
+
+        while select inventTransferTable
+        {
+            tmpTable.clear();
+
+            select firstonly inventLocationFrom
+            where inventLocationFrom.InventLocationId == inventTransferTable.InventLocationIdFrom;
+
+            select firstonly inventLocationto
+            where inventLocationTo.InventLocationId == inventTransferTable.InventLocationIdTo;
+
+            tmpTable.TransferOrder = inventTransferTable.TransferId;
+            tmpTable.ShipDate = inventTransferTable.ShipDate;
+            tmpTable.TransferStatus = enum2Str(inventTransferTable.TransferStatus);
+            tmpTable.ReceiveDate = inventTransferTable.ReceiveDate;
+            tmpTable.FromWarehouse = inventLocationFrom.Name;
+            tmpTable.ToWarehouse = inventLocationTo.Name;
+            tmpTable.ToAddress = inventTransferTable.toAddress();
+            tmpTable.FromAddress = inventTransferTable.fromAddress();
+            boolean journalFound = false;
+
+            while select inventTransferLine
+            where inventTransferLine.TransferId == inventTransferTable.TransferId
+            {
+                
+                tmpTable.ItemId = inventTransferLine.ItemId;
+                tmpTable.ItemName = inventTransferLine.itemName();
+                
+                inventDim = inventTransferLine.inventDim();
+
+                tmpTable.Quality = inventDim.configId;
+                tmpTable.Site = inventDim.InventSiteId;
+                tmpTable.Depot = inventDim.InventLocationId;
+
+                tmpTable.QuantityTransfered = inventTransferLine.QtyTransfer;
+                tmpTable.QuantityShipped = inventTransferLine.QtyShipped;
+                tmpTable.ShippedRemaining = inventTransferLine.QtyRemainShip;
+                tmpTable.QuantityReceived = inventTransferLine.QtyReceived;
+                tmpTable.ReceivedRemaining = inventTransferLine.QtyRemainReceive;
+
+                tmpTable.RowType = MZNAG_TransferOrderRowType::Line;
+
+                while select inventTransferJourLine
+                where inventTransferJourLine.TransferId == inventTransferTable.TransferId
+                && inventTransferJourLine.ItemId == inventTransferLine.ItemId
+                {
+                    journalFound = true;
+
+                    tmpTable.TransferOrder = inventTransferTable.TransferId;
+                    tmpTable.ShipDate = inventTransferTable.ShipDate;
+                    tmpTable.TransferStatus = enum2Str(inventTransferTable.TransferStatus);
+                    tmpTable.ReceiveDate = inventTransferTable.ReceiveDate;
+                    tmpTable.FromWarehouse = inventLocationFrom.Name;
+                    tmpTable.ToWarehouse = inventLocationTo.Name;
+                    tmpTable.ToAddress = inventTransferTable.toAddress();
+                    tmpTable.FromAddress = inventTransferTable.fromAddress();
+
+                    tmpTable.ItemId = inventTransferLine.ItemId;
+                    tmpTable.ItemName = inventTransferLine.itemName();
+                    
+                    select firstOnly inventTransferJour
+                        where inventTransferJour.VoucherId  == inventTransferJourLine.VoucherId
+                        && inventTransferJour.TransferId == inventTransferJourLine.TransferId;
+
+                    tmpTable.VoucherId = inventTransferJour.VoucherId;
+                    tmpTable.ShipDate1 = inventTransferJourLine.TransDate;
+                    tmpTable.RowType = any2Enum(enum2int(inventTransferJour.UpdateType) + 1);
+                    tmpTable.VoucherQtyShipped = inventTransferJourLine.QtyShipped;
+                    tmpTable.VoucherQtyReceived = inventTransferJourLine.QtyReceived;
+
+                    select firstOnly inventDim
+                        where inventDim.inventDimId == inventTransferJourLine.inventDimId;
+                    tmpTable.Site1 = inventDim.InventSiteId;
+                    tmpTable.Size1 = inventDim.InventSizeId;
+                    tmpTable.Status = inventDim.InventStatusId;
+                    tmpTable.Style = inventDim.InventStyleId;
+                    tmpTable.BatchId = inventDim.inventBatchId;
+                    tmpTable.QuantityReceived = inventTransferJourLine.QtyReceived;
+                    tmpTable.QuantityShipped = inventTransferJourLine.QtyShipped;
+
+                    tmpTable.insert();
+
+                    tmpTable.QuantityTransfered = 0;
+                    tmpTable.QuantityShipped = 0;
+                    tmpTable.ShippedRemaining = 0;
+                    tmpTable.QuantityReceived = 0;
+                    tmpTable.ReceivedRemaining = 0;
+
+                    tmpTable.VoucherQtyShipped = 0;
+                    tmpTable.VoucherQtyReceived = 0;
+
+                    tmpTable.QuantityReceived = 0;
+                    tmpTable.QuantityShipped = 0;
+                }
+                if(!journalFound)
+                {
+                    tmpTable.insert();
+                }
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_CustomWorkflowTypeSubmitManager</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class MZNAG_CustomWorkflowTypeSubmitManager 
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args args)
+	{
+        MZNAG_RequestOrderTable table;
+        UserGroupList userGroupList;
+
+        MZNAG_CustomWorkflowTypeSubmitManager submitManager = new MZNAG_CustomWorkflowTypeSubmitManager();
+
+        recId _recId = args.record().RecId;
+        WorkflowCorrelationId _workflowCorrelationId;
+        workflowTypeName _workflowTypeName = workflowTypeStr("MZNAG_CustomWorkflowType");
+        WorkflowComment note = "";
+        WorkflowSubmitDialog workflowSubmitDialog;
+
+        workflowSubmitDialog = workflowSubmitDialog::construct(args.caller().getActiveWorkflowConfiguration());
+        workflowSubmitDialog.run();
+
+        if(workflowSubmitDialog.parmIsClosedOK())
+        {
+            table = args.record();
+            note = workflowSubmitDialog.parmWorkflowComment();
+            try
+            {
+                ttsbegin;
+                _workflowCorrelationId = Workflow::activateFromWorkflowType(_workflowTypeName, table.RecId, note, NoYes::No);
+
+                str strUserGroups = "";
+                Counter totalCount;
+
+                while select groupId from userGroupList order by RecId desc
+                    where userGroupList.userId == curUserId()
+                {
+                    if (totalCount == 0)
+                        strUserGroups = userGroupList.groupId;
+                    else
+                        strUserGroups = strUserGroups + strFmt(",%1", userGroupList.groupId);
+
+                    totalCount += 1;
+                }
+
+                table.Status = MZNAG_CustomWorkflowEnum::Submitted;
+
+                if(table.Status == MZNAG_CustomWorkflowEnum::Submitted)
+                    table.SubmissionDate = systemDateGet();
+
+                table.update();
+                ttscommit;
+
+                info("Submitted to Workflow.");
+            }
+            catch(Exception::Error)
+                error("Error on workflow activation");
+        }
+	}
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

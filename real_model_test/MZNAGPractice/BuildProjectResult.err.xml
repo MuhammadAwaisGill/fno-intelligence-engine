@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Diagnostics
+  GenerationTime="2026-08-03T15:36:56.2994266+05:00">
+  <Items>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Error</Severity>
+      <Path>dynamics://Class/WorkflowApproval1ResubmitActionMgr</Path>
+      <ElementType>Class</ElementType>
+      <Moniker>ModelElementWithUnparsableSource</Moniker>
+      <Line>0</Line>
+      <Column>0</Column>
+      <Message>The model element was saved with unparsable source code and cannot be used. Please edit the element in Visual Studio to fix the errors.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Error</Severity>
+      <Path>dynamics://Class/WorkflowApproval1ResubmitActionMgr</Path>
+      <ElementType>Class</ElementType>
+      <Moniker>ElementNameMismatch</Moniker>
+      <Message>The name in the source code declaration 'CustomWorkflowApprovalResubmitActionMgr' does not match the artifact name 'WorkflowApproval1ResubmitActionMgr'.</Message>
+    </Diagnostic>
+  </Items>
+  <Aliases />
+</Diagnostics>

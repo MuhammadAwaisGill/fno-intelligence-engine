@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxWorkflowTemplate xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V2">
+	<Name>MZNAG_CustomWorkflowType</Name>
+	<AssociationType>Global</AssociationType>
+	<CancelMenuItem>MZNAG_CustomWorkflowTypeCancelMenuItem</CancelMenuItem>
+	<CanceledEventHandler>MZNAG_CustomWorkflowTypeEventHandler</CanceledEventHandler>
+	<Category>MZNAG_CustomWorkflowCategory</Category>
+	<CompletedEventHandler>MZNAG_CustomWorkflowTypeEventHandler</CompletedEventHandler>
+	<Document>MZNAG_CustomWorkflowTypeDocument</Document>
+	<DocumentMenuItem>MZNAG_RequestOrderTable</DocumentMenuItem>
+	<HelpText>Help text for the MZNAG_CustomWorkflowType workflow type element'</HelpText>
+	<Label>Custom workflow for request orders</Label>
+	<StartedEventHandler>MZNAG_CustomWorkflowTypeEventHandler</StartedEventHandler>
+	<SubmitToWorkflowMenuItem>MZNAG_CustomWorkflowTypeSubmitMenuItem</SubmitToWorkflowMenuItem>
+	<LineItemWorkflows />
+	<SupportedElements>
+		<AxWorkflowElementReference xmlns="">
+			<Name>WorkflowApproval1</Name>
+			<ElementName>WorkflowApproval1</ElementName>
+		</AxWorkflowElementReference>
+	</SupportedElements>
+</AxWorkflowTemplate>

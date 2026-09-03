@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_PickingListEngine</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class MZNAG_PickingListEngine
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>postPickingList</Name>
+				<Source><![CDATA[
+    public static void postPickingList(MZNAG_SalesPickingHeaderTmp _pickingTmp)
+    {
+        MZNAG_SalesPickingHeader pickingHeader;
+        MZNAG_SalesPickingLine   pickingLine;
+        MZNAG_SalesPickingLinesTmp pickingTmpLines;
+        MZNAG_SalesLine salesLine;
+
+        ttsbegin;
+
+        pickingHeader.PickingListId = _pickingTmp.PickingListId;
+        pickingHeader.SalesId       = _pickingTmp.SalesId;
+        pickingHeader.CustAccount   = _pickingTmp.CustAccount;
+        pickingHeader.CustName      = _pickingTmp.CustName;
+        pickingHeader.PostingDate   = systemDateGet();
+        pickingHeader.insert();
+
+        while select pickingTmpLines
+        where pickingTmpLines.SalesId == pickingHeader.SalesId
+        {
+            pickingLine.clear();
+            pickingLine.PickingListId = pickingHeader.PickingListId;
+            pickingLine.SalesId       = pickingTmpLines.SalesId;
+            pickingLine.ItemId        = pickingTmpLines.ItemId;
+            pickingLine.ItemName      = pickingTmpLines.ItemName;
+            pickingLine.PickedQty     = pickingTmpLines.PickedQty;
+            pickingLine.LineNum       = pickingTmpLines.LineNum;
+            pickingLine.insert();
+
+            select forupdate salesLine
+            where salesLine.SalesId == pickingTmpLines.SalesId
+            && salesLine.LineNum == pickingTmpLines.LineNum;
+
+            salesLine.PickedQty += pickingTmpLines.PickedQty;
+            salesLine.update();
+        }
+        ttscommit;
+        info(strFmt("Picking list %1 generated successfully", pickingHeader.PickingListId));
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

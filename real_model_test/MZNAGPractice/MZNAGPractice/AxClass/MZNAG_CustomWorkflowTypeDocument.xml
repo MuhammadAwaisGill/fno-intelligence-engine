@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_CustomWorkflowTypeDocument</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// The MZNAG_CustomWorkflowTypeDocument workflow document class.
+/// </summary>
+class MZNAG_CustomWorkflowTypeDocument extends WorkflowDocument
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getQueryName</Name>
+				<Source><![CDATA[
+    /// <summary>
+	/// Returns query name for the workflow document.
+	/// </summary>
+	/// <returns>
+	/// Name of the query <c>MZNAG_CustomWorkflowQuery</c>.
+	/// </returns>
+	public queryName getQueryName()
+	{
+		return querystr(MZNAG_CustomWorkflowQuery);
+	}
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

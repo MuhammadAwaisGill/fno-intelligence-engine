@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Diagnostics
+  GenerationTime="2026-08-03T13:15:34.6206277+05:00">
+  <Items>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Error</Severity>
+      <Path>dynamics://Form/MZNAG_DetailsMasterForm</Path>
+      <ElementType>Form</ElementType>
+      <Moniker>ModelElementWithUnparsableSource</Moniker>
+      <Line>0</Line>
+      <Column>0</Column>
+      <Message>The model element was saved with unparsable source code and cannot be used. Please edit the element in Visual Studio to fix the errors.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>Unspecified</DiagnosticType>
+      <Severity>Error</Severity>
+      <Path>dynamics://Form/MZNAG_DetailsMasterForm</Path>
+      <ElementType>Form</ElementType>
+      <Moniker>FormNotFoundOrUnParsable</Moniker>
+      <Message>Form 'MZNAG_DetailsMasterForm' was not found or cannot be parsed.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>dynamics://Form/MZNAG_SalesEditLines/FormDataSourceRoot/MZNAG_SalesPickingLinesTmp/Method/validateWrite</Path>
+      <ElementType>Form DataSource Method</ElementType>
+      <Moniker>UnreachableStatement</Moniker>
+      <Line>77</Line>
+      <Column>17</Column>
+      <EndLine>77</EndLine>
+      <EndColumn>104</EndColumn>
+      <Message>The statement is unreachable.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>dynamics://Form/MZNAG_SalesEditLines/FormDataSourceRoot/MZNAG_SalesPickingLinesTmp/Method/validateWrite</Path>
+      <ElementType>Form DataSource Method</ElementType>
+      <Moniker>UnreachableStatement</Moniker>
+      <Line>82</Line>
+      <Column>13</Column>
+      <EndLine>82</EndLine>
+      <EndColumn>24</EndColumn>
+      <Message>The statement is unreachable.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>Metadata</DiagnosticType>
+      <Severity>Informational</Severity>
+      <Path>AxForm/MZNAG_DetailsMasterForm/UnparsableSource</Path>
+      <Moniker>UnparsableCodeDetected</Moniker>
+      <Message>Source code in the element has syntax errors. Review compilation errors and fix them.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>FormPatternValidation</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>AxForm/MZNAG_DetailsMaster/Design/Controls/MainTab/DetailsTabPage/DetailsTab/PaymentTabPage</Path>
+      <Moniker>ErrorFormControlPatternUnspecified</Moniker>
+      <Message>'AxForm/MZNAG_DetailsMaster/Design/Controls/MainTab/DetailsTabPage/DetailsTab/PaymentTabPage' has not specified a pattern. Please apply one of the available patterns.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>FormPatternValidation</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>AxForm/MZNAG_DetailsMasterForm/Design/Controls/MainTab/FormTabPageControl1/FormTabControl2/FormTabPageControl3</Path>
+      <Moniker>ErrorFormControlPatternUnspecified</Moniker>
+      <Message>'AxForm/MZNAG_DetailsMasterForm/Design/Controls/MainTab/FormTabPageControl1/FormTabControl2/FormTabPageControl3' has not specified a pattern. Please apply one of the available patterns.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>FormPatternValidation</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>AxForm/MZNAGCourseSchedule/Design/Controls/DetailsHeader</Path>
+      <Moniker>ErrorFormControlPatternUnspecified</Moniker>
+      <Message>'AxForm/MZNAGCourseSchedule/Design/Controls/DetailsHeader' has not specified a pattern. Please apply one of the available patterns.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>FormPatternValidation</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>AxForm/MZNAGCourseSchedule/Design/Controls/DetailsTabs/EnrollmentLines</Path>
+      <Moniker>ErrorFormControlPatternUnspecified</Moniker>
+      <Message>'AxForm/MZNAGCourseSchedule/Design/Controls/DetailsTabs/EnrollmentLines' has not specified a pattern. Please apply one of the available patterns.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>FormPatternValidation</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>AxForm/MZNAG_DialogForm/Design/Controls/FormGroupControl1</Path>
+      <Moniker>ErrorFormControlPatternUnspecified</Moniker>
+      <Message>'AxForm/MZNAG_DialogForm/Design/Controls/FormGroupControl1' has not specified a pattern. Please apply one of the available patterns.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>FormPatternValidation</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>AxForm/MZNAGStudent/Design</Path>
+      <Moniker>ErrorFormDesignPatternUnspecified</Moniker>
+      <Message>'FormDesign' has not specified a pattern. Please apply one of the available patterns.</Message>
+    </Diagnostic>
+  </Items>
+  <Aliases />
+</Diagnostics>

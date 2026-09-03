@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxEnum xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_BatchJobStatus</Name>
+	<UseEnumValue>No</UseEnumValue>
+	<EnumValues>
+		<AxEnumValue>
+			<Name>Started</Name>
+			<Label>Started</Label>
+		</AxEnumValue>
+		<AxEnumValue>
+			<Name>Ended</Name>
+			<Label>Ended</Label>
+			<Value>1</Value>
+		</AxEnumValue>
+	</EnumValues>
+	<IsExtensible>true</IsExtensible>
+</AxEnum>

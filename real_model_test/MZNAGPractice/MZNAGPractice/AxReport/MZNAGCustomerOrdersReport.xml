@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxReport xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V2">
+	<Name>MZNAGCustomerOrdersReport</Name>
+	<DataMethods />
+	<DataSets>
+		<AxReportDataSet xmlns="">
+			<Name>CustomerOrdersDS</Name>
+			<DynamicFilters>false</DynamicFilters>
+			<Query>SELECT * FROM MZNAGCustomerOrdersQuery</Query>
+			<FieldGroups />
+			<Fields>
+				<AxReportDataSetField>
+					<Name>CustomerID</Name>
+					<Alias>MZNAGCustomerTable.1.CustomerID</Alias>
+					<Caption>@SYS7149</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>CustomerName</Name>
+					<Alias>MZNAGCustomerTable.1.CustomerName</Alias>
+					<Caption>@SYS80991</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>CustGroup</Name>
+					<Alias>MZNAGCustomerTable.1.CustGroup</Alias>
+					<Caption>@SYS11904</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>CreditLimit</Name>
+					<Alias>MZNAGCustomerTable.1.CreditLimit</Alias>
+					<Caption>@SYS1532</Caption>
+					<DataType>System.Double</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>Currency</Name>
+					<Alias>MZNAGCustomerTable.1.Currency</Alias>
+					<Caption>@SYS7572</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>RegistrationDate</Name>
+					<Alias>MZNAGCustomerTable.1.RegistrationDate</Alias>
+					<Caption>Registration Date</Caption>
+					<DataType>System.DateTime</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>dataAreaId</Name>
+					<Alias>MZNAGCustomerTable.1.dataAreaId</Alias>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>recVersion</Name>
+					<Alias>MZNAGCustomerTable.1.recVersion</Alias>
+					<DataType>System.Int32</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>Partition</Name>
+					<Alias>MZNAGCustomerTable.1.Partition</Alias>
+					<DataType>System.Int64</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>SYSROWVERSION</Name>
+					<Alias>MZNAGCustomerTable.1.SYSROWVERSION</Alias>
+					<DataType>System.Int64</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>RecId</Name>
+					<Alias>MZNAGCustomerTable.1.RecId</Alias>
+					<DataType>System.Int64</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>SalesId</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.SalesId</Alias>
+					<Caption>@SYS9694</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>CustAccount</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.CustAccount</Alias>
+					<Caption>@SYS7149</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>OrderDate</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.OrderDate</Alias>
+					<Caption>@GLS109510</Caption>
+					<DataType>System.DateTime</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>SalesStatusName</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.SalesStatus:NAME(SalesStatus)</Alias>
+					<Caption>@SCM:SalesStatusLabel</Caption>
+					<DisableAutoCreateInDataRegion>true</DisableAutoCreateInDataRegion>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>SalesStatusLabel</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.SalesStatus:LABEL(SalesStatus)</Alias>
+					<Caption>@SCM:SalesStatusLabel</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>TotalAmount</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.TotalAmount</Alias>
+					<Caption>@SYS860</Caption>
+					<DataType>System.Double</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>dataAreaId1</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.dataAreaId</Alias>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>recVersion1</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.recVersion</Alias>
+					<DataType>System.Int32</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>Partition1</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.Partition</Alias>
+					<DataType>System.Int64</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>SYSROWVERSION1</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.SYSROWVERSION</Alias>
+					<DataType>System.Int64</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>RecId1</Name>
+					<Alias>MZNAGCustomerOrdersTable.1.RecId</Alias>
+					<DataType>System.Int64</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+			</Fields>
+			<Parameters>
+				<AxReportDataSetParameter>
+					<Name>AX_PartitionKey</Name>
+					<Alias>AX_PartitionKey</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_PartitionKey</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_CompanyName</Name>
+					<Alias>AX_CompanyName</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_CompanyName</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_UserContext</Name>
+					<Alias>AX_UserContext</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_UserContext</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_RenderingCulture</Name>
+					<Alias>AX_RenderingCulture</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_RenderingCulture</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_ReportContext</Name>
+					<Alias>AX_ReportContext</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_ReportContext</Parameter>
+				</AxReportDataSetParameter>
+			</Parameters>
+		</AxReportDataSet>
+	</DataSets>
+	<DefaultParameterGroup>
+		<Name xmlns="">Parameters</Name>
+		<ReportParameterBases xmlns="">
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_PartitionKey</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_CompanyName</Name>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_UserContext</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_RenderingCulture</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_ReportContext</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+		</ReportParameterBases>
+	</DefaultParameterGroup>
+	<Designs>
+		<AxReportDesign xmlns=""
+			i:type="AxReportPrecisionDesign">
+			<Name>PrecisionDesign1</Name>
+			<Text>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"&gt;
+  &lt;AutoRefresh&gt;0&lt;/AutoRefresh&gt;
+  &lt;DataSources&gt;
+    &lt;DataSource Name="AutoGen__Query"&gt;
+      &lt;ConnectionProperties&gt;
+        &lt;DataProvider&gt;AXQUERY&lt;/DataProvider&gt;
+        &lt;ConnectString /&gt;
+        &lt;IntegratedSecurity&gt;true&lt;/IntegratedSecurity&gt;
+      &lt;/ConnectionProperties&gt;
+      &lt;rd:DataSourceID&gt;d21a5682-9489-431b-82db-2301863d9f24&lt;/rd:DataSourceID&gt;
+    &lt;/DataSource&gt;
+  &lt;/DataSources&gt;
+  &lt;DataSets&gt;
+    &lt;DataSet Name="CustomerOrdersDS"&gt;
+      &lt;Query&gt;
+        &lt;DataSourceName&gt;AutoGen__Query&lt;/DataSourceName&gt;
+        &lt;QueryParameters&gt;
+          &lt;QueryParameter Name="AX_PartitionKey"&gt;
+            &lt;Value&gt;=Parameters!AX_PartitionKey.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_CompanyName"&gt;
+            &lt;Value&gt;=Parameters!AX_CompanyName.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_UserContext"&gt;
+            &lt;Value&gt;=Parameters!AX_UserContext.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_RenderingCulture"&gt;
+            &lt;Value&gt;=Parameters!AX_RenderingCulture.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_ReportContext"&gt;
+            &lt;Value&gt;=Parameters!AX_ReportContext.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+        &lt;/QueryParameters&gt;
+        &lt;CommandText&gt;SELECT * FROM MZNAGCustomerOrdersQuery&lt;/CommandText&gt;
+        &lt;rd:UseGenericDesigner&gt;true&lt;/rd:UseGenericDesigner&gt;
+      &lt;/Query&gt;
+      &lt;Fields&gt;
+        &lt;Field Name="CustomerID"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.CustomerID&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="CustomerName"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.CustomerName&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="CustGroup"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.CustGroup&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="CreditLimit"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.CreditLimit&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Double&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="Currency"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.Currency&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="RegistrationDate"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.RegistrationDate&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.DateTime&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="dataAreaId"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.dataAreaId&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="recVersion"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.recVersion&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Int32&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="Partition"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.Partition&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Int64&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SYSROWVERSION"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.SYSROWVERSION&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Int64&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="RecId"&gt;
+          &lt;DataField&gt;MZNAGCustomerTable.1.RecId&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Int64&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SalesId"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.SalesId&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="CustAccount"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.CustAccount&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="OrderDate"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.OrderDate&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.DateTime&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SalesStatusName"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.SalesStatus:NAME(SalesStatus)&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SalesStatusLabel"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.SalesStatus:LABEL(SalesStatus)&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="TotalAmount"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.TotalAmount&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Double&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="dataAreaId1"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.dataAreaId&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="recVersion1"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.recVersion&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Int32&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="Partition1"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.Partition&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Int64&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SYSROWVERSION1"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.SYSROWVERSION&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Int64&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="RecId1"&gt;
+          &lt;DataField&gt;MZNAGCustomerOrdersTable.1.RecId&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Int64&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+      &lt;/Fields&gt;
+      &lt;rd:DataSetInfo&gt;
+        &lt;rd:DataSetName&gt;CustomerOrdersDS&lt;/rd:DataSetName&gt;
+        &lt;rd:TableName&gt;Fields&lt;/rd:TableName&gt;
+        &lt;rd:TableAdapterFillMethod&gt;Fill&lt;/rd:TableAdapterFillMethod&gt;
+        &lt;rd:TableAdapterGetDataMethod&gt;GetData&lt;/rd:TableAdapterGetDataMethod&gt;
+        &lt;rd:TableAdapterName&gt;FieldsTableAdapter&lt;/rd:TableAdapterName&gt;
+      &lt;/rd:DataSetInfo&gt;
+    &lt;/DataSet&gt;
+  &lt;/DataSets&gt;
+  &lt;ReportSections&gt;
+    &lt;ReportSection&gt;
+      &lt;Body&gt;
+        &lt;ReportItems&gt;
+          &lt;Tablix Name="Tablix1"&gt;
+            &lt;TablixBody&gt;
+              &lt;TablixColumns&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;0.92361in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1.20833in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;0.72222in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;0.86111in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+              &lt;/TablixColumns&gt;
+              &lt;TablixRows&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox1"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Customer ID&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox1&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox3"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Customer Name&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox3&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox5"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Sales Id&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox5&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox7"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Order Date&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox7&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox9"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Total Amount&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox9&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="CustomerID"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!CustomerID.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;CustomerID&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerTable.CustomerID&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerTable.CustomerID&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerTable.CustomerID&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="CustomerName"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!CustomerName.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;CustomerName&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerTable.CustomerName&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerTable.CustomerName&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerTable.CustomerName&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="SalesId"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!SalesId.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;SalesId&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="OrderDate"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!OrderDate.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;OrderDate&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;DateTime&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerOrdersTable.OrderDate&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerOrdersTable.OrderDate&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerOrdersTable.OrderDate&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;rd:Selected&gt;true&lt;/rd:Selected&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="TotalAmount"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!TotalAmount.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;TotalAmount&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;Float&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerOrdersTable.TotalAmount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerOrdersTable.TotalAmount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;MZNAGCustomerOrdersTable.TotalAmount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+              &lt;/TablixRows&gt;
+            &lt;/TablixBody&gt;
+            &lt;TablixColumnHierarchy&gt;
+              &lt;TablixMembers&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+              &lt;/TablixMembers&gt;
+            &lt;/TablixColumnHierarchy&gt;
+            &lt;TablixRowHierarchy&gt;
+              &lt;TablixMembers&gt;
+                &lt;TablixMember&gt;
+                  &lt;KeepWithGroup&gt;After&lt;/KeepWithGroup&gt;
+                &lt;/TablixMember&gt;
+                &lt;TablixMember&gt;
+                  &lt;Group Name="Details" /&gt;
+                &lt;/TablixMember&gt;
+              &lt;/TablixMembers&gt;
+            &lt;/TablixRowHierarchy&gt;
+            &lt;DataSetName&gt;CustomerOrdersDS&lt;/DataSetName&gt;
+            &lt;Top&gt;1.47444in&lt;/Top&gt;
+            &lt;Left&gt;2.8425in&lt;/Left&gt;
+            &lt;Height&gt;0.5in&lt;/Height&gt;
+            &lt;Width&gt;4.71527in&lt;/Width&gt;
+            &lt;Style&gt;
+              &lt;Border&gt;
+                &lt;Style&gt;None&lt;/Style&gt;
+              &lt;/Border&gt;
+            &lt;/Style&gt;
+          &lt;/Tablix&gt;
+        &lt;/ReportItems&gt;
+        &lt;Height&gt;3in&lt;/Height&gt;
+        &lt;Style /&gt;
+      &lt;/Body&gt;
+      &lt;Width&gt;10in&lt;/Width&gt;
+      &lt;Page&gt;
+        &lt;PageHeight&gt;8.5in&lt;/PageHeight&gt;
+        &lt;PageWidth&gt;11in&lt;/PageWidth&gt;
+        &lt;InteractiveHeight&gt;8.5in&lt;/InteractiveHeight&gt;
+        &lt;InteractiveWidth&gt;11in&lt;/InteractiveWidth&gt;
+        &lt;LeftMargin&gt;1in&lt;/LeftMargin&gt;
+        &lt;RightMargin&gt;1in&lt;/RightMargin&gt;
+        &lt;TopMargin&gt;1in&lt;/TopMargin&gt;
+        &lt;BottomMargin&gt;1in&lt;/BottomMargin&gt;
+        &lt;Style /&gt;
+      &lt;/Page&gt;
+    &lt;/ReportSection&gt;
+  &lt;/ReportSections&gt;
+  &lt;ReportParameters&gt;
+    &lt;ReportParameter Name="AX_PartitionKey"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_PartitionKey&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_CompanyName"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Prompt&gt;AX_CompanyName&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_UserContext"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_UserContext&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_RenderingCulture"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_RenderingCulture&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_ReportContext"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_ReportContext&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+      &lt;UsedInQuery&gt;True&lt;/UsedInQuery&gt;
+    &lt;/ReportParameter&gt;
+  &lt;/ReportParameters&gt;
+  &lt;ReportParametersLayout&gt;
+    &lt;GridLayoutDefinition&gt;
+      &lt;NumberOfColumns&gt;5&lt;/NumberOfColumns&gt;
+      &lt;NumberOfRows&gt;1&lt;/NumberOfRows&gt;
+      &lt;CellDefinitions&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;0&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_PartitionKey&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;1&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_CompanyName&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;2&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_UserContext&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;3&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_RenderingCulture&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;4&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_ReportContext&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+      &lt;/CellDefinitions&gt;
+    &lt;/GridLayoutDefinition&gt;
+  &lt;/ReportParametersLayout&gt;
+  &lt;Language&gt;en-US&lt;/Language&gt;
+  &lt;rd:ReportUnitType&gt;Inch&lt;/rd:ReportUnitType&gt;
+  &lt;rd:ExpressionDialog&gt;Microsoft.Dynamics.Framework.Design.Reports.ExpressionEditor.ExpressionEditorDialog, Microsoft.Dynamics.Framework.Design.Reports&lt;/rd:ExpressionDialog&gt;
+  &lt;rd:ReportID&gt;e26c69fd-cee6-4453-9f68-f9d932c19ccf&lt;/rd:ReportID&gt;
+&lt;/Report&gt;</Text>
+			<DisableIndividualTransformation />
+		</AxReportDesign>
+	</Designs>
+	<EmbeddedImages />
+</AxReport>

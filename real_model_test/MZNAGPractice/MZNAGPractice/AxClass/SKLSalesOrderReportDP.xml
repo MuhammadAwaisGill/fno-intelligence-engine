@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>SKLSalesOrderReportDP</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[SRSReportParameterAttribute(classStr(SKLSalesOrderReportContract))]
+class SKLSalesOrderReportDP extends SRSReportDataProviderBase
+{
+    SKLSalesOrderReportTmp tmpTable;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getTmpTable</Name>
+				<Source><![CDATA[
+    [SRSReportDataSetAttribute(tableStr(SKLSalesOrderReportTmp))]
+    public SKLSalesOrderReportTmp getTmpTable()
+    {
+        select tmpTable;
+        return tmpTable;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processReport</Name>
+				<Source><![CDATA[
+    public void processReport()
+    {
+        SKLSalesOrderReportContract contract = this.parmDataContract() as SKLSalesOrderReportContract;
+        FromDate  fromDate  = contract.parmFromDate();
+        ToDate    toDate    = contract.parmToDate();
+        SalesType salesType = contract.parmSalesType();
+
+        // 1. Force-clear residual rows to prevent visual duplication on re-run
+        delete_from tmpTable;
+
+        SalesTable salesTable;
+        SalesLine  salesLine;
+
+        while select salesTable
+            where (!fromDate  || salesTable.CreatedDateTime >= DateTimeUtil::newDateTime(fromDate, 0))
+               && (!toDate    || salesTable.CreatedDateTime <= DateTimeUtil::newDateTime(toDate, 86400))
+               && (salesTable.SalesType == salesType)
+        {
+            tmpTable.clear();
+
+            tmpTable.SalesId       = salesTable.SalesId;
+            tmpTable.CustAccount   = salesTable.CustAccount;
+            tmpTable.CurrencyCode  = salesTable.CurrencyCode;
+            tmpTable.DateTime      = salesTable.CreatedDateTime;
+            tmpTable.CustName      = CustTable::find(salesTable.CustAccount).name();
+            
+            // DIRECT MAPPING: Pulls the standard 'Open' or 'Released' status straight from the order
+            tmpTable.ReleaseStatus = salesTable.ReleaseStatus;
+
+            // 2. Try the primary business framework total logic
+            SalesTotals salesTotals = SalesTotals::construct(salesTable, SalesUpdate::All);
+            real totalAmount = salesTotals.totalBalance();
+
+            // 3. Fallback check: If framework returns 0, try a direct line sum aggregation
+            if (totalAmount == 0.00)
+            {
+                select sum(LineAmount) from salesLine
+                    where salesLine.SalesId == salesTable.SalesId;
+                
+                totalAmount = salesLine.LineAmount;
+            }
+
+            tmpTable.SalesAmount = totalAmount;
+            tmpTable.insert();
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

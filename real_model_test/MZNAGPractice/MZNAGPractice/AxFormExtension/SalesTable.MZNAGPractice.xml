@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxFormExtension xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V6">
+	<Name>SalesTable.MZNAGPractice</Name>
+	<ControlModifications />
+	<Controls>
+		<AxFormExtensionControl xmlns="">
+			<Name>FormExtensionControlsgmdxjlj1</Name>
+			<FormControl xmlns=""
+				i:type="AxFormGroupControl">
+				<Name>BatchJobGroup</Name>
+				<Type>Group</Type>
+				<FormControlExtension
+					i:nil="true" />
+				<Controls>
+					<AxFormControl xmlns=""
+						i:type="AxFormComboBoxControl">
+						<Name>SalesTable_BatchJobStatus</Name>
+						<AllowEdit>No</AllowEdit>
+						<Type>ComboBox</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<DataField>BatchJobStatus</DataField>
+						<DataSource>SalesTable</DataSource>
+						<Label>Batch job status</Label>
+						<Items />
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormComboBoxControl">
+						<Name>SalesTable_CustomerStatus</Name>
+						<AllowEdit>No</AllowEdit>
+						<Type>ComboBox</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<DataField>CustomerStatus</DataField>
+						<DataSource>SalesTable</DataSource>
+						<Items />
+					</AxFormControl>
+				</Controls>
+				<Caption>Batch job</Caption>
+			</FormControl>
+			<Parent>LineViewHeader</Parent>
+		</AxFormExtensionControl>
+	</Controls>
+	<DataSourceModifications />
+	<DataSourceReferences />
+	<DataSources />
+	<Parts />
+	<PropertyModifications />
+</AxFormExtension>

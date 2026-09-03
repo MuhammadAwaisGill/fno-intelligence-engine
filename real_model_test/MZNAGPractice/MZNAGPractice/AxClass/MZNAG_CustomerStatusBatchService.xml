@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_CustomerStatusBatchService</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class MZNAG_CustomerStatusBatchService extends SysOperationServiceBase
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>processOperation</Name>
+				<Source><![CDATA[
+    public void processOperation(MZNAG_CustomerStatusBatchContract _contract)
+    {
+        SalesTable salesTable;
+        CustAccount custAccount = _contract.parmCustAccount();
+
+        ttsbegin;
+
+        while select forUpdate salesTable
+            where salesTable.CustAccount == custAccount
+               && salesTable.CustomerStatus == MZNAG_CustomerStatus::NotProcessed
+        {
+            salesTable.CustomerStatus = MZNAG_CustomerStatus::Processed;
+            salesTable.update();
+        }
+
+        ttscommit;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

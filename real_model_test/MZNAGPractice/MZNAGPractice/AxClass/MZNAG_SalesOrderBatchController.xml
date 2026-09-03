@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_SalesOrderBatchController</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class MZNAG_SalesOrderBatchController extends SysOperationServiceController
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>construct</Name>
+				<Source><![CDATA[
+    public static MZNAG_SalesOrderBatchController construct()
+    {
+        MZNAG_SalesOrderBatchController controller = new MZNAG_SalesOrderBatchController();
+        controller.parmClassName(classStr(MZNAG_SalesOrderBatchService));
+        controller.parmMethodName(methodStr(MZNAG_SalesOrderBatchService, processOperation));
+        controller.parmExecutionMode(SysOperationExecutionMode::ScheduledBatch);
+        return controller;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        MZNAG_SalesOrderBatchController controller = MZNAG_SalesOrderBatchController::construct();
+        controller.startOperation();
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

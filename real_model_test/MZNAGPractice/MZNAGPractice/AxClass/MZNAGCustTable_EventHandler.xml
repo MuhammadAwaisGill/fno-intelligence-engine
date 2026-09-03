@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAGCustTable_EventHandler</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class MZNAGCustTable_EventHandler
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>CustTable_onUpdating</Name>
+				<Source><![CDATA[
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    [DataEventHandler(tableStr(CustTable), DataEventType::Updating)]
+    public static void CustTable_onUpdating(Common sender, DataEventArgs e)
+    {
+        CustTable custTable = sender;
+        CustTrans custTrans;
+
+        update_recordset custTrans
+                setting MZNAGDescription = custTable.MZNAGDescription
+                where custTrans.AccountNum == custTable.AccountNum;
+
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

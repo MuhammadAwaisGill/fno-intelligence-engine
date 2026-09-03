@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAGQueryTest</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+internal final class MZNAGQueryTest
+{
+ 
+    
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        // Initializing the Query from the AOT by Name
+        Query query;// = new Query(queryStr(MZNAGCourseEnrollmentQuery));
+        QueryRun queryRun = new QueryRun(query);
+
+        MZNAGCourseSchedule schedule;
+        MZNAGEnrollment     enrollment;
+        MZNAGStudent        student;
+
+        // Run the query & loop through results
+        while (queryRun.next())
+        {
+            // fetching each table buffer from query
+            schedule = queryRun.get(tableNum(MZNAGCourseSchedule));
+            enrollment = queryRun.get(tableNum(MZNAGEnrollment));
+            student = queryRun.get(tableNum(MZNAGStudent));
+
+            // printing to infolog
+            info(strFmt("Schedule: %1 | Student: %2 | Status: %3",
+                schedule.MZNAGScheduleId,
+                student.MZNAGStudentId,
+                enum2Str(enrollment.MZNAGEnrollmentStatus)));
+
+        }
+        info("Query Completed!");
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

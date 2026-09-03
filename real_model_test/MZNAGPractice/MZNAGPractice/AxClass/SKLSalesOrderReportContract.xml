@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>SKLSalesOrderReportContract</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[DataContractAttribute]
+class SKLSalesOrderReportContract
+{
+    private FromDate fromDate;
+    private ToDate   toDate;
+    SalesType       salesType;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>parmFromDate</Name>
+				<Source><![CDATA[
+    [DataMemberAttribute("FromDate"),
+    SysOperationLabelAttribute("From Date")]
+    public FromDate parmFromDate(FromDate _fromDate = fromDate)
+    {
+        fromDate = _fromDate;
+        return fromDate;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmToDate</Name>
+				<Source><![CDATA[
+    [DataMemberAttribute("ToDate"),
+    SysOperationLabelAttribute("To Date")]
+    public ToDate parmToDate(ToDate _toDate = toDate)
+    {
+        toDate = _toDate;
+        return toDate;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmSalesType</Name>
+				<Source><![CDATA[
+    [DataMemberAttribute('SalesType'),
+    SysOperationLabelAttribute('Order Type'),
+    SysOperationHelpTextAttribute('Select specific sales order type.')]
+    public SalesType parmSalesType(SalesType _salesType = salesType)
+    {
+        salesType = _salesType;
+        return salesType;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

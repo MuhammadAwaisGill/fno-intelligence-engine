@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAGEnrollmentService</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class MZNAGEnrollmentService 
+{
+    // 1. Class-level variable declarations (instance variables)
+    // class variable (state)
+    str defaultStatus;
+    MZNAGStudent    studentBuffer;
+    MZNAGEnrollment enrollmentBuffer;
+    //StudentId       studentId;
+    boolean         processed;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    /*select [modifiers] [aggregate] fieldlist
+    from tableBuffer
+    [index hint IndexName]
+    [where conditions]
+    [join / outer join / exists join / not exists join anotherBuffer
+        where joinCondition]
+    [order by / group by fields]*/
+
+
+    // selecting from specific fields
+    /*MZNAGStudent studentBuffer;
+    while select firstonly10 MZNAGStudentId, MZNAGStudentName from studentBuffer
+        where studentBuffer.IsActice == true;*/
+
+    
+    // Joins 
+    /*MZNAGStudent studentBuffer;
+    MZNAGEnrollment enrollmentBuffer;
+
+    while select enrollmentBuffer
+        join studentBuffer
+            where studentBuffer.MZNAGStudentId == enrollmentBuffer.MZNAGStudentId
+                && enrollmentBuffer.Status == MZNAGEnrollmentStatus::Enrolled
+    {
+        info(strFmt("%1 — %2", enrollmentBuffer.EnrollmentId, studentBuffer.StudentName));
+    }*/
+
+
+    // first we will hide the default constructor by making it protected
+    protected void new()
+    {
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>construct</Name>
+				<Source><![CDATA[
+    // then we create a static construct method
+    public static MZNAGEnrollmentService construct()
+    {
+        return new MZNAGEnrollmentService();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>process</Name>
+				<Source><![CDATA[
+    public void process()
+    {
+        Info("Processing Enrollment...");
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>setDefaultStatus</Name>
+				<Source><![CDATA[
+    // instance(object) method
+    public void setDefaultStatus(str _status)
+    {
+        this.defaultStatus = _status;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>validateEnrollment</Name>
+				<Source><![CDATA[
+    // Calling the instance method
+    // MZNAGEnrollmentService enrollmentService = new MZNAGEnrollmentService();
+    // enrollmentService.setDefaultStatus("Enrolled");
+
+    // static(class) method
+    public static void validateEnrollment(MZNAGStudent _student)
+    {
+        if(_student.MZNAGStudentId)
+        {
+            throw error("Student is not active");
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    // Calling the static method
+    // MZNAGStudentEnrollment::validateEnrollment(_student);
+    
+    
+    public static void main(Args _args)
+    {
+        MZNAGEnrollment enrollment;
+
+        // Validation before Inserting
+        enrollment.MZNAGScheduleId = "SCH-001";
+        enrollment.MZNAGStudentId = "STU-001";
+        enrollment.MZNAGEnrollmentId = "ENR003";
+        enrollment.MZNAGEnrollmentStatus = MZNAGEnrollmentStatus::Enrolled;
+        enrollment.EnrollmentDate = today();
+
+        try
+        {
+            ttsbegin;
+            enrollment.insert();
+            ttscommit;
+
+            info("Enrollment created Successfully!");
+        }
+        catch (Exception::DuplicateKeyException)
+        {
+            ttsabort;
+            error("This student is already enrolled in this schedule");
+        }
+        catch (Exception::Error)
+        {
+            ttsabort;
+            error("An error occurred while creating the enrollment");
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

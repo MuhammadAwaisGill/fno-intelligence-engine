@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_PurchaseOrderControlledDocumentDP</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[SRSReportQueryAttribute(queryStr(MZNAG_PurchaseOrderControlledDocumentQuery))]
+class MZNAG_PurchaseOrderControlledDocumentDP extends SRSReportDataProviderBase
+{
+    MZNAG_POControlledDocumentTable tempTable;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getMZNAG_POControlledDocumentTable</Name>
+				<Source><![CDATA[
+    [SRSReportDataSetAttribute(tableStr(MZNAG_POControlledDocumentTable))]
+    public MZNAG_POControlledDocumentTable getMZNAG_POControlledDocumentTable()
+    {
+        select tempTable;
+        return tempTable;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processReport</Name>
+				<Source><![CDATA[
+    public void processReport()
+    {
+        QueryRun                    queryRun;
+        VendPurchOrderJour          vendPurchOrderJour;
+        PurchLineAllVersions        purchLineAllVersions;
+        CompanyInfo                 companyInfo;
+        PurchTableAllVersions       purchTableAllVersions;
+        VendTable                   vendTable;
+        PurchTable                  purchTable;
+        PurchLine                   purchLine;
+        boolean                     found;
+
+        companyInfo = CompanyInfo::find();
+
+        Query query = this.parmQuery();
+        queryRun = new QueryRun(query);
+
+        while (queryRun.next() && !found)
+        {
+            vendPurchOrderJour = queryRun.get(tableNum(VendPurchOrderJour));
+
+            purchTable = purchTable::find(vendPurchOrderJour.PurchId);
+            vendTable = vendTable::find(purchTable.PurchId);
+
+            while select purchLine
+            join purchLineAllVersions
+            where purchLineAllVersions.PurchTableVersionRecId == vendPurchOrderJour.PurchTableVersion
+            && purchLineAllVersions.InventTransId == purchLine.InventTransId
+            {
+                tempTable.clear();
+
+                tempTable.CompanyName    = companyInfo.name();
+                tempTable.CompanyAddress = companyInfo.postalAddress().Address;
+                tempTable.CompanyURL     = companyInfo.url();
+                tempTable.CompanyEmail   = companyInfo.email();
+                tempTable.CompanyPhone   = companyInfo.phone();
+                tempTable.CompanyLogo    = CompanyImage::findByRecord(companyInfo).Image;
+
+                tempTable.Supplier          = vendTable.name();
+                tempTable.SupplierID        = vendPurchOrderJour.OrderAccount;
+                tempTable.Telephone         = vendTable.phone();
+                tempTable.SupplierEmail     = vendTable.email();
+                tempTable.PurchaseOrder     = vendPurchOrderJour.PurchId;
+                tempTable.PurchaseOrderDate = vendPurchOrderJour.PurchOrderDate;
+                tempTable.PODeliveryDate    = purchTable.DeliveryDate;
+                tempTable.POCurrency        = purchTableAllVersions.CurrencyCode;
+                tempTable.BillToLocation    = companyInfo.postalAddress().Address;
+
+                tempTable.LineNo            = 1;
+                tempTable.LineItemCode      = purchLineAllVersions.ItemId;
+                tempTable.LineNameDesc      = purchLineAllVersions.Name;
+                tempTable.LineUOM           = purchLineAllVersions.PurchUnit;
+                tempTable.LineQuantity      = purchLineAllVersions.PurchQty;
+                tempTable.LineUnitPrice     = purchLineAllVersions.PurchPrice;
+                tempTable.LineAmount        = purchLineAllVersions.LineAmount;
+                tempTable.LineTotalDiscount = purchLineAllVersions.LineDisc;
+                tempTable.LineAmtAftrDisc   = purchLineAllVersions.LineAmount - purchLineAllVersions.LineDisc;
+                tempTable.LineSalesTax       = 0.00;
+                tempTable.LineTotalAmtAftrTax = tempTable.LineAmtAftrDisc + tempTable.LineSalesTax;
+                tempTable.LineAmtInWords      = "";
+
+                tempTable.insert();
+                found = true;
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

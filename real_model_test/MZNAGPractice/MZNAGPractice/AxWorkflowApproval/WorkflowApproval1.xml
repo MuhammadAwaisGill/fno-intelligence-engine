@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxWorkflowApproval xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V2">
+	<Name>WorkflowApproval1</Name>
+	<CanceledEventHandler>WorkflowApproval1EventHandler</CanceledEventHandler>
+	<DelegateMenuItem>WorkflowApproval1DelegateMenuItem</DelegateMenuItem>
+	<Document>MZNAG_CustomWorkflowTypeDocument</Document>
+	<DocumentMenuItem>MZNAG_RequestOrderTable</DocumentMenuItem>
+	<DocumentPreviewFieldGroup>Overview</DocumentPreviewFieldGroup>
+	<HelpText>Help text for the WorkflowApproval1 approval element</HelpText>
+	<Label>WorkflowApproval1 Approval</Label>
+	<ResubmitMenuItem>WorkflowApproval1ResubmitMenuItem</ResubmitMenuItem>
+	<StartedEventHandler>WorkflowApproval1EventHandler</StartedEventHandler>
+	<WorkItemsCreatedEventHandler>WorkflowApproval1EventHandler</WorkItemsCreatedEventHandler>
+	<Approve>
+		<Name xmlns="">Approve</Name>
+		<ActionMenuItem xmlns="">WorkflowApproval1Approve</ActionMenuItem>
+		<EventHandler xmlns="">WorkflowApproval1EventHandler</EventHandler>
+	</Approve>
+	<Deny>
+		<Name xmlns="">Deny</Name>
+		<Type xmlns="">Deny</Type>
+	</Deny>
+	<Reject>
+		<Name xmlns="">Reject</Name>
+		<ActionMenuItem xmlns="">WorkflowApproval1Reject</ActionMenuItem>
+		<EventHandler xmlns="">WorkflowApproval1EventHandler</EventHandler>
+		<Type xmlns="">Return</Type>
+	</Reject>
+	<RequestChange>
+		<Name xmlns="">RequestChange</Name>
+		<ActionMenuItem xmlns="">WorkflowApproval1RequestChange</ActionMenuItem>
+		<EventHandler xmlns="">WorkflowApproval1EventHandler</EventHandler>
+		<Type xmlns="">RequestChange</Type>
+	</RequestChange>
+</AxWorkflowApproval>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxTable xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_SalesPickingLinesTmp</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class MZNAG_SalesPickingLinesTmp extends common
+{
+   
+
+}
+
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>shouldThrowExceptionOnZeroDelete</Name>
+				<Source><![CDATA[
+    public boolean shouldThrowExceptionOnZeroDelete()
+    {
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>validateField</Name>
+				<Source><![CDATA[
+    public boolean validateField(FieldId _fieldIdToCheck)
+    {
+        boolean ret = super(_fieldIdToCheck);
+        /*
+        switch (_fieldIdToCheck)
+        {
+            case fieldNum(MZNAG_SalesPickingListTmp, PickedQty):
+                if (this.PickedQty < this.PreviouslyPickedQty)
+                {
+                    ret = checkFailed(strFmt("Picked quantity cannot be less than the already recorded amount (%1).",
+                        this.PreviouslyPickedQty));
+                }
+                else if (this.PickedQty > this.SalesQty)
+                {
+                    ret = checkFailed(strFmt("Picked quantity (%1) cannot exceed sales quantity (%2).",
+                        this.PickedQty, this.SalesQty));
+                }
+                break;
+        }*/
+
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>modifiedField</Name>
+				<Source><![CDATA[
+    public void modifiedField(FieldId _fieldId)
+    {
+        super(_fieldId);
+
+        /*switch (_fieldId)
+        {
+            case fieldNum(MZNAG_SalesPickingListTmp, PickedQty):
+                this.QtyToPick = this.SalesQty - this.PickedQty;
+                break;
+        }*/
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateTmpData</Name>
+				<Source><![CDATA[
+    /// <summary>
+    ///
+    /// </summary>
+    public static void populateTmpData(MZNAGSalesId _salesId)
+    {
+        MZNAG_SalesPickingLinesTmp pickingTmp;
+        MZNAG_SalesLine           salesLine;
+        
+        while select salesLine
+        where salesLine.SalesId == _salesId
+        {
+            real remainingQty = salesLine.SalesQty - salesLine.PickedQty;
+
+            if (remainingQty > 0)
+            {
+                pickingTmp.clear();
+
+                pickingTmp.SalesId             = salesLine.SalesId;
+                pickingTmp.LineNum             = salesLine.LineNum;
+                pickingTmp.ItemId              = salesLine.ItemId;
+                pickingTmp.ItemName            = salesLine.ItemName;
+                pickingTmp.InventSiteId        = salesLine.InventSiteId;
+                pickingTmp.InventLocationId    = salesLine.InventLocationId;
+                pickingTmp.PickedQty           = remainingQty;
+                pickingTmp.QtyToPick           = remainingQty;
+                pickingTmp.insert();
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+	<SubscriberAccessLevel>
+		<Read>Allow</Read>
+	</SubscriberAccessLevel>
+	<DeleteActions />
+	<FieldGroups>
+		<AxTableFieldGroup>
+			<Name>AutoReport</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoLookup</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoIdentification</Name>
+			<AutoPopulate>Yes</AutoPopulate>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoSummary</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoBrowse</Name>
+			<Fields />
+		</AxTableFieldGroup>
+	</FieldGroups>
+	<Fields>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>SalesId</Name>
+			<AllowEdit>No</AllowEdit>
+			<ExtendedDataType>MZNAGSalesId</ExtendedDataType>
+			<IgnoreEDTRelation>Yes</IgnoreEDTRelation>
+			<Mandatory>Yes</Mandatory>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>ItemId</Name>
+			<ExtendedDataType>ItemId</ExtendedDataType>
+			<IgnoreEDTRelation>Yes</IgnoreEDTRelation>
+			<Mandatory>Yes</Mandatory>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>ItemName</Name>
+			<Label>Item name</Label>
+			<StringSize>100</StringSize>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldReal">
+			<Name>SalesQty</Name>
+			<ExtendedDataType>SalesQty</ExtendedDataType>
+			<IgnoreEDTRelation>Yes</IgnoreEDTRelation>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldReal">
+			<Name>PickedQty</Name>
+			<ExtendedDataType>InventQty</ExtendedDataType>
+			<IgnoreEDTRelation>Yes</IgnoreEDTRelation>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldReal">
+			<Name>QtyToPick</Name>
+			<ExtendedDataType>InventQty</ExtendedDataType>
+			<IgnoreEDTRelation>Yes</IgnoreEDTRelation>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldReal">
+			<Name>PreviouslyPickedQty</Name>
+			<ExtendedDataType>InventQty</ExtendedDataType>
+			<IgnoreEDTRelation>Yes</IgnoreEDTRelation>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldReal">
+			<Name>LineNum</Name>
+			<AllowEdit>No</AllowEdit>
+			<ExtendedDataType>LineNum</ExtendedDataType>
+			<IgnoreEDTRelation>Yes</IgnoreEDTRelation>
+			<Mandatory>Yes</Mandatory>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>InventSiteId</Name>
+			<ExtendedDataType>InventSiteId</ExtendedDataType>
+			<IgnoreEDTRelation>Yes</IgnoreEDTRelation>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>InventLocationId</Name>
+			<ExtendedDataType>InventLocationId</ExtendedDataType>
+			<IgnoreEDTRelation>Yes</IgnoreEDTRelation>
+		</AxTableField>
+	</Fields>
+	<FullTextIndexes />
+	<Indexes />
+	<Mappings />
+	<Relations>
+		<AxTableRelation>
+			<Name>MZNAG_SalesTable</Name>
+			<Cardinality>ZeroMore</Cardinality>
+			<RelatedTable>MZNAG_SalesTable</RelatedTable>
+			<RelatedTableCardinality>ExactlyOne</RelatedTableCardinality>
+			<RelationshipType>Association</RelationshipType>
+			<Constraints>
+				<AxTableRelationConstraint xmlns=""
+					i:type="AxTableRelationConstraintField">
+					<Name>SalesId</Name>
+					<Field>SalesId</Field>
+					<RelatedField>SalesId</RelatedField>
+				</AxTableRelationConstraint>
+			</Constraints>
+		</AxTableRelation>
+	</Relations>
+	<StateMachines />
+</AxTable>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>SKL_SampleReportDP</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>/// Report Data Provider class for the SKL Sample Customer Report./// </summary>
+[
+// REMOVED: SRSReportQueryAttribute(queryStr(SKL_SampleCustomerQuery))
+// We only need the parameter attribute now to link the contract.
+SRSReportParameterAttribute(classStr(SKL_SampleReportContract))
+]public class SKL_SampleReportDP extends SRSReportDataProviderBase
+{
+    SKL_SampleCustomer tempSKL_SampleCustomer;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getSKL_SampleCustomer</Name>
+				<Source><![CDATA[
+    [SRSReportDataSetAttribute(tableStr(SKL_SampleCustomer))]
+    public SKL_SampleCustomer getSKL_SampleCustomer()
+    {
+        select tempSKL_SampleCustomer;
+        return tempSKL_SampleCustomer;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processReport</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Core business logic to read data and populate our TempDB table.
+    /// </summary>
+    public void processReport()
+    {
+        CustTable custTable;
+
+        // Clear the temporary buffer before starting
+        tempSKL_SampleCustomer.clear();
+
+        // Loop through ALL customers (no 'where' clause!)
+        while select custTable
+        {
+            // Map data fields from master table to our report table
+            tempSKL_SampleCustomer.AccountNum = custTable.AccountNum;
+            tempSKL_SampleCustomer.Name = custTable.name();
+            tempSKL_SampleCustomer.Balance = custTable.openBalanceMST();
+
+            // Insert into our TempDB table cache
+            tempSKL_SampleCustomer.insert();
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

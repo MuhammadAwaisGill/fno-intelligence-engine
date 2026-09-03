@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_PurchaseRequisitionStatusDP</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class MZNAg_PurchaseRequisitionStatusDP extends SRSReportDataProviderBase
+{
+    MZNAG_PurchaseRequistionStatusTable tmpTable;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getTmpTable</Name>
+				<Source><![CDATA[
+    [SrsReportDataSetAttribute(tableStr(MZNAG_PurchaseRequistionStatusTable))]
+
+    public MZNAG_PurchaseRequistionStatusTable getTmpTable()
+    {
+        select tmpTable;
+        return tmpTable;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processReport</Name>
+				<Source><![CDATA[
+    public void processReport()
+    {
+        PurchReqTable purchReqTable;
+        PurchReqLine purchReqLine;
+        
+        str companyName = CompanyInfo::find().Name;
+        str companyId = curExt();
+
+        // 1. Find the current legal entity record
+        CompanyInfo companyInfo = CompanyInfo::find();
+
+        // 2. Fetch the image data from the CompanyImage subsystem
+       // container logoContainer = CompanyImage::findByRecord(companyInfo).Image;
+
+        while select purchReqTable
+        {
+            while select purchReqLine
+                where purchReqLine.PurchReqTable == purchReqTable.RecId
+            {
+                tmpTable.clear();
+
+                tmpTable.Name = purchReqTable.PurchReqName;
+                tmpTable.PRNumber = purchReqTable.PurchReqId;
+                tmpTable.LegalEntity = companyId;
+                tmpTable.PRCreatedDateTime = purchReqTable.CreatedDateTime;
+                //tmpTable.DelegatedUserName = purchReqLine.
+                tmpTable.Status = enum2Str(purchReqLine.RequisitionStatus);
+                tmpTable.PurchaseOrderId = purchReqLine.PurchId;
+                tmpTable.POCreatedDateTime = purchReqLine.CreatedDateTime;
+                tmpTable.CompanyName = companyName;
+                tmpTable.CompanyLogo = CompanyImage::findByRecord(companyInfo).Image;;
+
+                tmpTable.insert();
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

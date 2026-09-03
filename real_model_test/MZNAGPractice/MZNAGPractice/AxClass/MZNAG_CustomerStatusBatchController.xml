@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_CustomerStatusBatchController</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class MZNAG_CustomerStatusBatchController extends SysOperationServiceController
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>construct</Name>
+				<Source><![CDATA[
+    public static MZNAG_CustomerStatusBatchController construct()
+    {
+        MZNAG_CustomerStatusBatchController controller = new MZNAG_CustomerStatusBatchController();
+        controller.parmClassName(classStr(MZNAG_CustomerStatusBatchService));
+        controller.parmMethodName(methodStr(MZNAG_CustomerStatusBatchService, processOperation));
+        controller.parmExecutionMode(SysOperationExecutionMode::ScheduledBatch);
+        controller.parmDialogCaption("Update customer status");
+        return controller;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>caption</Name>
+				<Source><![CDATA[
+    public ClassDescription caption()
+    {
+        return "Update customer status for sales orders";
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        MZNAG_CustomerStatusBatchController controller = MZNAG_CustomerStatusBatchController::construct();
+
+        controller.startOperation();
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

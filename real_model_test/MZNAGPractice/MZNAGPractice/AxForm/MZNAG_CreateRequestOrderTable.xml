@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxForm xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V6">
+	<Name>MZNAG_CreateRequestOrderTable</Name>
+	<SourceCode>
+		<Methods xmlns="">
+			<Method>
+				<Name>classDeclaration</Name>
+				<Source><![CDATA[
+[Form]
+public class MZNAG_CreateRequestOrderTable extends FormRun
+{
+    
+}
+]]></Source>
+			</Method>
+		</Methods>
+		<DataSources xmlns="">
+			<DataSource>
+				<Name>MZNAG_CreateRequestOrderTable</Name>
+				<Methods />
+				<Fields>
+					<Field>
+						<DataField>SalesId</DataField>
+						<Methods>
+							<Method>
+								<Name>modified</Name>
+								<Source><![CDATA[
+            /// <summary>
+            ///
+            /// </summary>
+            public void modified()
+            {
+                super();
+                MZNAG_CreateRequestOrderTable createRequestOrderTableDelete;
+                MZNAG_CreateRequestOrderLine createRequestOrderLineDelete;
+                delete_from createRequestOrderTableDelete;
+                delete_from createRequestOrderLineDelete;
+
+                SalesTable salesTable = SalesTable::find(MZNAG_CreateRequestOrderTable.SalesId);
+                SalesLine salesline;
+
+                MZNAG_CreateRequestOrderTable.CustAccount = salesTable.CustAccount;
+                MZNAG_CreateRequestOrderTable.CustomerName = salesTable.customerName();
+                MZNAG_CreateRequestOrderTable.CurrencyCode = salesTable.CurrencyCode;
+                MZNAG_CreateRequestOrderTable.InventSiteId = salesTable.InventSiteId;
+                MZNAG_CreateRequestOrderTable.InventLocationId = salesTable.InventLocationId;
+                MZNAG_CreateRequestOrderTable.insert();
+
+                while select * from salesline
+                where salesline.SalesId == salesTable.SalesId
+                {
+                    MZNAG_CreateRequestOrderLine.clear();
+                    MZNAG_CreateRequestOrderLine.SalesId    = salesline.SalesId;
+                    MZNAG_CreateRequestOrderLine.LineNum    = salesline.LineNum;
+                    MZNAG_CreateRequestOrderLine.ItemId     = salesline.ItemId;
+                    MZNAG_CreateRequestOrderLine.ItemName   = salesline.itemName();
+                    MZNAG_CreateRequestOrderLine.SalesQty   = salesline.SalesQty;
+                    MZNAG_CreateRequestOrderLine.SalesPrice = salesline.SalesPrice;
+                    MZNAG_CreateRequestOrderLine.LineAmount = salesline.LineAmount;
+
+                    MZNAG_CreateRequestOrderLine.insert();
+                }
+                MZNAG_CreateRequestOrderLine_ds.research(true);
+            }
+
+]]></Source>
+							</Method>
+						</Methods>
+					</Field>
+				</Fields>
+			</DataSource>
+			<DataSource>
+				<Name>MZNAG_CreateRequestOrderLine</Name>
+				<Methods>
+					<Method>
+						<Name>initValue</Name>
+						<Source><![CDATA[
+        public void initValue()
+        {
+            super();
+            MZNAG_CreateRequestOrderLine createRequestOrderLine;
+
+            select maxof(LineNum) from createRequestOrderLine
+                where createRequestOrderLine.SalesId == MZNAG_CreateRequestOrderLine.SalesId;
+
+            MZNAG_CreateRequestOrderLine.LineNum = createRequestOrderLine.LineNum + 1;
+
+            MZNAG_CreateRequestOrderLine.SalesQty = 1;
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+				<Fields />
+			</DataSource>
+		</DataSources>
+		<DataControls xmlns="">
+			<Control>
+				<Name>Ok</Name>
+				<Type>Button</Type>
+				<Methods>
+					<Method>
+						<Name>clicked</Name>
+						<Source><![CDATA[
+        public void clicked()
+        {
+            super();
+            
+            MZNAG_RequestOrderTable requestOrder;
+            MZNAG_RequestOrderLine requestLine;
+            MZNAG_CreateRequestOrderTable createRequestOrder = MZNAG_CreateRequestOrderTable_ds.cursor();
+            MZNAG_CreateRequestOrderLine createRequestLine;
+
+            requestOrder.SalesId       = createRequestOrder.SalesId;
+            requestOrder.CustAccount   = createRequestOrder.CustAccount;
+            requestOrder.CustomerName      = createRequestOrder.CustomerName;
+            requestOrder.CurrencyCode  = createRequestOrder.CurrencyCode;
+            requestOrder.InventSiteId  = createRequestOrder.InventSiteId;
+            requestOrder.InventLocationId   = createRequestOrder.InventLocationId;
+            requestOrder.SalesStatus   = createRequestOrder.SalesStatus;
+            requestOrder.insert();
+
+            while select createRequestLine
+            {
+                requestLine.clear();
+                requestLine.SalesId       = createRequestLine.SalesId;
+                requestLine.ItemId        = createRequestLine.ItemId;
+                requestLine.ItemName      = createRequestLine.ItemName;
+                requestLine.SalesPrice    = createRequestLine.SalesPrice;
+                requestLine.SalesQty      = createRequestLine.SalesQty;
+                requestLine.LineNum       = createRequestLine.LineNum;
+                requestLine.insert();
+             }
+
+            FormRun callerForm;
+
+            if (element.args() && element.args().caller())
+            {
+                callerForm = element.args().caller() as FormRun;
+            }
+
+            if (callerForm)
+            {
+                FormDataSource requestOrderTable_ds = callerForm.dataSource(formDataSourceStr(MZNAG_RequestOrderTable, MZNAG_RequestOrderTable));
+                FormDataSource requestOrderLine_ds = callerForm.dataSource(formDataSourceStr(MZNAG_RequestOrderTable, MZNAG_RequestOrderLine));
+             
+                if (requestOrderTable_ds)
+                {
+                    requestOrderTable_ds.research(true);
+                }
+                if (requestOrderLine_ds)
+                {
+                    requestOrderLine_ds.research(true);
+                }
+            } 
+
+            element.close();
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+			</Control>
+		</DataControls>
+		<Members xmlns="" />
+	</SourceCode>
+	<DataSources>
+		<AxFormDataSource xmlns="">
+			<Name>MZNAG_CreateRequestOrderTable</Name>
+			<Table>MZNAG_CreateRequestOrderTable</Table>
+			<Fields>
+				<AxFormDataSourceField>
+					<DataField>CurrencyCode</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>CustAccount</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>CustomerName</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>DataAreaId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>InventLocationId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>InventSiteId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>LineNum</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Partition</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>RecId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>SalesId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>SalesStatus</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>TableId</DataField>
+				</AxFormDataSourceField>
+			</Fields>
+			<ReferencedDataSources />
+			<InsertIfEmpty>No</InsertIfEmpty>
+			<DataSourceLinks />
+			<DerivedDataSources />
+		</AxFormDataSource>
+		<AxFormDataSource xmlns="">
+			<Name>MZNAG_CreateRequestOrderLine</Name>
+			<Table>MZNAG_CreateRequestOrderLine</Table>
+			<Fields>
+				<AxFormDataSourceField>
+					<DataField>DataAreaId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>ItemId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>ItemName</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>LineAmount</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>LineNum</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Partition</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>RecId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>SalesId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>SalesPrice</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>SalesQty</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>TableId</DataField>
+				</AxFormDataSourceField>
+			</Fields>
+			<ReferencedDataSources />
+			<JoinSource>MZNAG_CreateRequestOrderTable</JoinSource>
+			<InsertIfEmpty>No</InsertIfEmpty>
+			<DataSourceLinks />
+			<DerivedDataSources />
+		</AxFormDataSource>
+	</DataSources>
+	<Design>
+		<Caption xmlns="">Create request order</Caption>
+		<DialogSize xmlns="">Full</DialogSize>
+		<Pattern xmlns="">DialogFastTabs</Pattern>
+		<PatternVersion xmlns="">1.0</PatternVersion>
+		<Style xmlns="">Dialog</Style>
+		<Controls xmlns="">
+			<AxFormControl xmlns=""
+				i:type="AxFormTabControl">
+				<Name>ContentTab</Name>
+				<Type>Tab</Type>
+				<FormControlExtension
+					i:nil="true" />
+				<Controls>
+					<AxFormControl xmlns=""
+						i:type="AxFormTabPageControl">
+						<Name>TabOverView</Name>
+						<Pattern>FieldsFieldGroups</Pattern>
+						<PatternVersion>1.1</PatternVersion>
+						<Type>TabPage</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<Controls>
+							<AxFormControl xmlns=""
+								i:type="AxFormGroupControl">
+								<Name>HeaderGroup</Name>
+								<Type>Group</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>MZNAG_CreateRequestOrderTable_SalesId</Name>
+										<Type>String</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>SalesId</DataField>
+										<DataSource>MZNAG_CreateRequestOrderTable</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>MZNAG_CreateRequestOrderTable_CustAccount</Name>
+										<AllowEdit>No</AllowEdit>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>String</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>CustAccount</DataField>
+										<DataSource>MZNAG_CreateRequestOrderTable</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>MZNAG_CreateRequestOrderTable_CustomerName</Name>
+										<AllowEdit>No</AllowEdit>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>String</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>CustomerName</DataField>
+										<DataSource>MZNAG_CreateRequestOrderTable</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>MZNAG_CreateRequestOrderTable_CurrencyCode</Name>
+										<AllowEdit>No</AllowEdit>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>String</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>CurrencyCode</DataField>
+										<DataSource>MZNAG_CreateRequestOrderTable</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>MZNAG_CreateRequestOrderTable_InventSiteId</Name>
+										<AllowEdit>No</AllowEdit>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>String</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>InventSiteId</DataField>
+										<DataSource>MZNAG_CreateRequestOrderTable</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>MZNAG_CreateRequestOrderTable_InventLocationId</Name>
+										<AllowEdit>No</AllowEdit>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>String</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>InventLocationId</DataField>
+										<DataSource>MZNAG_CreateRequestOrderTable</DataSource>
+									</AxFormControl>
+								</Controls>
+								<Caption>General</Caption>
+								<DataSource>MZNAG_CreateRequestOrderTable</DataSource>
+							</AxFormControl>
+						</Controls>
+						<ColumnsMode>Fill</ColumnsMode>
+						<Caption>Header details</Caption>
+						<DataSource>MZNAG_CreateRequestOrderTable</DataSource>
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormTabPageControl">
+						<Name>TabSalesParmLines</Name>
+						<Pattern>ToolbarList</Pattern>
+						<PatternVersion>1.2</PatternVersion>
+						<Type>TabPage</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<Controls>
+							<AxFormControl xmlns=""
+								i:type="AxFormActionPaneControl">
+								<Name>LinesActionPane</Name>
+								<Type>ActionPane</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormActionPaneTabControl">
+										<Name>LineActionPaneTab</Name>
+										<Type>ActionPaneTab</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormButtonGroupControl">
+												<Name>LineButtonGroup</Name>
+												<Type>ButtonGroup</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<Controls>
+													<AxFormControl xmlns=""
+														i:type="AxFormCommandButtonControl">
+														<Name>AddLineBtn</Name>
+														<Type>CommandButton</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<ButtonDisplay>TextWithImageLeft</ButtonDisplay>
+														<Command>New</Command>
+														<NormalImage>Add</NormalImage>
+														<Text>Add line</Text>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormCommandButtonControl">
+														<Name>DeleteBtn</Name>
+														<Type>CommandButton</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<ButtonDisplay>TextWithImageLeft</ButtonDisplay>
+														<Command>DeleteRecord</Command>
+														<MultiSelect>Yes</MultiSelect>
+														<NormalImage>Delete</NormalImage>
+														<Text>Remove</Text>
+													</AxFormControl>
+												</Controls>
+												<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+											</AxFormControl>
+										</Controls>
+										<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+									</AxFormControl>
+								</Controls>
+								<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+								<Style>Strip</Style>
+							</AxFormControl>
+							<AxFormControl xmlns=""
+								i:type="AxFormGridControl">
+								<Name>Trans</Name>
+								<Type>Grid</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormRealControl">
+										<Name>MZNAG_CreateRequestOrderLine_LineNum</Name>
+										<AllowEdit>No</AllowEdit>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>Real</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>LineNum</DataField>
+										<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>MZNAG_CreateRequestOrderLine_ItemId</Name>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>String</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>ItemId</DataField>
+										<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>MZNAG_CreateRequestOrderLine_ItemName</Name>
+										<AllowEdit>No</AllowEdit>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>String</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>ItemName</DataField>
+										<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormRealControl">
+										<Name>MZNAG_CreateRequestOrderLine_SalesPrice</Name>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>Real</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>SalesPrice</DataField>
+										<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormRealControl">
+										<Name>MZNAG_CreateRequestOrderLine_SalesQty</Name>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>Real</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>SalesQty</DataField>
+										<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormRealControl">
+										<Name>MZNAG_CreateRequestOrderLine_LineAmount</Name>
+										<AllowEdit>No</AllowEdit>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>Real</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>LineAmount</DataField>
+										<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+									</AxFormControl>
+								</Controls>
+								<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+							</AxFormControl>
+						</Controls>
+						<Caption>Line details</Caption>
+						<DataSource>MZNAG_CreateRequestOrderLine</DataSource>
+						<FastTabExpanded>Always</FastTabExpanded>
+					</AxFormControl>
+				</Controls>
+				<Style>FastTabs</Style>
+			</AxFormControl>
+			<AxFormControl xmlns=""
+				i:type="AxFormButtonGroupControl">
+				<Name>FormButtonGroupControl1</Name>
+				<Type>ButtonGroup</Type>
+				<WidthMode>SizeToAvailable</WidthMode>
+				<FormControlExtension
+					i:nil="true" />
+				<Controls>
+					<AxFormControl xmlns=""
+						i:type="AxFormButtonControl">
+						<Name>Ok</Name>
+						<Type>Button</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<ButtonDisplay>TextOnly</ButtonDisplay>
+						<DefaultButton>Yes</DefaultButton>
+						<Text>OK</Text>
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormButtonControl">
+						<Name>Cancel</Name>
+						<Type>Button</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<ButtonDisplay>TextOnly</ButtonDisplay>
+						<Text>Cancel</Text>
+					</AxFormControl>
+				</Controls>
+				<ArrangeMethod>HorizontalRight</ArrangeMethod>
+				<Style>DialogCommitContainer</Style>
+			</AxFormControl>
+		</Controls>
+	</Design>
+	<Parts />
+</AxForm>

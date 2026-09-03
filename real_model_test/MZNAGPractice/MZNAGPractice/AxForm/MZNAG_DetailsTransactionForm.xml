@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxForm xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V6">
+	<Name>MZNAG_DetailsTransactionForm</Name>
+	<SourceCode>
+		<Methods xmlns="">
+			<Method>
+				<Name>classDeclaration</Name>
+				<Source><![CDATA[
+[Form]
+public class MZNAG_DetailsTransactionForm extends FormRun
+{
+
+}
+]]></Source>
+			</Method>
+			<Method>
+				<Name>run</Name>
+				<Source><![CDATA[
+    public void run()
+    {
+        super();
+        this.updateButtonStates();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>updateButtonStates</Name>
+				<Source><![CDATA[
+    public void updateButtonStates()
+    {
+        MZNAG_SalesLine          salesLine;
+        MZNAG_SalesPickingHeader pickingHeader;
+
+        boolean canGeneratePickingList = false;
+        boolean hasPickingJournal      = false;
+        boolean canPostPackingSlip     = false;
+        boolean hasPackingJournal      = false;
+
+        if (MZNAG_SalesTable.SalesId)
+        {
+            select firstonly RecId from salesLine
+                where salesLine.SalesId == MZNAG_SalesTable.SalesId
+                   && (salesLine.SalesQty - salesLine.PickedQty) > 0;
+            canGeneratePickingList = (salesLine.RecId != 0);
+
+            select firstonly RecId from pickingHeader
+                where pickingHeader.SalesId == MZNAG_SalesTable.SalesId;
+            hasPickingJournal = (pickingHeader.RecId != 0);
+
+            select firstonly RecId from salesLine
+                where salesLine.SalesId == MZNAG_SalesTable.SalesId
+                   && salesLine.PickedQty > 0;
+            canPostPackingSlip = (salesLine.RecId != 0);
+        }
+
+        MZNAG_PickingList.enabled(canGeneratePickingList);
+        PickingListBtn.enabled(hasPickingJournal);
+        MZNAG_PackingSlip.enabled(canPostPackingSlip);
+        PackingSlipBtn.enabled(hasPackingJournal);
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+		<DataSources xmlns="">
+			<DataSource>
+				<Name>MZNAG_SalesTable</Name>
+				<Methods>
+					<Method>
+						<Name>active</Name>
+						<Source><![CDATA[
+        public int active()
+        {
+            int ret = super();
+            element.updateButtonStates();
+            return ret;
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+				<Fields />
+			</DataSource>
+			<DataSource>
+				<Name>MZNAG_SalesLine</Name>
+				<Methods>
+					<Method>
+						<Name>active</Name>
+						<Source><![CDATA[
+        public int active()
+        {
+            int ret = super();
+            element.updateButtonStates();
+            return ret;
+        }
+
+]]></Source>
+					</Method>
+					<Method>
+						<Name>written</Name>
+						<Source><![CDATA[
+        public void written()
+        {
+            super();
+            element.updateButtonStates();
+        }
+
+]]></Source>
+					</Method>
+					<Method>
+						<Name>delete</Name>
+						<Source><![CDATA[
+        public void delete()
+        {
+            super();
+            element.updateButtonStates();
+        }
+
+]]></Source>
+					</Method>
+					<Method>
+						<Name>initValue</Name>
+						<Source><![CDATA[
+        /// <summary>
+        ///
+        /// </summary>
+        public void initValue()
+        {
+            super();
+
+            MZNAG_SalesLine salesLine;
+
+            str SalesId = MZNAG_SalesLine.SalesId;
+
+            select maxof(LineNum) from salesLine
+            where salesLine.SalesId == MZNAG_SalesLine.SalesId;
+
+            MZNAG_SalesLine.LineNum = salesLine.LineNum + 1;
+            MZNAG_SalesLine.SalesQty  = 1.0;
+        }
+
+]]></Source>
+					</Method>
+				</Methods>
+				<Fields />
+			</DataSource>
+		</DataSources>
+		<DataControls xmlns="" />
+		<Members xmlns="" />
+	</SourceCode>
+	<DataSources>
+		<AxFormDataSource xmlns="">
+			<Name>MZNAG_SalesTable</Name>
+			<Table>MZNAG_SalesTable</Table>
+			<Fields>
+				<AxFormDataSourceField>
+					<DataField>CreatedDateTime</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>CustAccount</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>CustName</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>DataAreaId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>InventLocationId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>InventSiteId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>ModifiedDateTime</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>OrderDate</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Partition</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>RecId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>SalesId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<AllowEdit>No</AllowEdit>
+					<DataField>SalesStatus</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>TableId</DataField>
+				</AxFormDataSourceField>
+			</Fields>
+			<ReferencedDataSources />
+			<InsertIfEmpty>No</InsertIfEmpty>
+			<DataSourceLinks />
+			<DerivedDataSources />
+		</AxFormDataSource>
+		<AxFormDataSource xmlns="">
+			<Name>MZNAG_SalesLine</Name>
+			<Table>MZNAG_SalesLine</Table>
+			<Fields>
+				<AxFormDataSourceField>
+					<DataField>DataAreaId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>InventLocationId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>InventSiteId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>ItemId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>ItemName</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>LineAmount</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>LineNum</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>Partition</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>PickedQty</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>QtyToPick</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>RecId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>SalesId</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>SalesPrice</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>SalesQty</DataField>
+				</AxFormDataSourceField>
+				<AxFormDataSourceField>
+					<DataField>TableId</DataField>
+				</AxFormDataSourceField>
+			</Fields>
+			<ReferencedDataSources />
+			<JoinSource>MZNAG_SalesTable</JoinSource>
+			<InsertIfEmpty>No</InsertIfEmpty>
+			<DataSourceLinks />
+			<DerivedDataSources />
+		</AxFormDataSource>
+	</DataSources>
+	<Design>
+		<Caption xmlns="">Sales table</Caption>
+		<Pattern xmlns="">DetailsTransaction</Pattern>
+		<PatternVersion xmlns="">1.4</PatternVersion>
+		<Style xmlns="">DetailsFormTransaction</Style>
+		<Controls xmlns="">
+			<AxFormControl xmlns=""
+				i:type="AxFormActionPaneControl">
+				<Name>ActionPaneHeader</Name>
+				<Type>ActionPane</Type>
+				<FormControlExtension
+					i:nil="true" />
+				<Controls>
+					<AxFormControl xmlns=""
+						i:type="AxFormActionPaneTabControl">
+						<Name>PickAndPack</Name>
+						<Type>ActionPaneTab</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<Controls>
+							<AxFormControl xmlns=""
+								i:type="AxFormButtonGroupControl">
+								<Name>PickAndPackGenerate</Name>
+								<Type>ButtonGroup</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormMenuFunctionButtonControl">
+										<Name>MZNAG_PackingSlip</Name>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>MenuFunctionButton</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataSource>MZNAG_SalesTable</DataSource>
+										<MenuItemName>MZNAG_SalesEditLines</MenuItemName>
+										<Text>Packing list</Text>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormMenuFunctionButtonControl">
+										<Name>MZNAG_PickingList</Name>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>MenuFunctionButton</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataSource>MZNAG_SalesTable</DataSource>
+										<MenuItemName>MZNAG_SalesEditLines2</MenuItemName>
+										<Text>Picking list</Text>
+									</AxFormControl>
+								</Controls>
+								<Caption>Generate</Caption>
+							</AxFormControl>
+							<AxFormControl xmlns=""
+								i:type="AxFormButtonGroupControl">
+								<Name>PickAndPackJournal</Name>
+								<Type>ButtonGroup</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormMenuFunctionButtonControl">
+										<Name>PickingListBtn</Name>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>MenuFunctionButton</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<MenuItemName>MZNAG_PickingListForm</MenuItemName>
+										<Text>Picking list</Text>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormMenuFunctionButtonControl">
+										<Name>PackingSlipBtn</Name>
+										<AutoDeclaration>Yes</AutoDeclaration>
+										<Type>MenuFunctionButton</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<MenuItemName>MZNAG_PackingSlipForm</MenuItemName>
+										<Text>Packing slip journal</Text>
+									</AxFormControl>
+								</Controls>
+								<Caption>Journals</Caption>
+							</AxFormControl>
+						</Controls>
+						<Caption>Pick and pack</Caption>
+					</AxFormControl>
+				</Controls>
+			</AxFormControl>
+			<AxFormControl xmlns=""
+				i:type="AxFormGroupControl">
+				<Name>NavigationList</Name>
+				<HeightMode>SizeToAvailable</HeightMode>
+				<Type>Group</Type>
+				<Visible>No</Visible>
+				<FormControlExtension
+					i:nil="true" />
+				<Controls>
+					<AxFormControl>
+						<Name>QuickFilterControl</Name>
+						<WidthMode>SizeToAvailable</WidthMode>
+						<FormControlExtension>
+							<Name>QuickFilterControl</Name>
+							<ExtensionComponents />
+							<ExtensionProperties>
+								<AxFormControlExtensionProperty>
+									<Name>targetControlName</Name>
+									<Type>String</Type>
+									<Value>NavigationListGrid</Value>
+								</AxFormControlExtensionProperty>
+								<AxFormControlExtensionProperty>
+									<Name>placeholderText</Name>
+									<Type>String</Type>
+								</AxFormControlExtensionProperty>
+								<AxFormControlExtensionProperty>
+									<Name>defaultColumnName</Name>
+									<Type>String</Type>
+									<Value>MZNAG_SalesTable_SalesId</Value>
+								</AxFormControlExtensionProperty>
+							</ExtensionProperties>
+						</FormControlExtension>
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormGridControl">
+						<Name>NavigationListGrid</Name>
+						<AllowEdit>No</AllowEdit>
+						<Type>Grid</Type>
+						<WidthMode>SizeToContent</WidthMode>
+						<FormControlExtension
+							i:nil="true" />
+						<Controls>
+							<AxFormControl xmlns=""
+								i:type="AxFormStringControl">
+								<Name>MZNAG_SalesTable_SalesId</Name>
+								<Type>String</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<DataField>SalesId</DataField>
+								<DataSource>MZNAG_SalesTable</DataSource>
+							</AxFormControl>
+							<AxFormControl xmlns=""
+								i:type="AxFormStringControl">
+								<Name>MZNAG_SalesTable_CustAccount</Name>
+								<Type>String</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<DataField>CustAccount</DataField>
+								<DataSource>MZNAG_SalesTable</DataSource>
+							</AxFormControl>
+						</Controls>
+						<DataSource>MZNAG_SalesTable</DataSource>
+						<MultiSelect>No</MultiSelect>
+						<ShowRowLabels>No</ShowRowLabels>
+						<Style>List</Style>
+					</AxFormControl>
+				</Controls>
+				<FrameType>None</FrameType>
+				<Style>SidePanel</Style>
+			</AxFormControl>
+			<AxFormControl xmlns=""
+				i:type="AxFormTabControl">
+				<Name>MainTab</Name>
+				<Type>Tab</Type>
+				<FormControlExtension
+					i:nil="true" />
+				<Controls>
+					<AxFormControl xmlns=""
+						i:type="AxFormTabPageControl">
+						<Name>TabPageDetails</Name>
+						<Type>TabPage</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<Controls>
+							<AxFormControl xmlns=""
+								i:type="AxFormGroupControl">
+								<Name>HeaderInfo</Name>
+								<Type>Group</Type>
+								<WidthMode>SizeToAvailable</WidthMode>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>HeaderTitle</Name>
+										<Skip>Yes</Skip>
+										<Type>String</Type>
+										<WidthMode>SizeToAvailable</WidthMode>
+										<FormControlExtension
+											i:nil="true" />
+										<DataMethod>titleFields</DataMethod>
+										<DataSource>MZNAG_SalesTable</DataSource>
+										<Label>Sales Id</Label>
+										<ShowLabel>No</ShowLabel>
+										<Style>TitleField</Style>
+										<Text>Sales Id</Text>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormGroupControl">
+										<Name>EntityStatus</Name>
+										<ExtendedStyle>entityStatus</ExtendedStyle>
+										<Type>Group</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormComboBoxControl">
+												<Name>SalesStatus</Name>
+												<Type>ComboBox</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<DataField>SalesStatus</DataField>
+												<DataSource>MZNAG_SalesTable</DataSource>
+												<Items />
+											</AxFormControl>
+										</Controls>
+										<ArrangeMethod>HorizontalRight</ArrangeMethod>
+										<Breakable>No</Breakable>
+										<DataSource>MZNAG_SalesTable</DataSource>
+										<FrameType>None</FrameType>
+										<ViewEditMode>View</ViewEditMode>
+									</AxFormControl>
+								</Controls>
+								<ArrangeMethod>HorizontalLeft</ArrangeMethod>
+								<FrameType>None</FrameType>
+								<Style>DetailTitleContainer</Style>
+							</AxFormControl>
+							<AxFormControl xmlns=""
+								i:type="AxFormTabControl">
+								<Name>DetailsTab</Name>
+								<Type>Tab</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormTabPageControl">
+										<Name>LineView</Name>
+										<Type>TabPage</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormTabControl">
+												<Name>LineViewTab</Name>
+												<Type>Tab</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<Controls>
+													<AxFormControl xmlns=""
+														i:type="AxFormTabPageControl">
+														<Name>LineViewHeader</Name>
+														<Pattern>Custom</Pattern>
+														<Type>TabPage</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<Controls>
+															<AxFormControl xmlns=""
+																i:type="AxFormGroupControl">
+																<Name>General</Name>
+																<Type>Group</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<Controls>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormStringControl">
+																		<Name>MZNAG_SalesTable_SalesId1</Name>
+																		<Type>String</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>SalesId</DataField>
+																		<DataSource>MZNAG_SalesTable</DataSource>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormStringControl">
+																		<Name>MZNAG_SalesTable_CustAccount1</Name>
+																		<Type>String</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>CustAccount</DataField>
+																		<DataSource>MZNAG_SalesTable</DataSource>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormStringControl">
+																		<Name>MZNAG_SalesTable_CustName</Name>
+																		<AllowEdit>No</AllowEdit>
+																		<Type>String</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>CustName</DataField>
+																		<DataSource>MZNAG_SalesTable</DataSource>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormComboBoxControl">
+																		<Name>MZNAG_SalesTable_SalesStatus</Name>
+																		<Type>ComboBox</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>SalesStatus</DataField>
+																		<DataSource>MZNAG_SalesTable</DataSource>
+																		<Items />
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormStringControl">
+																		<Name>MZNAG_SalesTable_InventSiteId</Name>
+																		<Type>String</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>InventSiteId</DataField>
+																		<DataSource>MZNAG_SalesTable</DataSource>
+																		<Text>Site</Text>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormStringControl">
+																		<Name>MZNAG_SalesTable_InventLocationId</Name>
+																		<Type>String</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>InventLocationId</DataField>
+																		<DataSource>MZNAG_SalesTable</DataSource>
+																		<Text>Warehouse</Text>
+																	</AxFormControl>
+																</Controls>
+																<Caption>General</Caption>
+																<DataSource>MZNAG_SalesTable</DataSource>
+															</AxFormControl>
+														</Controls>
+														<ColumnsMode>Fill</ColumnsMode>
+														<Caption>Header</Caption>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormTabPageControl">
+														<Name>LineViewLines</Name>
+														<HeightMode>SizeToAvailable</HeightMode>
+														<Type>TabPage</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<Controls>
+															<AxFormControl xmlns=""
+																i:type="AxFormActionPaneControl">
+																<Name>LinesActionPaneStrip</Name>
+																<Type>ActionPane</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<Controls>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormActionPaneTabControl">
+																		<Name>LineOverviewActionTab</Name>
+																		<Type>ActionPaneTab</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<Controls>
+																			<AxFormControl xmlns=""
+																				i:type="AxFormButtonGroupControl">
+																				<Name>LineOverviewMainActionButtonGroup</Name>
+																				<Type>ButtonGroup</Type>
+																				<FormControlExtension
+																					i:nil="true" />
+																				<Controls>
+																					<AxFormControl xmlns=""
+																						i:type="AxFormCommandButtonControl">
+																						<Name>LineStripNew</Name>
+																						<AutoDeclaration>Yes</AutoDeclaration>
+																						<Type>CommandButton</Type>
+																						<FormControlExtension
+																							i:nil="true" />
+																						<Command>New</Command>
+																						<MultiSelect>Yes</MultiSelect>
+																						<Text>Add line</Text>
+																					</AxFormControl>
+																					<AxFormControl xmlns=""
+																						i:type="AxFormCommandButtonControl">
+																						<Name>LineStripDelete</Name>
+																						<AutoDeclaration>Yes</AutoDeclaration>
+																						<Type>CommandButton</Type>
+																						<FormControlExtension
+																							i:nil="true" />
+																						<Command>DeleteRecord</Command>
+																						<MultiSelect>Yes</MultiSelect>
+																						<SaveRecord>No</SaveRecord>
+																						<Text>Remove</Text>
+																					</AxFormControl>
+																				</Controls>
+																				<DataSource>MZNAG_SalesLine</DataSource>
+																			</AxFormControl>
+																		</Controls>
+																		<DataSource>MZNAG_SalesLine</DataSource>
+																	</AxFormControl>
+																</Controls>
+																<Style>Strip</Style>
+															</AxFormControl>
+															<AxFormControl xmlns=""
+																i:type="AxFormGridControl">
+																<Name>SalesLineGrid</Name>
+																<Type>Grid</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<Controls>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormRealControl">
+																		<Name>MZNAG_SalesLine_LineNum</Name>
+																		<AllowEdit>No</AllowEdit>
+																		<Type>Real</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>LineNum</DataField>
+																		<DataSource>MZNAG_SalesLine</DataSource>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormStringControl">
+																		<Name>MZNAG_SalesLine_ItemId1</Name>
+																		<Type>String</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>ItemId</DataField>
+																		<DataSource>MZNAG_SalesLine</DataSource>
+																		<Label>Item Id</Label>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormStringControl">
+																		<Name>MZNAG_SalesLine_ItemName</Name>
+																		<Type>String</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>ItemName</DataField>
+																		<DataSource>MZNAG_SalesLine</DataSource>
+																		<Label>Product name</Label>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormRealControl">
+																		<Name>MZNAG_SalesLine_SalesPrice</Name>
+																		<Type>Real</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>SalesPrice</DataField>
+																		<DataSource>MZNAG_SalesLine</DataSource>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormRealControl">
+																		<Name>MZNAG_SalesLine_SalesQty</Name>
+																		<AutoDeclaration>Yes</AutoDeclaration>
+																		<Type>Real</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>SalesQty</DataField>
+																		<DataSource>MZNAG_SalesLine</DataSource>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormRealControl">
+																		<Name>MZNAG_SalesLine_PickedQty</Name>
+																		<AllowEdit>No</AllowEdit>
+																		<Type>Real</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>PickedQty</DataField>
+																		<DataSource>MZNAG_SalesLine</DataSource>
+																		<Label>Picked quantity</Label>
+																		<ShowZero>Yes</ShowZero>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormRealControl">
+																		<Name>MZNAG_SalesLine_LineAmount</Name>
+																		<AllowEdit>No</AllowEdit>
+																		<AutoDeclaration>Yes</AutoDeclaration>
+																		<Type>Real</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataField>LineAmount</DataField>
+																		<DataSource>MZNAG_SalesLine</DataSource>
+																		<Label>Line Amount</Label>
+																	</AxFormControl>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormRealControl">
+																		<Name>MZNAG_SalesLine_RemainingQty</Name>
+																		<AllowEdit>No</AllowEdit>
+																		<Type>Real</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<DataMethod>displayRemainingQty</DataMethod>
+																		<DataSource>MZNAG_SalesLine</DataSource>
+																		<Label>Remaining quantity</Label>
+																	</AxFormControl>
+																</Controls>
+																<DataSource>MZNAG_SalesLine</DataSource>
+																<Style>Tabular</Style>
+																<VisibleRows>5</VisibleRows>
+																<VisibleRowsMode>Fixed</VisibleRowsMode>
+															</AxFormControl>
+														</Controls>
+														<Caption>Lines</Caption>
+														<FastTabExpanded>Always</FastTabExpanded>
+													</AxFormControl>
+													<AxFormControl xmlns=""
+														i:type="AxFormTabPageControl">
+														<Name>LineViewLineDetails</Name>
+														<Type>TabPage</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<Controls>
+															<AxFormControl xmlns=""
+																i:type="AxFormTabControl">
+																<Name>LinesDetailTab</Name>
+																<Type>Tab</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<Controls>
+																	<AxFormControl xmlns=""
+																		i:type="AxFormTabPageControl">
+																		<Name>TabLineGeneral</Name>
+																		<Pattern>FieldsFieldGroups</Pattern>
+																		<PatternVersion>1.1</PatternVersion>
+																		<Type>TabPage</Type>
+																		<FormControlExtension
+																			i:nil="true" />
+																		<Controls>
+																			<AxFormControl xmlns=""
+																				i:type="AxFormGroupControl">
+																				<Name>FormGroupControl1</Name>
+																				<Type>Group</Type>
+																				<FormControlExtension
+																					i:nil="true" />
+																				<Controls>
+																					<AxFormControl xmlns=""
+																						i:type="AxFormStringControl">
+																						<Name>MZNAG_SalesLine_SalesId</Name>
+																						<AllowEdit>No</AllowEdit>
+																						<Type>String</Type>
+																						<FormControlExtension
+																							i:nil="true" />
+																						<DataField>SalesId</DataField>
+																						<DataSource>MZNAG_SalesLine</DataSource>
+																					</AxFormControl>
+																					<AxFormControl xmlns=""
+																						i:type="AxFormRealControl">
+																						<Name>MZNAG_SalesLine_SalesPrice1</Name>
+																						<AllowEdit>No</AllowEdit>
+																						<Type>Real</Type>
+																						<FormControlExtension
+																							i:nil="true" />
+																						<DataField>SalesPrice</DataField>
+																						<DataSource>MZNAG_SalesLine</DataSource>
+																					</AxFormControl>
+																					<AxFormControl xmlns=""
+																						i:type="AxFormStringControl">
+																						<Name>MZNAG_SalesTable_CustName1</Name>
+																						<AllowEdit>No</AllowEdit>
+																						<Type>String</Type>
+																						<FormControlExtension
+																							i:nil="true" />
+																						<DataField>CustName</DataField>
+																						<DataSource>MZNAG_SalesTable</DataSource>
+																					</AxFormControl>
+																					<AxFormControl xmlns=""
+																						i:type="AxFormStringControl">
+																						<Name>MZNAG_SalesLine_ItemId</Name>
+																						<AllowEdit>No</AllowEdit>
+																						<Type>String</Type>
+																						<FormControlExtension
+																							i:nil="true" />
+																						<DataField>ItemId</DataField>
+																						<DataSource>MZNAG_SalesLine</DataSource>
+																						<Label>Item Id</Label>
+																					</AxFormControl>
+																					<AxFormControl xmlns=""
+																						i:type="AxFormRealControl">
+																						<Name>MZNAG_SalesLine_LineAmount2</Name>
+																						<AllowEdit>No</AllowEdit>
+																						<Type>Real</Type>
+																						<FormControlExtension
+																							i:nil="true" />
+																						<DataField>LineAmount</DataField>
+																						<DataSource>MZNAG_SalesLine</DataSource>
+																						<Label>Line Amount</Label>
+																					</AxFormControl>
+																					<AxFormControl xmlns=""
+																						i:type="AxFormStringControl">
+																						<Name>MZNAG_SalesTable_InventSiteId1</Name>
+																						<AllowEdit>No</AllowEdit>
+																						<Type>String</Type>
+																						<FormControlExtension
+																							i:nil="true" />
+																						<DataField>InventSiteId</DataField>
+																						<DataSource>MZNAG_SalesTable</DataSource>
+																					</AxFormControl>
+																					<AxFormControl xmlns=""
+																						i:type="AxFormStringControl">
+																						<Name>MZNAG_SalesTable_InventLocationId1</Name>
+																						<AllowEdit>No</AllowEdit>
+																						<Type>String</Type>
+																						<FormControlExtension
+																							i:nil="true" />
+																						<DataField>InventLocationId</DataField>
+																						<DataSource>MZNAG_SalesTable</DataSource>
+																					</AxFormControl>
+																				</Controls>
+																				<Caption>Product</Caption>
+																			</AxFormControl>
+																		</Controls>
+																		<ColumnsMode>Fill</ColumnsMode>
+																		<Caption>Product</Caption>
+																		<DataSource>MZNAG_SalesLine</DataSource>
+																	</AxFormControl>
+																</Controls>
+															</AxFormControl>
+														</Controls>
+														<Caption>Line details</Caption>
+													</AxFormControl>
+												</Controls>
+												<Style>FastTabs</Style>
+											</AxFormControl>
+										</Controls>
+										<PanelStyle>DetailsLine</PanelStyle>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormTabPageControl">
+										<Name>HeaderView</Name>
+										<Type>TabPage</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<Controls>
+											<AxFormControl xmlns=""
+												i:type="AxFormTabControl">
+												<Name>HeaderDetailsTab</Name>
+												<Type>Tab</Type>
+												<FormControlExtension
+													i:nil="true" />
+												<Controls>
+													<AxFormControl xmlns=""
+														i:type="AxFormTabPageControl">
+														<Name>TabHeaderGeneral</Name>
+														<Pattern>FieldsFieldGroups</Pattern>
+														<PatternVersion>1.1</PatternVersion>
+														<Type>TabPage</Type>
+														<FormControlExtension
+															i:nil="true" />
+														<Controls>
+															<AxFormControl xmlns=""
+																i:type="AxFormStringControl">
+																<Name>MZNAG_SalesLine_SalesId1</Name>
+																<Type>String</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<DataField>SalesId</DataField>
+																<DataSource>MZNAG_SalesLine</DataSource>
+															</AxFormControl>
+															<AxFormControl xmlns=""
+																i:type="AxFormStringControl">
+																<Name>MZNAG_SalesTable_CustAccount3</Name>
+																<Type>String</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<DataField>CustAccount</DataField>
+																<DataSource>MZNAG_SalesTable</DataSource>
+															</AxFormControl>
+															<AxFormControl xmlns=""
+																i:type="AxFormStringControl">
+																<Name>MZNAG_SalesTable_InventSiteId2</Name>
+																<Type>String</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<DataField>InventSiteId</DataField>
+																<DataSource>MZNAG_SalesTable</DataSource>
+																<Label>Site</Label>
+															</AxFormControl>
+															<AxFormControl xmlns=""
+																i:type="AxFormStringControl">
+																<Name>MZNAG_SalesTable_InventLocationId2</Name>
+																<Type>String</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<DataField>InventLocationId</DataField>
+																<DataSource>MZNAG_SalesTable</DataSource>
+																<Label>Warehouse</Label>
+															</AxFormControl>
+															<AxFormControl xmlns=""
+																i:type="AxFormComboBoxControl">
+																<Name>MZNAG_SalesTable_SalesStatus2</Name>
+																<Type>ComboBox</Type>
+																<FormControlExtension
+																	i:nil="true" />
+																<DataField>SalesStatus</DataField>
+																<DataSource>MZNAG_SalesTable</DataSource>
+																<Items />
+															</AxFormControl>
+														</Controls>
+														<ColumnsMode>Fill</ColumnsMode>
+														<DataSource>MZNAG_SalesLine</DataSource>
+													</AxFormControl>
+												</Controls>
+												<Style>FastTabs</Style>
+											</AxFormControl>
+										</Controls>
+										<PanelStyle>DetailsHeader</PanelStyle>
+									</AxFormControl>
+								</Controls>
+								<ShowTabs>No</ShowTabs>
+							</AxFormControl>
+						</Controls>
+						<PanelStyle>Details</PanelStyle>
+						<Style>DetailsFormDetails</Style>
+					</AxFormControl>
+					<AxFormControl xmlns=""
+						i:type="AxFormTabPageControl">
+						<Name>TabPageGrid</Name>
+						<Type>TabPage</Type>
+						<FormControlExtension
+							i:nil="true" />
+						<Controls>
+							<AxFormControl xmlns=""
+								i:type="AxFormGroupControl">
+								<Name>CustomFilterGroup</Name>
+								<Pattern>CustomAndQuickFilters</Pattern>
+								<PatternVersion>1.1</PatternVersion>
+								<Type>Group</Type>
+								<WidthMode>SizeToAvailable</WidthMode>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl>
+										<Name>QuickFilterControl1</Name>
+										<FormControlExtension>
+											<Name>QuickFilterControl</Name>
+											<ExtensionComponents />
+											<ExtensionProperties>
+												<AxFormControlExtensionProperty>
+													<Name>targetControlName</Name>
+													<Type>String</Type>
+													<Value>GridHeader</Value>
+												</AxFormControlExtensionProperty>
+												<AxFormControlExtensionProperty>
+													<Name>placeholderText</Name>
+													<Type>String</Type>
+												</AxFormControlExtensionProperty>
+												<AxFormControlExtensionProperty>
+													<Name>defaultColumnName</Name>
+													<Type>String</Type>
+													<Value>MZNAG_SalesTable_SalesId3</Value>
+												</AxFormControlExtensionProperty>
+											</ExtensionProperties>
+										</FormControlExtension>
+									</AxFormControl>
+								</Controls>
+								<ArrangeMethod>HorizontalLeft</ArrangeMethod>
+								<FrameType>None</FrameType>
+								<Style>CustomFilter</Style>
+								<ViewEditMode>Edit</ViewEditMode>
+							</AxFormControl>
+							<AxFormControl xmlns=""
+								i:type="AxFormGridControl">
+								<Name>GridHeader</Name>
+								<Type>Grid</Type>
+								<FormControlExtension
+									i:nil="true" />
+								<Controls>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>MZNAG_SalesTable_SalesId3</Name>
+										<Type>String</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>SalesId</DataField>
+										<DataSource>MZNAG_SalesTable</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormStringControl">
+										<Name>MZNAG_SalesTable_CustAccount2</Name>
+										<Type>String</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>CustAccount</DataField>
+										<DataSource>MZNAG_SalesTable</DataSource>
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormComboBoxControl">
+										<Name>MZNAG_SalesTable_SalesStatus1</Name>
+										<Type>ComboBox</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>SalesStatus</DataField>
+										<DataSource>MZNAG_SalesTable</DataSource>
+										<Items />
+									</AxFormControl>
+									<AxFormControl xmlns=""
+										i:type="AxFormDateControl">
+										<Name>MZNAG_SalesTable_OrderDate</Name>
+										<Type>Date</Type>
+										<FormControlExtension
+											i:nil="true" />
+										<DataField>OrderDate</DataField>
+										<DataSource>MZNAG_SalesTable</DataSource>
+									</AxFormControl>
+								</Controls>
+								<DataSource>MZNAG_SalesTable</DataSource>
+								<DefaultAction>GridDefaultAction</DefaultAction>
+							</AxFormControl>
+							<AxFormControl xmlns=""
+								i:type="AxFormCommandButtonControl">
+								<Name>GridDefaultAction</Name>
+								<Type>CommandButton</Type>
+								<Visible>No</Visible>
+								<FormControlExtension
+									i:nil="true" />
+								<Command>DetailsView</Command>
+							</AxFormControl>
+						</Controls>
+						<PanelStyle>Grid</PanelStyle>
+						<Style>DetailsFormGrid</Style>
+					</AxFormControl>
+				</Controls>
+				<ShowTabs>No</ShowTabs>
+			</AxFormControl>
+		</Controls>
+	</Design>
+	<Parts />
+</AxForm>

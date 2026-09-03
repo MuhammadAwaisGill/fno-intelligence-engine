@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_SalesOrderBatchService</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class MZNAG_SalesOrderBatchService extends SysOperationServiceBase
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>processOperation</Name>
+				<Source><![CDATA[
+    public void processOperation()
+    {
+        SalesTable salesTable;
+
+        while select forUpdate salesTable
+            where salesTable.BatchJobStatus == MZNAG_BatchJobStatus::Started
+        { ttsbegin;
+            if (salesTable.SalesStatus == SalesStatus::Backorder)
+            {
+                salesTable.BatchJobStatus = MZNAG_BatchJobStatus::Ended;
+                salesTable.update();
+            }
+           ttscommit;
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

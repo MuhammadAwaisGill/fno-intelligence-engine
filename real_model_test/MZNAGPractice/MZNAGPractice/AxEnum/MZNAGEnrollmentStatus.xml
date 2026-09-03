@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxEnum xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAGEnrollmentStatus</Name>
+	<Label>Status</Label>
+	<Literals>ForceLiterals</Literals>
+	<UseEnumValue>No</UseEnumValue>
+	<EnumValues>
+		<AxEnumValue>
+			<Name>Enrolled</Name>
+			<Label>Enrolled</Label>
+		</AxEnumValue>
+		<AxEnumValue>
+			<Name>Completed</Name>
+			<Label>Completed</Label>
+			<Value>1</Value>
+		</AxEnumValue>
+		<AxEnumValue>
+			<Name>Dropped</Name>
+			<Label>Dropped</Label>
+			<Value>2</Value>
+		</AxEnumValue>
+	</EnumValues>
+	<IsExtensible>true</IsExtensible>
+</AxEnum>

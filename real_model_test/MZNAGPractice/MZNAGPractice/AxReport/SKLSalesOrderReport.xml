@@ -1,0 +1,1921 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxReport xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V2">
+	<Name>SKLSalesOrderReport</Name>
+	<DataMethods />
+	<DataSets>
+		<AxReportDataSet xmlns="">
+			<Name>SalesDataset</Name>
+			<DataSourceType>ReportDataProvider</DataSourceType>
+			<DynamicFilters>false</DynamicFilters>
+			<Query>SELECT * FROM SKLSalesOrderReportDP.SKLSalesOrderReportTmp</Query>
+			<FieldGroups />
+			<Fields>
+				<AxReportDataSetField>
+					<Name>CurrencyCode</Name>
+					<Alias>SKLSalesOrderReportTmp.1.CurrencyCode</Alias>
+					<Caption>Sales Order Currency</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>CustAccount</Name>
+					<Alias>SKLSalesOrderReportTmp.1.CustAccount</Alias>
+					<Caption>Customer Acc</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>CustName</Name>
+					<Alias>SKLSalesOrderReportTmp.1.CustName</Alias>
+					<Caption>Customer Name</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>DateTime</Name>
+					<Alias>SKLSalesOrderReportTmp.1.DateTime</Alias>
+					<Caption>Created Date Time</Caption>
+					<DataType>System.DateTime</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>ReleaseStatusLabel</Name>
+					<Alias>SKLSalesOrderReportTmp.1.ReleaseStatus:LABEL(WHSReleaseStatus)</Alias>
+					<Caption>Release Status</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>ReleaseStatusName</Name>
+					<Alias>SKLSalesOrderReportTmp.1.ReleaseStatus:NAME(WHSReleaseStatus)</Alias>
+					<Caption>Release Status</Caption>
+					<DisableAutoCreateInDataRegion>true</DisableAutoCreateInDataRegion>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>SalesAmount</Name>
+					<Alias>SKLSalesOrderReportTmp.1.SalesAmount</Alias>
+					<Caption>Sales Order Amount</Caption>
+					<DataType>System.Double</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>SalesId</Name>
+					<Alias>SKLSalesOrderReportTmp.1.SalesId</Alias>
+					<Caption>Sales OrderNo</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+			</Fields>
+			<Parameters>
+				<AxReportDataSetParameter>
+					<Name>AX_PartitionKey</Name>
+					<Alias>AX_PartitionKey</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_PartitionKey</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_CompanyName</Name>
+					<Alias>AX_CompanyName</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_CompanyName</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_UserContext</Name>
+					<Alias>AX_UserContext</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_UserContext</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_RenderingCulture</Name>
+					<Alias>AX_RenderingCulture</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_RenderingCulture</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_ReportContext</Name>
+					<Alias>AX_ReportContext</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_ReportContext</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_RdpPreProcessedId</Name>
+					<Alias>AX_RdpPreProcessedId</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_RdpPreProcessedId</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>FromDate</Name>
+					<Alias>FromDate</Alias>
+					<DataType>System.DateTime</DataType>
+					<Parameter>SalesDataset_FromDate</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>ToDate</Name>
+					<Alias>ToDate</Alias>
+					<DataType>System.DateTime</DataType>
+					<Parameter>SalesDataset_ToDate</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>SalesType</Name>
+					<Alias>SalesType</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>SalesDataset_SalesType</Parameter>
+				</AxReportDataSetParameter>
+			</Parameters>
+		</AxReportDataSet>
+	</DataSets>
+	<DefaultParameterGroup>
+		<Name xmlns="">Parameters</Name>
+		<ReportParameterBases xmlns="">
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_PartitionKey</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_CompanyName</Name>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_UserContext</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_RenderingCulture</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_ReportContext</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_RdpPreProcessedId</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>SalesDataset_FromDate</Name>
+				<DataType>System.DateTime</DataType>
+				<PromptString>From Date</PromptString>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>SalesDataset_ToDate</Name>
+				<DataType>System.DateTime</DataType>
+				<PromptString>To Date</PromptString>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>SalesDataset_SalesType</Name>
+				<PromptString>Order Type</PromptString>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+		</ReportParameterBases>
+	</DefaultParameterGroup>
+	<Designs>
+		<AxReportDesign xmlns=""
+			i:type="AxReportPrecisionDesign">
+			<Name>PrecisionDesign1</Name>
+			<Text>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"&gt;
+  &lt;AutoRefresh&gt;0&lt;/AutoRefresh&gt;
+  &lt;DataSources&gt;
+    &lt;DataSource Name="AutoGen__ReportDataProvider"&gt;
+      &lt;Transaction&gt;true&lt;/Transaction&gt;
+      &lt;ConnectionProperties&gt;
+        &lt;DataProvider&gt;AXREPORTDATAPROVIDER&lt;/DataProvider&gt;
+        &lt;ConnectString /&gt;
+        &lt;IntegratedSecurity&gt;true&lt;/IntegratedSecurity&gt;
+      &lt;/ConnectionProperties&gt;
+      &lt;rd:DataSourceID&gt;83599418-4e58-4270-aaa8-ecfda5114e7a&lt;/rd:DataSourceID&gt;
+    &lt;/DataSource&gt;
+  &lt;/DataSources&gt;
+  &lt;DataSets&gt;
+    &lt;DataSet Name="SalesDataset"&gt;
+      &lt;Query&gt;
+        &lt;DataSourceName&gt;AutoGen__ReportDataProvider&lt;/DataSourceName&gt;
+        &lt;QueryParameters&gt;
+          &lt;QueryParameter Name="AX_PartitionKey"&gt;
+            &lt;Value&gt;=Parameters!AX_PartitionKey.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_CompanyName"&gt;
+            &lt;Value&gt;=Parameters!AX_CompanyName.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_UserContext"&gt;
+            &lt;Value&gt;=Parameters!AX_UserContext.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_RenderingCulture"&gt;
+            &lt;Value&gt;=Parameters!AX_RenderingCulture.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_ReportContext"&gt;
+            &lt;Value&gt;=Parameters!AX_ReportContext.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_RdpPreProcessedId"&gt;
+            &lt;Value&gt;=Parameters!AX_RdpPreProcessedId.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="FromDate"&gt;
+            &lt;Value&gt;=Parameters!SalesDataset_FromDate.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="ToDate"&gt;
+            &lt;Value&gt;=Parameters!SalesDataset_ToDate.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="SalesType"&gt;
+            &lt;Value&gt;=Parameters!SalesDataset_SalesType.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+        &lt;/QueryParameters&gt;
+        &lt;CommandText&gt;SELECT * FROM SKLSalesOrderReportDP.SKLSalesOrderReportTmp&lt;/CommandText&gt;
+        &lt;rd:UseGenericDesigner&gt;true&lt;/rd:UseGenericDesigner&gt;
+      &lt;/Query&gt;
+      &lt;Fields&gt;
+        &lt;Field Name="CurrencyCode"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.CurrencyCode&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="CustAccount"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.CustAccount&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="CustName"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.CustName&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="DateTime"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.DateTime&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.DateTime&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="ReleaseStatusLabel"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.ReleaseStatus:LABEL(WHSReleaseStatus)&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="ReleaseStatusName"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.ReleaseStatus:NAME(WHSReleaseStatus)&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SalesAmount"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.SalesAmount&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Double&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SalesId"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.SalesId&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+      &lt;/Fields&gt;
+      &lt;rd:DataSetInfo&gt;
+        &lt;rd:DataSetName&gt;SalesDataset&lt;/rd:DataSetName&gt;
+        &lt;rd:TableName&gt;Fields&lt;/rd:TableName&gt;
+        &lt;rd:TableAdapterFillMethod&gt;Fill&lt;/rd:TableAdapterFillMethod&gt;
+        &lt;rd:TableAdapterGetDataMethod&gt;GetData&lt;/rd:TableAdapterGetDataMethod&gt;
+        &lt;rd:TableAdapterName&gt;FieldsTableAdapter&lt;/rd:TableAdapterName&gt;
+      &lt;/rd:DataSetInfo&gt;
+    &lt;/DataSet&gt;
+  &lt;/DataSets&gt;
+  &lt;ReportSections&gt;
+    &lt;ReportSection&gt;
+      &lt;Body&gt;
+        &lt;ReportItems&gt;
+          &lt;Tablix Name="Tablix1"&gt;
+            &lt;TablixBody&gt;
+              &lt;TablixColumns&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1.30556in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1.15278in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1.11111in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1.09722in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+              &lt;/TablixColumns&gt;
+              &lt;TablixRows&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox1"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Sales Id&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox1&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightGrey&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox3"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Customer Account&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox3&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightGrey&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox5"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Customer Name&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox5&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightGrey&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox9"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Currency Code&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox9&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightGrey&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox11"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Release Status&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox11&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightGrey&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox7"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Sales Amount&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox7&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightGrey&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="SalesId"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!SalesId.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;SalesId&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.SalesId&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.SalesId&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.SalesId&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="CustAccount"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!CustAccount.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;CustAccount&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.CustAccount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.CustAccount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.CustAccount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="CustName"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!CustName.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;CustName&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.CustName&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.CustName&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.CustName&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="CurrencyCode"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!CurrencyCode.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;CurrencyCode&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.CurrencyCode&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.CurrencyCode&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.CurrencyCode&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="ReleaseStatusLabel"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!ReleaseStatusLabel.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;ReleaseStatusLabel&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.ReleaseStatus&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.ReleaseStatus&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.ReleaseStatus&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="SalesAmount"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!SalesAmount.Value&lt;/Value&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;SalesAmount&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;Float&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.SalesAmount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.SalesAmount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;SKLSalesOrderReportTmp.SalesAmount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+              &lt;/TablixRows&gt;
+            &lt;/TablixBody&gt;
+            &lt;TablixColumnHierarchy&gt;
+              &lt;TablixMembers&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+              &lt;/TablixMembers&gt;
+            &lt;/TablixColumnHierarchy&gt;
+            &lt;TablixRowHierarchy&gt;
+              &lt;TablixMembers&gt;
+                &lt;TablixMember&gt;
+                  &lt;KeepWithGroup&gt;After&lt;/KeepWithGroup&gt;
+                &lt;/TablixMember&gt;
+                &lt;TablixMember&gt;
+                  &lt;Group Name="Details" /&gt;
+                &lt;/TablixMember&gt;
+              &lt;/TablixMembers&gt;
+            &lt;/TablixRowHierarchy&gt;
+            &lt;DataSetName&gt;SalesDataset&lt;/DataSetName&gt;
+            &lt;Height&gt;0.5in&lt;/Height&gt;
+            &lt;Width&gt;6.66667in&lt;/Width&gt;
+            &lt;Style&gt;
+              &lt;Border&gt;
+                &lt;Style&gt;None&lt;/Style&gt;
+              &lt;/Border&gt;
+            &lt;/Style&gt;
+          &lt;/Tablix&gt;
+        &lt;/ReportItems&gt;
+        &lt;Height&gt;0.75in&lt;/Height&gt;
+        &lt;Style /&gt;
+      &lt;/Body&gt;
+      &lt;Width&gt;6.66667in&lt;/Width&gt;
+      &lt;Page&gt;
+        &lt;PageHeader&gt;
+          &lt;Height&gt;0.57167in&lt;/Height&gt;
+          &lt;PrintOnFirstPage&gt;true&lt;/PrintOnFirstPage&gt;
+          &lt;PrintOnLastPage&gt;true&lt;/PrintOnLastPage&gt;
+          &lt;ReportItems&gt;
+            &lt;Textbox Name="Textbox14"&gt;
+              &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+              &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+              &lt;Paragraphs&gt;
+                &lt;Paragraph&gt;
+                  &lt;TextRuns&gt;
+                    &lt;TextRun&gt;
+                      &lt;Value&gt;Sales Order Report&lt;/Value&gt;
+                      &lt;Style /&gt;
+                    &lt;/TextRun&gt;
+                  &lt;/TextRuns&gt;
+                  &lt;Style /&gt;
+                &lt;/Paragraph&gt;
+              &lt;/Paragraphs&gt;
+              &lt;rd:DefaultName&gt;Textbox14&lt;/rd:DefaultName&gt;
+              &lt;Top&gt;0.32167in&lt;/Top&gt;
+              &lt;Left&gt;5.01389in&lt;/Left&gt;
+              &lt;Height&gt;0.25in&lt;/Height&gt;
+              &lt;Width&gt;1.44444in&lt;/Width&gt;
+              &lt;Style&gt;
+                &lt;Border&gt;
+                  &lt;Style&gt;None&lt;/Style&gt;
+                &lt;/Border&gt;
+                &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+              &lt;/Style&gt;
+            &lt;/Textbox&gt;
+            &lt;Textbox Name="Textbox16"&gt;
+              &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+              &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+              &lt;Paragraphs&gt;
+                &lt;Paragraph&gt;
+                  &lt;TextRuns&gt;
+                    &lt;TextRun&gt;
+                      &lt;Value&gt;="From: " &amp;amp; Format(Parameters!SalesDataset_FromDate.Value, "dd-MM-yyyy") &amp;amp; " - To: " &amp;amp; Format(Parameters!SalesDataset_ToDate.Value, "dd-MM-yyyy")&lt;/Value&gt;
+                      &lt;Style /&gt;
+                    &lt;/TextRun&gt;
+                  &lt;/TextRuns&gt;
+                  &lt;Style /&gt;
+                &lt;/Paragraph&gt;
+              &lt;/Paragraphs&gt;
+              &lt;rd:DefaultName&gt;Textbox16&lt;/rd:DefaultName&gt;
+              &lt;Top&gt;0.32167in&lt;/Top&gt;
+              &lt;Height&gt;0.25in&lt;/Height&gt;
+              &lt;Width&gt;2.30556in&lt;/Width&gt;
+              &lt;ZIndex&gt;1&lt;/ZIndex&gt;
+              &lt;Style&gt;
+                &lt;Border&gt;
+                  &lt;Style&gt;None&lt;/Style&gt;
+                &lt;/Border&gt;
+                &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+              &lt;/Style&gt;
+            &lt;/Textbox&gt;
+          &lt;/ReportItems&gt;
+          &lt;Style&gt;
+            &lt;Border&gt;
+              &lt;Style&gt;None&lt;/Style&gt;
+            &lt;/Border&gt;
+          &lt;/Style&gt;
+        &lt;/PageHeader&gt;
+        &lt;PageFooter&gt;
+          &lt;Height&gt;0.38417in&lt;/Height&gt;
+          &lt;PrintOnFirstPage&gt;true&lt;/PrintOnFirstPage&gt;
+          &lt;PrintOnLastPage&gt;true&lt;/PrintOnLastPage&gt;
+          &lt;ReportItems&gt;
+            &lt;Textbox Name="Textbox15"&gt;
+              &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+              &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+              &lt;Paragraphs&gt;
+                &lt;Paragraph&gt;
+                  &lt;TextRuns&gt;
+                    &lt;TextRun&gt;
+                      &lt;Value&gt;="Generated on: " &amp;amp; Format(Globals!ExecutionTime, "dd-MM-yyyy")&lt;/Value&gt;
+                      &lt;Style /&gt;
+                    &lt;/TextRun&gt;
+                  &lt;/TextRuns&gt;
+                  &lt;Style /&gt;
+                &lt;/Paragraph&gt;
+              &lt;/Paragraphs&gt;
+              &lt;rd:DefaultName&gt;Textbox15&lt;/rd:DefaultName&gt;
+              &lt;Top&gt;0.13417in&lt;/Top&gt;
+              &lt;Left&gt;4.45834in&lt;/Left&gt;
+              &lt;Height&gt;0.25in&lt;/Height&gt;
+              &lt;Width&gt;1.99999in&lt;/Width&gt;
+              &lt;Style&gt;
+                &lt;Border&gt;
+                  &lt;Style&gt;None&lt;/Style&gt;
+                &lt;/Border&gt;
+                &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+              &lt;/Style&gt;
+            &lt;/Textbox&gt;
+          &lt;/ReportItems&gt;
+          &lt;Style&gt;
+            &lt;Border&gt;
+              &lt;Style&gt;None&lt;/Style&gt;
+            &lt;/Border&gt;
+          &lt;/Style&gt;
+        &lt;/PageFooter&gt;
+        &lt;PageWidth&gt;7.25in&lt;/PageWidth&gt;
+        &lt;InteractiveHeight&gt;11in&lt;/InteractiveHeight&gt;
+        &lt;InteractiveWidth&gt;8.5in&lt;/InteractiveWidth&gt;
+        &lt;LeftMargin&gt;0.25in&lt;/LeftMargin&gt;
+        &lt;RightMargin&gt;0.25in&lt;/RightMargin&gt;
+        &lt;TopMargin&gt;0.25in&lt;/TopMargin&gt;
+        &lt;BottomMargin&gt;0.25in&lt;/BottomMargin&gt;
+        &lt;Style /&gt;
+      &lt;/Page&gt;
+    &lt;/ReportSection&gt;
+  &lt;/ReportSections&gt;
+  &lt;ReportParameters&gt;
+    &lt;ReportParameter Name="AX_PartitionKey"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_PartitionKey&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_CompanyName"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Prompt&gt;AX_CompanyName&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_UserContext"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_UserContext&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_RenderingCulture"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_RenderingCulture&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_ReportContext"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_ReportContext&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+      &lt;UsedInQuery&gt;True&lt;/UsedInQuery&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_RdpPreProcessedId"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_RdpPreProcessedId&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="SalesDataset_FromDate"&gt;
+      &lt;DataType&gt;DateTime&lt;/DataType&gt;
+      &lt;Prompt&gt;From Date&lt;/Prompt&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="SalesDataset_ToDate"&gt;
+      &lt;DataType&gt;DateTime&lt;/DataType&gt;
+      &lt;Prompt&gt;To Date&lt;/Prompt&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="SalesDataset_SalesType"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Prompt&gt;Order Type&lt;/Prompt&gt;
+    &lt;/ReportParameter&gt;
+  &lt;/ReportParameters&gt;
+  &lt;ReportParametersLayout&gt;
+    &lt;GridLayoutDefinition&gt;
+      &lt;NumberOfColumns&gt;6&lt;/NumberOfColumns&gt;
+      &lt;NumberOfRows&gt;3&lt;/NumberOfRows&gt;
+      &lt;CellDefinitions&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;0&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_PartitionKey&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;1&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_CompanyName&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;2&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_UserContext&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;3&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_RenderingCulture&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;4&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_ReportContext&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;5&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_RdpPreProcessedId&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;0&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;1&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;SalesDataset_FromDate&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;1&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;1&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;SalesDataset_ToDate&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;0&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;2&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;SalesDataset_SalesType&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+      &lt;/CellDefinitions&gt;
+    &lt;/GridLayoutDefinition&gt;
+  &lt;/ReportParametersLayout&gt;
+  &lt;Language&gt;en-US&lt;/Language&gt;
+  &lt;rd:ReportUnitType&gt;Inch&lt;/rd:ReportUnitType&gt;
+  &lt;rd:ExpressionDialog&gt;Microsoft.Dynamics.Framework.Design.Reports.ExpressionEditor.ExpressionEditorDialog, Microsoft.Dynamics.Framework.Design.Reports&lt;/rd:ExpressionDialog&gt;
+  &lt;rd:ReportID&gt;a562e5b6-521e-41b4-b235-7a7c48464106&lt;/rd:ReportID&gt;
+&lt;/Report&gt;</Text>
+			<DisableIndividualTransformation />
+		</AxReportDesign>
+		<AxReportDesign xmlns=""
+			i:type="AxReportPrecisionDesign">
+			<Name>PrecisionDesign2</Name>
+			<Text>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"&gt;
+  &lt;AutoRefresh&gt;0&lt;/AutoRefresh&gt;
+  &lt;DataSources&gt;
+    &lt;DataSource Name="AutoGen__ReportDataProvider"&gt;
+      &lt;Transaction&gt;true&lt;/Transaction&gt;
+      &lt;ConnectionProperties&gt;
+        &lt;DataProvider&gt;AXREPORTDATAPROVIDER&lt;/DataProvider&gt;
+        &lt;ConnectString /&gt;
+        &lt;IntegratedSecurity&gt;true&lt;/IntegratedSecurity&gt;
+      &lt;/ConnectionProperties&gt;
+      &lt;rd:DataSourceID&gt;ce0b9d58-fe2d-4d21-97f1-e5c2095bd550&lt;/rd:DataSourceID&gt;
+    &lt;/DataSource&gt;
+  &lt;/DataSources&gt;
+  &lt;DataSets&gt;
+    &lt;DataSet Name="SalesDataset"&gt;
+      &lt;Query&gt;
+        &lt;DataSourceName&gt;AutoGen__ReportDataProvider&lt;/DataSourceName&gt;
+        &lt;QueryParameters&gt;
+          &lt;QueryParameter Name="AX_PartitionKey"&gt;
+            &lt;Value&gt;=Parameters!AX_PartitionKey.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_CompanyName"&gt;
+            &lt;Value&gt;=Parameters!AX_CompanyName.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_UserContext"&gt;
+            &lt;Value&gt;=Parameters!AX_UserContext.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_RenderingCulture"&gt;
+            &lt;Value&gt;=Parameters!AX_RenderingCulture.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_ReportContext"&gt;
+            &lt;Value&gt;=Parameters!AX_ReportContext.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_RdpPreProcessedId"&gt;
+            &lt;Value&gt;=Parameters!AX_RdpPreProcessedId.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="FromDate"&gt;
+            &lt;Value&gt;=Parameters!SalesDataset_FromDate.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="ToDate"&gt;
+            &lt;Value&gt;=Parameters!SalesDataset_ToDate.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="SalesType"&gt;
+            &lt;Value&gt;=Parameters!SalesDataset_SalesType.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+        &lt;/QueryParameters&gt;
+        &lt;CommandText&gt;SELECT * FROM SKLSalesOrderReportDP.SKLSalesOrderReportTmp&lt;/CommandText&gt;
+        &lt;rd:UseGenericDesigner&gt;true&lt;/rd:UseGenericDesigner&gt;
+      &lt;/Query&gt;
+      &lt;Fields&gt;
+        &lt;Field Name="CurrencyCode"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.CurrencyCode&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="CustAccount"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.CustAccount&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="CustName"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.CustName&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="DateTime"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.DateTime&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.DateTime&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="ReleaseStatusLabel"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.ReleaseStatus:LABEL(WHSReleaseStatus)&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="ReleaseStatusName"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.ReleaseStatus:NAME(WHSReleaseStatus)&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SalesAmount"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.SalesAmount&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Double&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SalesId"&gt;
+          &lt;DataField&gt;SKLSalesOrderReportTmp.1.SalesId&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+      &lt;/Fields&gt;
+      &lt;rd:DataSetInfo&gt;
+        &lt;rd:DataSetName&gt;SalesDataset&lt;/rd:DataSetName&gt;
+        &lt;rd:TableName&gt;Fields&lt;/rd:TableName&gt;
+        &lt;rd:TableAdapterFillMethod&gt;Fill&lt;/rd:TableAdapterFillMethod&gt;
+        &lt;rd:TableAdapterGetDataMethod&gt;GetData&lt;/rd:TableAdapterGetDataMethod&gt;
+        &lt;rd:TableAdapterName&gt;FieldsTableAdapter&lt;/rd:TableAdapterName&gt;
+      &lt;/rd:DataSetInfo&gt;
+    &lt;/DataSet&gt;
+  &lt;/DataSets&gt;
+  &lt;ReportSections&gt;
+    &lt;ReportSection&gt;
+      &lt;Body&gt;
+        &lt;ReportItems&gt;
+          &lt;Tablix Name="Tablix1"&gt;
+            &lt;TablixBody&gt;
+              &lt;TablixColumns&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1.10417in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1.09722in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+              &lt;/TablixColumns&gt;
+              &lt;TablixRows&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox1"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Sales Id&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                    &lt;Format&gt;0.00;(0.00)&lt;/Format&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox1&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightGrey&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox3"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Currency Code&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox3&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightGrey&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox5"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Release Status&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox5&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightGrey&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox7"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Sales Amount&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox7&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightGrey&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="CustAccount1"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!CustAccount.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Center&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;CustAccount1&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BackgroundColor&gt;LightSteelBlue&lt;/BackgroundColor&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;ColSpan&gt;4&lt;/ColSpan&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="SalesId"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!SalesId.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;SalesId&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="CurrencyCode"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!CurrencyCode.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;CurrencyCode&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="ReleaseStatusLabel"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!ReleaseStatusLabel.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;ReleaseStatusLabel&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="SalesAmount"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!SalesAmount.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;SalesAmount&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox68"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Total Sales Amount:&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Right&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox68&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;ColSpan&gt;3&lt;/ColSpan&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="SalesAmount1"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Sum(Fields!SalesAmount.Value)&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;SalesAmount1&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+              &lt;/TablixRows&gt;
+            &lt;/TablixBody&gt;
+            &lt;TablixColumnHierarchy&gt;
+              &lt;TablixMembers&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+              &lt;/TablixMembers&gt;
+            &lt;/TablixColumnHierarchy&gt;
+            &lt;TablixRowHierarchy&gt;
+              &lt;TablixMembers&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember&gt;
+                  &lt;Group Name="CustAccount"&gt;
+                    &lt;GroupExpressions&gt;
+                      &lt;GroupExpression&gt;=Fields!CustAccount.Value&lt;/GroupExpression&gt;
+                    &lt;/GroupExpressions&gt;
+                  &lt;/Group&gt;
+                  &lt;SortExpressions&gt;
+                    &lt;SortExpression&gt;
+                      &lt;Value&gt;=Fields!CustAccount.Value&lt;/Value&gt;
+                    &lt;/SortExpression&gt;
+                  &lt;/SortExpressions&gt;
+                  &lt;TablixMembers&gt;
+                    &lt;TablixMember&gt;
+                      &lt;KeepWithGroup&gt;After&lt;/KeepWithGroup&gt;
+                    &lt;/TablixMember&gt;
+                    &lt;TablixMember&gt;
+                      &lt;Group Name="Details" /&gt;
+                      &lt;TablixMembers&gt;
+                        &lt;TablixMember /&gt;
+                      &lt;/TablixMembers&gt;
+                    &lt;/TablixMember&gt;
+                    &lt;TablixMember&gt;
+                      &lt;KeepWithGroup&gt;Before&lt;/KeepWithGroup&gt;
+                    &lt;/TablixMember&gt;
+                  &lt;/TablixMembers&gt;
+                &lt;/TablixMember&gt;
+              &lt;/TablixMembers&gt;
+            &lt;/TablixRowHierarchy&gt;
+            &lt;DataSetName&gt;SalesDataset&lt;/DataSetName&gt;
+            &lt;SortExpressions&gt;
+              &lt;SortExpression&gt;
+                &lt;Value&gt;=Fields!CustAccount.Value&lt;/Value&gt;
+              &lt;/SortExpression&gt;
+            &lt;/SortExpressions&gt;
+            &lt;Height&gt;1in&lt;/Height&gt;
+            &lt;Width&gt;4.20139in&lt;/Width&gt;
+            &lt;Style&gt;
+              &lt;Border&gt;
+                &lt;Style&gt;None&lt;/Style&gt;
+              &lt;/Border&gt;
+            &lt;/Style&gt;
+          &lt;/Tablix&gt;
+        &lt;/ReportItems&gt;
+        &lt;Height&gt;1.06944in&lt;/Height&gt;
+        &lt;Style&gt;
+          &lt;Border&gt;
+            &lt;Style&gt;None&lt;/Style&gt;
+          &lt;/Border&gt;
+        &lt;/Style&gt;
+      &lt;/Body&gt;
+      &lt;Width&gt;4.20139in&lt;/Width&gt;
+      &lt;Page&gt;
+        &lt;PageHeader&gt;
+          &lt;Height&gt;0.59722in&lt;/Height&gt;
+          &lt;PrintOnFirstPage&gt;true&lt;/PrintOnFirstPage&gt;
+          &lt;PrintOnLastPage&gt;true&lt;/PrintOnLastPage&gt;
+          &lt;ReportItems&gt;
+            &lt;Textbox Name="Textbox16"&gt;
+              &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+              &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+              &lt;Paragraphs&gt;
+                &lt;Paragraph&gt;
+                  &lt;TextRuns&gt;
+                    &lt;TextRun&gt;
+                      &lt;Value&gt;="From: " &amp;amp; Format(Parameters!SalesDataset_FromDate.Value, "dd-MM-yyyy") &amp;amp; " - To: " &amp;amp; Format(Parameters!SalesDataset_ToDate.Value, "dd-MM-yyyy")&lt;/Value&gt;
+                      &lt;Style /&gt;
+                    &lt;/TextRun&gt;
+                  &lt;/TextRuns&gt;
+                  &lt;Style /&gt;
+                &lt;/Paragraph&gt;
+              &lt;/Paragraphs&gt;
+              &lt;rd:DefaultName&gt;Textbox16&lt;/rd:DefaultName&gt;
+              &lt;Top&gt;0.34722in&lt;/Top&gt;
+              &lt;Height&gt;0.25in&lt;/Height&gt;
+              &lt;Width&gt;2.30556in&lt;/Width&gt;
+              &lt;Style&gt;
+                &lt;Border&gt;
+                  &lt;Style&gt;None&lt;/Style&gt;
+                &lt;/Border&gt;
+                &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+              &lt;/Style&gt;
+            &lt;/Textbox&gt;
+            &lt;Textbox Name="Textbox14"&gt;
+              &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+              &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+              &lt;Paragraphs&gt;
+                &lt;Paragraph&gt;
+                  &lt;TextRuns&gt;
+                    &lt;TextRun&gt;
+                      &lt;Value&gt;Sales Order Report&lt;/Value&gt;
+                      &lt;Style&gt;
+                        &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                      &lt;/Style&gt;
+                    &lt;/TextRun&gt;
+                  &lt;/TextRuns&gt;
+                  &lt;Style /&gt;
+                &lt;/Paragraph&gt;
+              &lt;/Paragraphs&gt;
+              &lt;rd:DefaultName&gt;Textbox14&lt;/rd:DefaultName&gt;
+              &lt;Top&gt;0.34722in&lt;/Top&gt;
+              &lt;Left&gt;2.75695in&lt;/Left&gt;
+              &lt;Height&gt;0.25in&lt;/Height&gt;
+              &lt;Width&gt;1.44444in&lt;/Width&gt;
+              &lt;ZIndex&gt;1&lt;/ZIndex&gt;
+              &lt;Style&gt;
+                &lt;Border&gt;
+                  &lt;Style&gt;None&lt;/Style&gt;
+                &lt;/Border&gt;
+                &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+              &lt;/Style&gt;
+            &lt;/Textbox&gt;
+          &lt;/ReportItems&gt;
+          &lt;Style&gt;
+            &lt;Border&gt;
+              &lt;Style&gt;None&lt;/Style&gt;
+            &lt;/Border&gt;
+          &lt;/Style&gt;
+        &lt;/PageHeader&gt;
+        &lt;PageFooter&gt;
+          &lt;Height&gt;0.61111in&lt;/Height&gt;
+          &lt;PrintOnFirstPage&gt;true&lt;/PrintOnFirstPage&gt;
+          &lt;PrintOnLastPage&gt;true&lt;/PrintOnLastPage&gt;
+          &lt;ReportItems&gt;
+            &lt;Textbox Name="Textbox15"&gt;
+              &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+              &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+              &lt;Paragraphs&gt;
+                &lt;Paragraph&gt;
+                  &lt;TextRuns&gt;
+                    &lt;TextRun&gt;
+                      &lt;Value&gt;="Generated on: " &amp;amp; Format(Globals!ExecutionTime, "dd-MM-yyyy")&lt;/Value&gt;
+                      &lt;Style /&gt;
+                    &lt;/TextRun&gt;
+                  &lt;/TextRuns&gt;
+                  &lt;Style /&gt;
+                &lt;/Paragraph&gt;
+              &lt;/Paragraphs&gt;
+              &lt;rd:DefaultName&gt;Textbox15&lt;/rd:DefaultName&gt;
+              &lt;Left&gt;2.2014in&lt;/Left&gt;
+              &lt;Height&gt;0.25in&lt;/Height&gt;
+              &lt;Width&gt;1.99999in&lt;/Width&gt;
+              &lt;Style&gt;
+                &lt;Border&gt;
+                  &lt;Style&gt;None&lt;/Style&gt;
+                &lt;/Border&gt;
+                &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+              &lt;/Style&gt;
+            &lt;/Textbox&gt;
+          &lt;/ReportItems&gt;
+          &lt;Style&gt;
+            &lt;Border&gt;
+              &lt;Style&gt;None&lt;/Style&gt;
+            &lt;/Border&gt;
+          &lt;/Style&gt;
+        &lt;/PageFooter&gt;
+        &lt;PageWidth&gt;4.8in&lt;/PageWidth&gt;
+        &lt;InteractiveHeight&gt;11in&lt;/InteractiveHeight&gt;
+        &lt;InteractiveWidth&gt;8.5in&lt;/InteractiveWidth&gt;
+        &lt;LeftMargin&gt;0.25in&lt;/LeftMargin&gt;
+        &lt;RightMargin&gt;0.25in&lt;/RightMargin&gt;
+        &lt;TopMargin&gt;0.25in&lt;/TopMargin&gt;
+        &lt;BottomMargin&gt;0.25in&lt;/BottomMargin&gt;
+        &lt;Style /&gt;
+      &lt;/Page&gt;
+    &lt;/ReportSection&gt;
+  &lt;/ReportSections&gt;
+  &lt;ReportParameters&gt;
+    &lt;ReportParameter Name="AX_PartitionKey"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_PartitionKey&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_CompanyName"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Prompt&gt;AX_CompanyName&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_UserContext"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_UserContext&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_RenderingCulture"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_RenderingCulture&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_ReportContext"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_ReportContext&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+      &lt;UsedInQuery&gt;True&lt;/UsedInQuery&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_RdpPreProcessedId"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_RdpPreProcessedId&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="SalesDataset_FromDate"&gt;
+      &lt;DataType&gt;DateTime&lt;/DataType&gt;
+      &lt;Prompt&gt;From Date&lt;/Prompt&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="SalesDataset_ToDate"&gt;
+      &lt;DataType&gt;DateTime&lt;/DataType&gt;
+      &lt;Prompt&gt;To Date&lt;/Prompt&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="SalesDataset_SalesType"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Prompt&gt;Order Type&lt;/Prompt&gt;
+    &lt;/ReportParameter&gt;
+  &lt;/ReportParameters&gt;
+  &lt;ReportParametersLayout&gt;
+    &lt;GridLayoutDefinition&gt;
+      &lt;NumberOfColumns&gt;6&lt;/NumberOfColumns&gt;
+      &lt;NumberOfRows&gt;3&lt;/NumberOfRows&gt;
+      &lt;CellDefinitions&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;0&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_PartitionKey&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;1&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_CompanyName&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;2&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_UserContext&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;3&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_RenderingCulture&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;4&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_ReportContext&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;5&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_RdpPreProcessedId&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;0&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;1&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;SalesDataset_FromDate&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;1&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;1&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;SalesDataset_ToDate&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;0&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;2&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;SalesDataset_SalesType&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+      &lt;/CellDefinitions&gt;
+    &lt;/GridLayoutDefinition&gt;
+  &lt;/ReportParametersLayout&gt;
+  &lt;Language&gt;en-US&lt;/Language&gt;
+  &lt;rd:ReportUnitType&gt;Inch&lt;/rd:ReportUnitType&gt;
+  &lt;rd:ExpressionDialog&gt;Microsoft.Dynamics.Framework.Design.Reports.ExpressionEditor.ExpressionEditorDialog, Microsoft.Dynamics.Framework.Design.Reports&lt;/rd:ExpressionDialog&gt;
+  &lt;rd:ReportID&gt;7391671e-8fda-4158-a603-2bc40ec77c96&lt;/rd:ReportID&gt;
+&lt;/Report&gt;</Text>
+			<DisableIndividualTransformation />
+		</AxReportDesign>
+	</Designs>
+	<EmbeddedImages />
+</AxReport>

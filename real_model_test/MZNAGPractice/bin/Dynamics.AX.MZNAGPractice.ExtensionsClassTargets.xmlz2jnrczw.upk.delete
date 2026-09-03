@@ -1,0 +1,3 @@
+<ExtensionClasses>
+  <ExtensionClass ExtensionClassName="MZNAGCustTable_Extension" ExtensionTargetName="CustTable" ExtensionTargetTypeId="TableTypeId" ExtensionNestedTargetName="" />
+</ExtensionClasses>

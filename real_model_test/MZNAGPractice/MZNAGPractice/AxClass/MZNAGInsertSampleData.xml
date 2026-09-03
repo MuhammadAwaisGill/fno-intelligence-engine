@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAGInsertSampleData</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class MZNAGInsertSampleData
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        MZNAGCustomerTable       custTable;
+        MZNAGCustomerOrdersTable ordersTable;
+
+        ttsbegin;
+
+        // 1. Insert Sample Customer
+        custTable.CustomerID   = "CUST-001";
+        custTable.CustomerName = "John Doe Enterprises";
+        custTable.CustGroup    = "10";
+        custTable.insert();
+
+        // 2. Insert Sample Orders linked to that Customer via CustAccount
+        ordersTable.SalesId      = "ORD-1001";
+        ordersTable.CustAccount  = "CUST-001"; // Fixed field name here
+        ordersTable.OrderDate    = DateTimeUtil::getSystemDate(DateTimeUtil::getUserPreferredTimeZone());
+        ordersTable.TotalAmount  = 1500.00;
+        ordersTable.insert();
+
+        ordersTable.clear();
+        ordersTable.SalesId      = "ORD-1002";
+        ordersTable.CustAccount  = "CUST-001"; // Fixed field name here
+        ordersTable.OrderDate    = DateTimeUtil::getSystemDate(DateTimeUtil::getUserPreferredTimeZone());
+        ordersTable.TotalAmount  = 450.50;
+        ordersTable.insert();
+
+        ttscommit;
+
+        info("Sample customer and orders inserted successfully!");
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

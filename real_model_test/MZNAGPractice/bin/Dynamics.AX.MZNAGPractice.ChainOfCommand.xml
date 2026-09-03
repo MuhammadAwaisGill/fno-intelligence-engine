@@ -1,0 +1,6 @@
+<ChainOfCommand>
+  <ExtensionClass Name="MZNAGCustTable_Extension" ExtensionTarget="CustTable" ExtensionTargetType="TableTypeId">
+    <Method ActualExtensionTarget="CustTable" IsStatic="False" CocMethodDelegateElementOwner="CustTable" IsFormNestedTargetConcept="False" CoCRootFormName="" CoCNestedElementKind="Class" IsCommonBaseMethodTarget="False" SupportsLazyInit="False">modifiedField</Method>
+    <Method ActualExtensionTarget="CustTable" IsStatic="False" CocMethodDelegateElementOwner="CustTable" IsFormNestedTargetConcept="False" CoCRootFormName="" CoCNestedElementKind="Class" IsCommonBaseMethodTarget="False" SupportsLazyInit="False">update</Method>
+  </ExtensionClass>
+</ChainOfCommand>

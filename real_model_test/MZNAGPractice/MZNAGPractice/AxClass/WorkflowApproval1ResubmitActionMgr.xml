@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>WorkflowApproval1ResubmitActionMgr</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class WorkflowApproval1ResubmitActionMgr
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        recID recID = _args.record().RecId;
+        tableId tableId = _args.record().TableId;
+        MZNAG_RequestOrderTable  tableBuffer = _args.record();
+        WorkflowWorkItemTable workItem = _args.caller().getActiveWorkflowWorkItem();
+        WorkflowWorkItemActionDialog workflowWorkItemActionDialog;
+        UserGroupList           userGroupList;
+        if (workItem.RecId > 0)
+        {
+            try
+            {
+
+                workflowWorkItemActionDialog = WorkflowWorkItemActionDialog::construct( workItem,
+                WorkflowWorkItemActionType::Resubmit,
+                new MenuFunction(_args.menuItemName(),_args.menuItemType()));
+                workflowWorkItemActionDialog.run();
+
+                if (workflowWorkItemActionDialog.parmIsClosedOK())
+                {
+                    if (tableBuffer.Status == MZNAG_CustomWorkflowEnum::Rejected || tableBuffer.Status == MZNAG_CustomWorkflowEnum::ChangeRequested)
+                    {
+                        select firstonly groupId from userGroupList
+                            where userGroupList.UserId == curUserId();
+
+                        if (userGroupList.groupId)
+                        {
+                            //tableBuffer.CSDSubmitGroupId = userGroupList.groupId;
+                        }
+
+                        workItem = _args.caller().getActiveWorkflowWorkItem();
+                        WorkflowWorkItemActionManager::dispatchWorkItemAction( workItem,
+                        workflowWorkItemActionDialog.parmWorkflowComment(),
+                        workflowWorkItemActionDialog.parmTargetUser(),
+                        WorkflowWorkItemActionType::Resubmit,
+                        _args.menuItemName());
+
+                        tableBuffer.Status = MZNAG_CustomWorkflowEnum::Pending;
+                        ttsbegin;
+                        tableBuffer.dataSource().write();
+
+                        ttscommit;
+                    }
+                    else
+                    {
+                        throw Exception::Error;
+                    }
+                }
+            }
+
+            catch(Exception::Error)
+            {
+                throw error(strfmt("Can not resubmit some error occured"));
+            }
+        }
+        // Make the form refresh its common workflow UI controls.
+        FormRun fr;
+        fr = _args.caller();
+        fr.dataSource().research(true);
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

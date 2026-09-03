@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>PurchaseOrderReportDP</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class PurchaseOrderReportDP extends SRSReportDataProviderBase
+{
+    PurchaseOrderReportTmp tmpTable;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getTmpTable</Name>
+				<Source><![CDATA[
+    [SrsReportDataSetAttribute(tableStr(PurchaseOrderReportTmp))]
+    public PurchaseOrderReportTmp getTmpTable()
+    {
+        select * from tmpTable;
+        return tmpTable;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processReport</Name>
+				<Source><![CDATA[
+    public void processReport() 
+    {
+        PurchTable purchTable;
+        PurchLine purchLine;
+        int srNo;
+
+        while select purchTable
+        {
+            srNo = 0;
+
+            while select purchLine
+                where purchLine.PurchId == purchTable.PurchId
+            {
+                srNo++;
+
+                tmpTable.clear();
+
+                // Mapping Header Fields (from PurchTable)
+                tmpTable.PurchaseId = purchTable.PurchId;
+                tmpTable.PurchaseStatus = enum2Str(purchTable.PurchStatus);
+                tmpTable.SupplierAccount = purchTable.OrderAccount;
+                tmpTable.Name = purchTable.vendorName();
+
+                // Mapping Line Fields (fron PurchLine).
+                tmpTable.SrNo = srNo;
+                tmpTable.ItemId = purchLine.ItemId;
+                tmpTable.Description = purchLine.Name;
+                tmpTable.Quantity = purchLine.PurchQty;
+                tmpTable.Currency = purchLine.CurrencyCode;
+                tmpTable.Unit = purchLine.purchUnit;
+                tmpTable.UnitPrice = purchLine.PurchPrice;
+                tmpTable.Discount = purchLine.LineDisc;
+                tmpTable.Amount = purchLine.LineAmount;
+
+                tmpTable.insert();
+            }
+        }
+
+
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_CustomerStatusBatchContract</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[DataContractAttribute]
+public class MZNAG_CustomerStatusBatchContract
+{
+    CustAccount custAccount;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>parmCustAccount</Name>
+				<Source><![CDATA[
+    [DataMemberAttribute('CustAccount'),
+     SysOperationLabel('Customer account')]
+    
+        public CustAccount parmCustAccount(CustAccount _custAccount = custAccount)
+    {
+        custAccount = _custAccount;
+        return custAccount;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

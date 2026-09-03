@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxWorkflowCategory xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V2">
+	<Name>MZNAG_CustomWorkflowCategory</Name>
+	<Label>Custom workflow category</Label>
+	<Module>Customer</Module>
+</AxWorkflowCategory>

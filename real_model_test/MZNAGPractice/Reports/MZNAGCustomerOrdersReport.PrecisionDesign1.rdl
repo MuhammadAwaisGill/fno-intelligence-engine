@@ -1,0 +1,718 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Tablix Name="Tablix1">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>0.92361in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.20833in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.72222in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.86111in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Customer ID</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Customer Name</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Sales Id</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox5</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox7">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Order Date</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox7</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox9">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Total Amount</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox9</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="CustomerID">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!CustomerID.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>CustomerID</rd:DefaultName>
+                          <CustomProperties>
+                            <CustomProperty>
+                              <Name>AXDataType</Name>
+                              <Value><![CDATA[String]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTFormat</Name>
+                              <Value><![CDATA[MZNAGCustomerTable.CustomerID]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTTextAlign</Name>
+                              <Value><![CDATA[MZNAGCustomerTable.CustomerID]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTDirection</Name>
+                              <Value><![CDATA[MZNAGCustomerTable.CustomerID]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXFieldName</Name>
+                              <Value><![CDATA[CustomerID]]></Value>
+                            </CustomProperty>
+                          </CustomProperties>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="CustomerName">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!CustomerName.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>CustomerName</rd:DefaultName>
+                          <CustomProperties>
+                            <CustomProperty>
+                              <Name>AXDataType</Name>
+                              <Value><![CDATA[String]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTFormat</Name>
+                              <Value><![CDATA[MZNAGCustomerTable.CustomerName]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTTextAlign</Name>
+                              <Value><![CDATA[MZNAGCustomerTable.CustomerName]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTDirection</Name>
+                              <Value><![CDATA[MZNAGCustomerTable.CustomerName]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXFieldName</Name>
+                              <Value><![CDATA[CustomerName]]></Value>
+                            </CustomProperty>
+                          </CustomProperties>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="SalesId">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!SalesId.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>SalesId</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <CustomProperties>
+                            <CustomProperty>
+                              <Name>AXDataType</Name>
+                              <Value><![CDATA[String]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTFormat</Name>
+                              <Value><![CDATA[MZNAGCustomerOrdersTable.SalesId]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTTextAlign</Name>
+                              <Value><![CDATA[MZNAGCustomerOrdersTable.SalesId]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTDirection</Name>
+                              <Value><![CDATA[MZNAGCustomerOrdersTable.SalesId]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXFieldName</Name>
+                              <Value><![CDATA[SalesId]]></Value>
+                            </CustomProperty>
+                          </CustomProperties>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="OrderDate">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!OrderDate.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>OrderDate</rd:DefaultName>
+                          <CustomProperties>
+                            <CustomProperty>
+                              <Name>AXDataType</Name>
+                              <Value><![CDATA[DateTime]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTFormat</Name>
+                              <Value><![CDATA[MZNAGCustomerOrdersTable.OrderDate]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTTextAlign</Name>
+                              <Value><![CDATA[MZNAGCustomerOrdersTable.OrderDate]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTDirection</Name>
+                              <Value><![CDATA[MZNAGCustomerOrdersTable.OrderDate]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXFieldName</Name>
+                              <Value><![CDATA[OrderDate]]></Value>
+                            </CustomProperty>
+                          </CustomProperties>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <rd:Selected>true</rd:Selected>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TotalAmount">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!TotalAmount.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>TotalAmount</rd:DefaultName>
+                          <CustomProperties>
+                            <CustomProperty>
+                              <Name>AXDataType</Name>
+                              <Value><![CDATA[Float]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTFormat</Name>
+                              <Value><![CDATA[MZNAGCustomerOrdersTable.TotalAmount]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTTextAlign</Name>
+                              <Value><![CDATA[MZNAGCustomerOrdersTable.TotalAmount]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXEDTDirection</Name>
+                              <Value><![CDATA[MZNAGCustomerOrdersTable.TotalAmount]]></Value>
+                            </CustomProperty>
+                            <CustomProperty>
+                              <Name>AXFieldName</Name>
+                              <Value><![CDATA[TotalAmount]]></Value>
+                            </CustomProperty>
+                          </CustomProperties>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>CustomerOrdersDS</DataSetName>
+            <Top>1.47444in</Top>
+            <Left>2.8425in</Left>
+            <Height>0.5in</Height>
+            <Width>4.71527in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+        </ReportItems>
+        <Height>3in</Height>
+        <Style />
+      </Body>
+      <Width>10in</Width>
+      <Page>
+        <PageHeight>8.5in</PageHeight>
+        <PageWidth>11in</PageWidth>
+        <InteractiveHeight>8.5in</InteractiveHeight>
+        <InteractiveWidth>11in</InteractiveWidth>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>5</NumberOfColumns>
+      <NumberOfRows>1</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>AX_PartitionKey</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>AX_CompanyName</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>AX_UserContext</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>AX_RenderingCulture</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>4</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>AX_ReportContext</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <Language>en-US</Language>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ExpressionDialog>Microsoft.Dynamics.Framework.Design.Reports.ExpressionEditor.ExpressionEditorDialog, Microsoft.Dynamics.Framework.Design.Reports</rd:ExpressionDialog>
+  <rd:ReportID>e26c69fd-cee6-4453-9f68-f9d932c19ccf</rd:ReportID>
+  <DataSources>
+    <DataSource Name="AutoGen__Query">
+      <Transaction>false</Transaction>
+      <ConnectionProperties>
+        <DataProvider>AXQUERY</DataProvider>
+        <ConnectString />
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+      <rd:DataSourceID>7a0ee91b-bca9-43f6-809e-cb9a41536110</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="CustomerOrdersDS">
+      <Fields>
+        <Field Name="CustomerID">
+          <DataField>MZNAGCustomerTable.1.CustomerID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CustomerName">
+          <DataField>MZNAGCustomerTable.1.CustomerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CustGroup">
+          <DataField>MZNAGCustomerTable.1.CustGroup</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreditLimit">
+          <DataField>MZNAGCustomerTable.1.CreditLimit</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="Currency">
+          <DataField>MZNAGCustomerTable.1.Currency</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RegistrationDate">
+          <DataField>MZNAGCustomerTable.1.RegistrationDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="dataAreaId">
+          <DataField>MZNAGCustomerTable.1.dataAreaId</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="recVersion">
+          <DataField>MZNAGCustomerTable.1.recVersion</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Partition">
+          <DataField>MZNAGCustomerTable.1.Partition</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="SYSROWVERSION">
+          <DataField>MZNAGCustomerTable.1.SYSROWVERSION</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="RecId">
+          <DataField>MZNAGCustomerTable.1.RecId</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="SalesId">
+          <DataField>MZNAGCustomerOrdersTable.1.SalesId</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CustAccount">
+          <DataField>MZNAGCustomerOrdersTable.1.CustAccount</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="OrderDate">
+          <DataField>MZNAGCustomerOrdersTable.1.OrderDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="SalesStatusName">
+          <DataField>MZNAGCustomerOrdersTable.1.SalesStatus:NAME(SalesStatus)</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SalesStatusLabel">
+          <DataField>MZNAGCustomerOrdersTable.1.SalesStatus:LABEL(SalesStatus)</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TotalAmount">
+          <DataField>MZNAGCustomerOrdersTable.1.TotalAmount</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="dataAreaId1">
+          <DataField>MZNAGCustomerOrdersTable.1.dataAreaId</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="recVersion1">
+          <DataField>MZNAGCustomerOrdersTable.1.recVersion</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Partition1">
+          <DataField>MZNAGCustomerOrdersTable.1.Partition</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="SYSROWVERSION1">
+          <DataField>MZNAGCustomerOrdersTable.1.SYSROWVERSION</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="RecId1">
+          <DataField>MZNAGCustomerOrdersTable.1.RecId</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <QueryParameters>
+          <QueryParameter Name="AX_PartitionKey">
+            <Value>=Parameters!AX_PartitionKey.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="AX_CompanyName">
+            <Value>=Parameters!AX_CompanyName.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="AX_UserContext">
+            <Value>=Parameters!AX_UserContext.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="AX_RenderingCulture">
+            <Value>=Parameters!AX_RenderingCulture.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="AX_ReportContext">
+            <Value>=Parameters!AX_ReportContext.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <DataSourceName>AutoGen__Query</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT * FROM MZNAGCustomerOrdersQuery</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <rd:DataSetInfo>
+        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
+        <rd:DataSetName>CustomerOrdersDS</rd:DataSetName>
+        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
+        <rd:TableAdapterName>FieldsTableAdapter</rd:TableAdapterName>
+        <rd:TableName>Fields</rd:TableName>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="AX_PartitionKey">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Hidden>true</Hidden>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>AX_PartitionKey</Prompt>
+      <MultiValue>false</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="AX_CompanyName">
+      <DataType>String</DataType>
+      <Nullable>false</Nullable>
+      <Hidden>true</Hidden>
+      <AllowBlank>false</AllowBlank>
+      <Prompt>AX_CompanyName</Prompt>
+      <MultiValue>false</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="AX_UserContext">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Hidden>true</Hidden>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>AX_UserContext</Prompt>
+      <MultiValue>false</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="AX_RenderingCulture">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Hidden>true</Hidden>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>AX_RenderingCulture</Prompt>
+      <MultiValue>false</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="AX_ReportContext">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Hidden>true</Hidden>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>AX_ReportContext</Prompt>
+      <MultiValue>false</MultiValue>
+      <UsedInQuery>True</UsedInQuery>
+    </ReportParameter>
+  </ReportParameters>
+  <CodeModules>
+    <CodeModule>Microsoft.Dynamics.Framework.Reports, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</CodeModule>
+    <CodeModule>Microsoft.Dynamics.ApplicationSuite.Reporting.BusinessLogic, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</CodeModule>
+  </CodeModules>
+</Report>

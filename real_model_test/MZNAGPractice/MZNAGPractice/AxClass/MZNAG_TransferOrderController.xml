@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_TransferOrderController</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class MZNAG_TransferOrderController extends SrsReportRunController
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>construct</Name>
+				<Source><![CDATA[
+    public static MZNAG_TransferOrderController construct()
+    {
+        return new MZNAG_TransferOrderController();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        MZNAG_TransferOrderController controller = MZNAG_TransferOrderController::construct();
+        
+        controller.parmReportName(ssrsReportStr(MZNAG_TransferOrderReport, PrecisionDesign1));
+        controller.parmArgs(_args);
+        controller.startOperation();
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

@@ -1,0 +1,2050 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxReport xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="Microsoft.Dynamics.AX.Metadata.V2">
+	<Name>PurchaseOrderReport</Name>
+	<DataMethods />
+	<DataSets>
+		<AxReportDataSet xmlns="">
+			<Name>PurchaseDataSet</Name>
+			<DataSourceType>ReportDataProvider</DataSourceType>
+			<DynamicFilters>false</DynamicFilters>
+			<Query>SELECT * FROM PurchaseOrderReportDP.PurchaseOrderReportTmp</Query>
+			<FieldGroups />
+			<Fields>
+				<AxReportDataSetField>
+					<Name>Amount</Name>
+					<Alias>PurchaseOrderReportTmp.1.Amount</Alias>
+					<Caption>Amount</Caption>
+					<DataType>System.Double</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>Currency</Name>
+					<Alias>PurchaseOrderReportTmp.1.Currency</Alias>
+					<Caption>Currency</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>Description</Name>
+					<Alias>PurchaseOrderReportTmp.1.Description</Alias>
+					<Caption>Description</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>Discount</Name>
+					<Alias>PurchaseOrderReportTmp.1.Discount</Alias>
+					<Caption>Discount</Caption>
+					<DataType>System.Double</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>ItemId</Name>
+					<Alias>PurchaseOrderReportTmp.1.ItemId</Alias>
+					<Caption>Item Id</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>Name</Name>
+					<Alias>PurchaseOrderReportTmp.1.Name</Alias>
+					<Caption>Name</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>PurchaseId</Name>
+					<Alias>PurchaseOrderReportTmp.1.PurchaseId</Alias>
+					<Caption>Purchase Id</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>PurchaseStatus</Name>
+					<Alias>PurchaseOrderReportTmp.1.PurchaseStatus</Alias>
+					<Caption>Purchase Status</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>Quantity</Name>
+					<Alias>PurchaseOrderReportTmp.1.Quantity</Alias>
+					<Caption>Quantity</Caption>
+					<DataType>System.Double</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>SrNo</Name>
+					<Alias>PurchaseOrderReportTmp.1.SrNo</Alias>
+					<Caption>Sr. #</Caption>
+					<DataType>System.Int32</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>SupplierAccount</Name>
+					<Alias>PurchaseOrderReportTmp.1.SupplierAccount</Alias>
+					<Caption>Supplier Account</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>Unit</Name>
+					<Alias>PurchaseOrderReportTmp.1.Unit</Alias>
+					<Caption>Unit</Caption>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+				<AxReportDataSetField>
+					<Name>UnitPrice</Name>
+					<Alias>PurchaseOrderReportTmp.1.UnitPrice</Alias>
+					<Caption>Unit Price</Caption>
+					<DataType>System.Double</DataType>
+					<DisplayWidth>Auto</DisplayWidth>
+					<UserDefined>false</UserDefined>
+				</AxReportDataSetField>
+			</Fields>
+			<Parameters>
+				<AxReportDataSetParameter>
+					<Name>AX_PartitionKey</Name>
+					<Alias>AX_PartitionKey</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_PartitionKey</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_CompanyName</Name>
+					<Alias>AX_CompanyName</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_CompanyName</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_UserContext</Name>
+					<Alias>AX_UserContext</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_UserContext</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_RenderingCulture</Name>
+					<Alias>AX_RenderingCulture</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_RenderingCulture</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_ReportContext</Name>
+					<Alias>AX_ReportContext</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_ReportContext</Parameter>
+				</AxReportDataSetParameter>
+				<AxReportDataSetParameter>
+					<Name>AX_RdpPreProcessedId</Name>
+					<Alias>AX_RdpPreProcessedId</Alias>
+					<DataType>System.String</DataType>
+					<Parameter>AX_RdpPreProcessedId</Parameter>
+				</AxReportDataSetParameter>
+			</Parameters>
+		</AxReportDataSet>
+	</DataSets>
+	<DefaultParameterGroup>
+		<Name xmlns="">Parameters</Name>
+		<ReportParameterBases xmlns="">
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_PartitionKey</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_CompanyName</Name>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_UserContext</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_RenderingCulture</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_ReportContext</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+			<AxReportParameterBase xmlns=""
+				i:type="AxReportParameter">
+				<Name>AX_RdpPreProcessedId</Name>
+				<AllowBlank>true</AllowBlank>
+				<Nullable>true</Nullable>
+				<UserVisibility>Hidden</UserVisibility>
+				<DefaultValue />
+				<Values />
+			</AxReportParameterBase>
+		</ReportParameterBases>
+	</DefaultParameterGroup>
+	<Designs>
+		<AxReportDesign xmlns=""
+			i:type="AxReportPrecisionDesign">
+			<Name>PrecisionDesign1</Name>
+			<Text>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"&gt;
+  &lt;AutoRefresh&gt;0&lt;/AutoRefresh&gt;
+  &lt;DataSources&gt;
+    &lt;DataSource Name="AutoGen__ReportDataProvider"&gt;
+      &lt;Transaction&gt;true&lt;/Transaction&gt;
+      &lt;ConnectionProperties&gt;
+        &lt;DataProvider&gt;AXREPORTDATAPROVIDER&lt;/DataProvider&gt;
+        &lt;ConnectString /&gt;
+        &lt;IntegratedSecurity&gt;true&lt;/IntegratedSecurity&gt;
+      &lt;/ConnectionProperties&gt;
+      &lt;rd:DataSourceID&gt;98246def-a172-4201-b148-8b03795f5338&lt;/rd:DataSourceID&gt;
+    &lt;/DataSource&gt;
+  &lt;/DataSources&gt;
+  &lt;DataSets&gt;
+    &lt;DataSet Name="PurchaseDataSet"&gt;
+      &lt;Query&gt;
+        &lt;DataSourceName&gt;AutoGen__ReportDataProvider&lt;/DataSourceName&gt;
+        &lt;QueryParameters&gt;
+          &lt;QueryParameter Name="AX_PartitionKey"&gt;
+            &lt;Value&gt;=Parameters!AX_PartitionKey.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_CompanyName"&gt;
+            &lt;Value&gt;=Parameters!AX_CompanyName.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_UserContext"&gt;
+            &lt;Value&gt;=Parameters!AX_UserContext.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_RenderingCulture"&gt;
+            &lt;Value&gt;=Parameters!AX_RenderingCulture.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_ReportContext"&gt;
+            &lt;Value&gt;=Parameters!AX_ReportContext.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+          &lt;QueryParameter Name="AX_RdpPreProcessedId"&gt;
+            &lt;Value&gt;=Parameters!AX_RdpPreProcessedId.Value&lt;/Value&gt;
+          &lt;/QueryParameter&gt;
+        &lt;/QueryParameters&gt;
+        &lt;CommandText&gt;SELECT * FROM PurchaseOrderReportDP.PurchaseOrderReportTmp&lt;/CommandText&gt;
+        &lt;rd:UseGenericDesigner&gt;true&lt;/rd:UseGenericDesigner&gt;
+      &lt;/Query&gt;
+      &lt;Fields&gt;
+        &lt;Field Name="Amount"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.Amount&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Double&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="Currency"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.Currency&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="Description"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.Description&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="Discount"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.Discount&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Double&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="ItemId"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.ItemId&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="Name"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.Name&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="PurchaseId"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.PurchaseId&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="PurchaseStatus"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.PurchaseStatus&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="Quantity"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.Quantity&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Double&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SrNo"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.SrNo&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Int32&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="SupplierAccount"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.SupplierAccount&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="Unit"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.Unit&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.String&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+        &lt;Field Name="UnitPrice"&gt;
+          &lt;DataField&gt;PurchaseOrderReportTmp.1.UnitPrice&lt;/DataField&gt;
+          &lt;rd:TypeName&gt;System.Double&lt;/rd:TypeName&gt;
+        &lt;/Field&gt;
+      &lt;/Fields&gt;
+      &lt;rd:DataSetInfo&gt;
+        &lt;rd:DataSetName&gt;PurchaseDataSet&lt;/rd:DataSetName&gt;
+        &lt;rd:TableName&gt;Fields&lt;/rd:TableName&gt;
+        &lt;rd:TableAdapterFillMethod&gt;Fill&lt;/rd:TableAdapterFillMethod&gt;
+        &lt;rd:TableAdapterGetDataMethod&gt;GetData&lt;/rd:TableAdapterGetDataMethod&gt;
+        &lt;rd:TableAdapterName&gt;FieldsTableAdapter&lt;/rd:TableAdapterName&gt;
+      &lt;/rd:DataSetInfo&gt;
+    &lt;/DataSet&gt;
+  &lt;/DataSets&gt;
+  &lt;ReportSections&gt;
+    &lt;ReportSection&gt;
+      &lt;Body&gt;
+        &lt;ReportItems&gt;
+          &lt;Tablix Name="Tablix1"&gt;
+            &lt;TablixBody&gt;
+              &lt;TablixColumns&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;0.53472in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;0.88194in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1.63194in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;0.65278in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;1in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;0.41667in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;0.79167in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;0.78472in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+                &lt;TablixColumn&gt;
+                  &lt;Width&gt;0.95139in&lt;/Width&gt;
+                &lt;/TablixColumn&gt;
+              &lt;/TablixColumns&gt;
+              &lt;TablixRows&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="PurchaseId"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Purchase Id:  &lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!PurchaseId.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Normal&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;PurchaseId&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;ColSpan&gt;6&lt;/ColSpan&gt;
+                        &lt;rd:Selected&gt;true&lt;/rd:Selected&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="PurchaseStatus"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Purchase status:  &lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!PurchaseStatus.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Normal&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;PurchaseStatus&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;ColSpan&gt;3&lt;/ColSpan&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="SupplierAccount"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Supplier Id:  &lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!SupplierAccount.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Normal&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;SupplierAccount&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;ColSpan&gt;6&lt;/ColSpan&gt;
+                        &lt;rd:Selected&gt;true&lt;/rd:Selected&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Name"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Name:  &lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!Name.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Normal&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Name&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;LightGrey&lt;/Color&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;ColSpan&gt;3&lt;/ColSpan&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="SrNo"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value /&gt;
+                                  &lt;Style /&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;SrNo&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Color&gt;White&lt;/Color&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;ColSpan&gt;9&lt;/ColSpan&gt;
+                        &lt;rd:Selected&gt;true&lt;/rd:Selected&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox159"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Sr. #&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox159&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;rd:Selected&gt;true&lt;/rd:Selected&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox160"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Item Id&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox160&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox161"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Description&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox161&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox162"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Quantity&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox162&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox163"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Currency &lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Center&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox163&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox164"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Unit&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox164&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox165"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Unit Price&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Right&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox165&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox166"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Discount&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Right&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox166&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox167"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Amount&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Right&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox167&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="SrNo1"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!SrNo.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Left&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;SrNo1&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;Integer&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.SrNo&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.SrNo&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.SrNo&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;rd:Selected&gt;true&lt;/rd:Selected&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="ItemId"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!ItemId.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;ItemId&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.ItemId&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.ItemId&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.ItemId&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Description"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!Description.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Description&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Description&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Description&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Description&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Quantity"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!Quantity.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Quantity&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;Float&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Quantity&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Quantity&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Quantity&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Currency"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!Currency.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Center&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Currency&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Currency&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Currency&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Currency&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Unit"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!Unit.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Unit&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;String&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Unit&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Unit&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Unit&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="UnitPrice"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!UnitPrice.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Right&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;UnitPrice&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;Float&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.UnitPrice&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.UnitPrice&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.UnitPrice&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Discount"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!Discount.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Right&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Discount&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;Float&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Discount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Discount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Discount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Amount"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Fields!Amount.Value&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Right&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Amount&lt;/rd:DefaultName&gt;
+                          &lt;CustomProperties&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXDataType&lt;/Name&gt;
+                              &lt;Value&gt;Float&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTFormat&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Amount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTTextAlign&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Amount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                            &lt;CustomProperty&gt;
+                              &lt;Name&gt;AXEDTDirection&lt;/Name&gt;
+                              &lt;Value&gt;PurchaseOrderReportTmp.Amount&lt;/Value&gt;
+                            &lt;/CustomProperty&gt;
+                          &lt;/CustomProperties&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+                &lt;TablixRow&gt;
+                  &lt;Height&gt;0.25in&lt;/Height&gt;
+                  &lt;TablixCells&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox274"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;Total&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox274&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Color&gt;Black&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;ColSpan&gt;3&lt;/ColSpan&gt;
+                        &lt;rd:Selected&gt;true&lt;/rd:Selected&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox277"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Sum(Fields!Quantity.Value)&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox277&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox284"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value /&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style /&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox284&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Color&gt;Black&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                        &lt;ColSpan&gt;4&lt;/ColSpan&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell /&gt;
+                    &lt;TablixCell&gt;
+                      &lt;CellContents&gt;
+                        &lt;Textbox Name="Textbox282"&gt;
+                          &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+                          &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+                          &lt;Paragraphs&gt;
+                            &lt;Paragraph&gt;
+                              &lt;TextRuns&gt;
+                                &lt;TextRun&gt;
+                                  &lt;Value&gt;=Sum(Fields!Amount.Value)&lt;/Value&gt;
+                                  &lt;Style&gt;
+                                    &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                                    &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                                  &lt;/Style&gt;
+                                &lt;/TextRun&gt;
+                              &lt;/TextRuns&gt;
+                              &lt;Style&gt;
+                                &lt;TextAlign&gt;Right&lt;/TextAlign&gt;
+                              &lt;/Style&gt;
+                            &lt;/Paragraph&gt;
+                          &lt;/Paragraphs&gt;
+                          &lt;rd:DefaultName&gt;Textbox282&lt;/rd:DefaultName&gt;
+                          &lt;Style&gt;
+                            &lt;Border&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/Border&gt;
+                            &lt;TopBorder&gt;
+                              &lt;Color&gt;Black&lt;/Color&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/TopBorder&gt;
+                            &lt;BottomBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/BottomBorder&gt;
+                            &lt;LeftBorder&gt;
+                              &lt;Style&gt;None&lt;/Style&gt;
+                            &lt;/LeftBorder&gt;
+                            &lt;RightBorder&gt;
+                              &lt;Style&gt;Solid&lt;/Style&gt;
+                            &lt;/RightBorder&gt;
+                            &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                            &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                            &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                            &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+                          &lt;/Style&gt;
+                        &lt;/Textbox&gt;
+                      &lt;/CellContents&gt;
+                    &lt;/TablixCell&gt;
+                  &lt;/TablixCells&gt;
+                &lt;/TablixRow&gt;
+              &lt;/TablixRows&gt;
+            &lt;/TablixBody&gt;
+            &lt;TablixColumnHierarchy&gt;
+              &lt;TablixMembers&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+                &lt;TablixMember /&gt;
+              &lt;/TablixMembers&gt;
+            &lt;/TablixColumnHierarchy&gt;
+            &lt;TablixRowHierarchy&gt;
+              &lt;TablixMembers&gt;
+                &lt;TablixMember&gt;
+                  &lt;Group Name="PurchaseId"&gt;
+                    &lt;GroupExpressions&gt;
+                      &lt;GroupExpression&gt;=Fields!PurchaseId.Value&lt;/GroupExpression&gt;
+                    &lt;/GroupExpressions&gt;
+                    &lt;PageBreak&gt;
+                      &lt;BreakLocation&gt;Between&lt;/BreakLocation&gt;
+                    &lt;/PageBreak&gt;
+                  &lt;/Group&gt;
+                  &lt;SortExpressions&gt;
+                    &lt;SortExpression&gt;
+                      &lt;Value&gt;=Fields!PurchaseId.Value&lt;/Value&gt;
+                    &lt;/SortExpression&gt;
+                  &lt;/SortExpressions&gt;
+                  &lt;TablixMembers&gt;
+                    &lt;TablixMember /&gt;
+                    &lt;TablixMember /&gt;
+                    &lt;TablixMember /&gt;
+                    &lt;TablixMember /&gt;
+                    &lt;TablixMember&gt;
+                      &lt;Group Name="Details" /&gt;
+                      &lt;TablixMembers&gt;
+                        &lt;TablixMember /&gt;
+                      &lt;/TablixMembers&gt;
+                    &lt;/TablixMember&gt;
+                    &lt;TablixMember&gt;
+                      &lt;KeepWithGroup&gt;Before&lt;/KeepWithGroup&gt;
+                    &lt;/TablixMember&gt;
+                  &lt;/TablixMembers&gt;
+                &lt;/TablixMember&gt;
+              &lt;/TablixMembers&gt;
+            &lt;/TablixRowHierarchy&gt;
+            &lt;DataSetName&gt;PurchaseDataSet&lt;/DataSetName&gt;
+            &lt;Top&gt;0.25in&lt;/Top&gt;
+            &lt;Left&gt;0.25in&lt;/Left&gt;
+            &lt;Height&gt;1.5in&lt;/Height&gt;
+            &lt;Width&gt;7.64583in&lt;/Width&gt;
+            &lt;Style&gt;
+              &lt;Border&gt;
+                &lt;Style&gt;None&lt;/Style&gt;
+              &lt;/Border&gt;
+            &lt;/Style&gt;
+          &lt;/Tablix&gt;
+        &lt;/ReportItems&gt;
+        &lt;Height&gt;1.91667in&lt;/Height&gt;
+        &lt;Style&gt;
+          &lt;Border&gt;
+            &lt;Style&gt;None&lt;/Style&gt;
+            &lt;Width&gt;2pt&lt;/Width&gt;
+          &lt;/Border&gt;
+          &lt;TopBorder&gt;
+            &lt;Style&gt;Solid&lt;/Style&gt;
+          &lt;/TopBorder&gt;
+          &lt;BottomBorder&gt;
+            &lt;Style&gt;Solid&lt;/Style&gt;
+          &lt;/BottomBorder&gt;
+          &lt;LeftBorder&gt;
+            &lt;Style&gt;Solid&lt;/Style&gt;
+          &lt;/LeftBorder&gt;
+          &lt;RightBorder&gt;
+            &lt;Style&gt;Solid&lt;/Style&gt;
+          &lt;/RightBorder&gt;
+        &lt;/Style&gt;
+      &lt;/Body&gt;
+      &lt;Width&gt;8.18056in&lt;/Width&gt;
+      &lt;Page&gt;
+        &lt;PageHeader&gt;
+          &lt;Height&gt;0.60639in&lt;/Height&gt;
+          &lt;PrintOnFirstPage&gt;true&lt;/PrintOnFirstPage&gt;
+          &lt;PrintOnLastPage&gt;true&lt;/PrintOnLastPage&gt;
+          &lt;ReportItems&gt;
+            &lt;Textbox Name="Textbox63"&gt;
+              &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+              &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+              &lt;Paragraphs&gt;
+                &lt;Paragraph&gt;
+                  &lt;TextRuns&gt;
+                    &lt;TextRun&gt;
+                      &lt;Value&gt;Purchase Order&lt;/Value&gt;
+                      &lt;Style&gt;
+                        &lt;FontFamily&gt;Segoe UI&lt;/FontFamily&gt;
+                        &lt;FontSize&gt;14pt&lt;/FontSize&gt;
+                        &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                      &lt;/Style&gt;
+                    &lt;/TextRun&gt;
+                  &lt;/TextRuns&gt;
+                  &lt;Style /&gt;
+                &lt;/Paragraph&gt;
+              &lt;/Paragraphs&gt;
+              &lt;rd:DefaultName&gt;Textbox63&lt;/rd:DefaultName&gt;
+              &lt;Top&gt;0.16889in&lt;/Top&gt;
+              &lt;Left&gt;3.16667in&lt;/Left&gt;
+              &lt;Height&gt;0.4375in&lt;/Height&gt;
+              &lt;Width&gt;1.95139in&lt;/Width&gt;
+              &lt;Style&gt;
+                &lt;Border&gt;
+                  &lt;Style&gt;None&lt;/Style&gt;
+                &lt;/Border&gt;
+                &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+              &lt;/Style&gt;
+            &lt;/Textbox&gt;
+          &lt;/ReportItems&gt;
+          &lt;Style&gt;
+            &lt;Border&gt;
+              &lt;Style&gt;None&lt;/Style&gt;
+              &lt;Width&gt;2pt&lt;/Width&gt;
+            &lt;/Border&gt;
+            &lt;TopBorder&gt;
+              &lt;Style&gt;Solid&lt;/Style&gt;
+            &lt;/TopBorder&gt;
+            &lt;BottomBorder&gt;
+              &lt;Style&gt;Solid&lt;/Style&gt;
+            &lt;/BottomBorder&gt;
+            &lt;LeftBorder&gt;
+              &lt;Style&gt;Solid&lt;/Style&gt;
+            &lt;/LeftBorder&gt;
+            &lt;RightBorder&gt;
+              &lt;Style&gt;Solid&lt;/Style&gt;
+            &lt;/RightBorder&gt;
+          &lt;/Style&gt;
+        &lt;/PageHeader&gt;
+        &lt;PageFooter&gt;
+          &lt;Height&gt;0.27778in&lt;/Height&gt;
+          &lt;PrintOnFirstPage&gt;true&lt;/PrintOnFirstPage&gt;
+          &lt;PrintOnLastPage&gt;true&lt;/PrintOnLastPage&gt;
+          &lt;ReportItems&gt;
+            &lt;Textbox Name="Textbox64"&gt;
+              &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+              &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+              &lt;Paragraphs&gt;
+                &lt;Paragraph&gt;
+                  &lt;TextRuns&gt;
+                    &lt;TextRun&gt;
+                      &lt;Value&gt;="Printed Date " &amp;amp; Format(Globals!ExecutionTime, "MM/dd/yyyy")&lt;/Value&gt;
+                      &lt;Style&gt;
+                        &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                      &lt;/Style&gt;
+                    &lt;/TextRun&gt;
+                  &lt;/TextRuns&gt;
+                  &lt;Style /&gt;
+                &lt;/Paragraph&gt;
+              &lt;/Paragraphs&gt;
+              &lt;rd:DefaultName&gt;Textbox64&lt;/rd:DefaultName&gt;
+              &lt;Height&gt;0.25in&lt;/Height&gt;
+              &lt;Width&gt;2in&lt;/Width&gt;
+              &lt;Style&gt;
+                &lt;Border&gt;
+                  &lt;Style&gt;None&lt;/Style&gt;
+                &lt;/Border&gt;
+                &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+              &lt;/Style&gt;
+            &lt;/Textbox&gt;
+            &lt;Textbox Name="Textbox65"&gt;
+              &lt;CanGrow&gt;true&lt;/CanGrow&gt;
+              &lt;KeepTogether&gt;true&lt;/KeepTogether&gt;
+              &lt;Paragraphs&gt;
+                &lt;Paragraph&gt;
+                  &lt;TextRuns&gt;
+                    &lt;TextRun&gt;
+                      &lt;Value&gt;="Page " &amp;amp; Globals!PageNumber &amp;amp; " of " &amp;amp; Globals!TotalPages&lt;/Value&gt;
+                      &lt;Style&gt;
+                        &lt;FontWeight&gt;Bold&lt;/FontWeight&gt;
+                      &lt;/Style&gt;
+                    &lt;/TextRun&gt;
+                  &lt;/TextRuns&gt;
+                  &lt;Style /&gt;
+                &lt;/Paragraph&gt;
+              &lt;/Paragraphs&gt;
+              &lt;rd:DefaultName&gt;Textbox65&lt;/rd:DefaultName&gt;
+              &lt;Top&gt;0.02778in&lt;/Top&gt;
+              &lt;Left&gt;6.94444in&lt;/Left&gt;
+              &lt;Height&gt;0.25in&lt;/Height&gt;
+              &lt;Width&gt;0.95139in&lt;/Width&gt;
+              &lt;ZIndex&gt;1&lt;/ZIndex&gt;
+              &lt;Style&gt;
+                &lt;Border&gt;
+                  &lt;Style&gt;None&lt;/Style&gt;
+                &lt;/Border&gt;
+                &lt;PaddingLeft&gt;2pt&lt;/PaddingLeft&gt;
+                &lt;PaddingRight&gt;2pt&lt;/PaddingRight&gt;
+                &lt;PaddingTop&gt;2pt&lt;/PaddingTop&gt;
+                &lt;PaddingBottom&gt;2pt&lt;/PaddingBottom&gt;
+              &lt;/Style&gt;
+            &lt;/Textbox&gt;
+          &lt;/ReportItems&gt;
+          &lt;Style&gt;
+            &lt;Border&gt;
+              &lt;Style&gt;None&lt;/Style&gt;
+              &lt;Width&gt;2pt&lt;/Width&gt;
+            &lt;/Border&gt;
+            &lt;BottomBorder&gt;
+              &lt;Style&gt;Solid&lt;/Style&gt;
+            &lt;/BottomBorder&gt;
+            &lt;LeftBorder&gt;
+              &lt;Style&gt;Solid&lt;/Style&gt;
+            &lt;/LeftBorder&gt;
+            &lt;RightBorder&gt;
+              &lt;Style&gt;Solid&lt;/Style&gt;
+            &lt;/RightBorder&gt;
+          &lt;/Style&gt;
+        &lt;/PageFooter&gt;
+        &lt;PageWidth&gt;8.7in&lt;/PageWidth&gt;
+        &lt;InteractiveHeight&gt;11in&lt;/InteractiveHeight&gt;
+        &lt;InteractiveWidth&gt;8.5in&lt;/InteractiveWidth&gt;
+        &lt;LeftMargin&gt;0.25in&lt;/LeftMargin&gt;
+        &lt;RightMargin&gt;0.25in&lt;/RightMargin&gt;
+        &lt;TopMargin&gt;0.25in&lt;/TopMargin&gt;
+        &lt;BottomMargin&gt;0.25in&lt;/BottomMargin&gt;
+        &lt;Style /&gt;
+      &lt;/Page&gt;
+    &lt;/ReportSection&gt;
+  &lt;/ReportSections&gt;
+  &lt;ReportParameters&gt;
+    &lt;ReportParameter Name="AX_PartitionKey"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_PartitionKey&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_CompanyName"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Prompt&gt;AX_CompanyName&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_UserContext"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_UserContext&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_RenderingCulture"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_RenderingCulture&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_ReportContext"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_ReportContext&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+      &lt;UsedInQuery&gt;True&lt;/UsedInQuery&gt;
+    &lt;/ReportParameter&gt;
+    &lt;ReportParameter Name="AX_RdpPreProcessedId"&gt;
+      &lt;DataType&gt;String&lt;/DataType&gt;
+      &lt;Nullable&gt;true&lt;/Nullable&gt;
+      &lt;AllowBlank&gt;true&lt;/AllowBlank&gt;
+      &lt;Prompt&gt;AX_RdpPreProcessedId&lt;/Prompt&gt;
+      &lt;Hidden&gt;true&lt;/Hidden&gt;
+    &lt;/ReportParameter&gt;
+  &lt;/ReportParameters&gt;
+  &lt;ReportParametersLayout&gt;
+    &lt;GridLayoutDefinition&gt;
+      &lt;NumberOfColumns&gt;6&lt;/NumberOfColumns&gt;
+      &lt;NumberOfRows&gt;1&lt;/NumberOfRows&gt;
+      &lt;CellDefinitions&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;0&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_PartitionKey&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;1&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_CompanyName&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;2&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_UserContext&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;3&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_RenderingCulture&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;4&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_ReportContext&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+        &lt;CellDefinition&gt;
+          &lt;ColumnIndex&gt;5&lt;/ColumnIndex&gt;
+          &lt;RowIndex&gt;0&lt;/RowIndex&gt;
+          &lt;ParameterName&gt;AX_RdpPreProcessedId&lt;/ParameterName&gt;
+        &lt;/CellDefinition&gt;
+      &lt;/CellDefinitions&gt;
+    &lt;/GridLayoutDefinition&gt;
+  &lt;/ReportParametersLayout&gt;
+  &lt;Language&gt;en-US&lt;/Language&gt;
+  &lt;rd:ReportUnitType&gt;Inch&lt;/rd:ReportUnitType&gt;
+  &lt;rd:ExpressionDialog&gt;Microsoft.Dynamics.Framework.Design.Reports.ExpressionEditor.ExpressionEditorDialog, Microsoft.Dynamics.Framework.Design.Reports&lt;/rd:ExpressionDialog&gt;
+  &lt;rd:ReportID&gt;7391671e-8fda-4158-a603-2bc40ec77c96&lt;/rd:ReportID&gt;
+&lt;/Report&gt;</Text>
+			<DisableIndividualTransformation />
+		</AxReportDesign>
+	</Designs>
+	<EmbeddedImages />
+</AxReport>

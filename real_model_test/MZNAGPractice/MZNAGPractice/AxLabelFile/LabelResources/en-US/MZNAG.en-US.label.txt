@@ -1,0 +1,3 @@
+﻿CustAccountTitle=Customer Account
+NewLabel0=Label files created on 07/24/2026 11:29:59 for label file Id MZNAG and language en-US
+ ;Label file comment - see above label

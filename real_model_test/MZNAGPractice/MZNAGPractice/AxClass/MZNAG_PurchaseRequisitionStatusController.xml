@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MZNAG_PurchaseRequisitionStatusController</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class MZNAG_PurchaseRequisitionStatusController extends SrsReportRunController
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public Static void main(Args _args)
+    {
+        MZNAG_PurchaseRequisitionStatusController controller = new MZNAG_PurchaseRequisitionStatusController();
+
+        controller.parmReportName(ssrsReportStr(MZNAG_PurchaseRequisitionStatusReport, PrecisionDesign1));
+        controller.parmArgs(_args);
+
+        controller.startOperation();
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

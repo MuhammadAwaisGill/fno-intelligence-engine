@@ -1,0 +1,15 @@
+==================================
+Compile Error: Form dynamics://Form/MZNAG_DetailsMasterForm: The model element was saved with unparsable source code and cannot be used. Please edit the element in Visual Studio to fix the errors.
+Unspecified Error: Form dynamics://Form/MZNAG_DetailsMasterForm: Form 'MZNAG_DetailsMasterForm' was not found or cannot be parsed.
+Compile Warning: Form DataSource Method dynamics://Form/MZNAG_SalesEditLines/FormDataSourceRoot/MZNAG_SalesPickingLinesTmp/Method/validateWrite: [(77,17),(77,104)]: The statement is unreachable.
+Compile Warning: Form DataSource Method dynamics://Form/MZNAG_SalesEditLines/FormDataSourceRoot/MZNAG_SalesPickingLinesTmp/Method/validateWrite: [(82,13),(82,24)]: The statement is unreachable.
+Metadata Information: AxForm/MZNAG_DetailsMasterForm/UnparsableSource: Source code in the element has syntax errors. Review compilation errors and fix them.
+FormPatternValidation Warning: AxForm/MZNAG_DetailsMaster/Design/Controls/MainTab/DetailsTabPage/DetailsTab/PaymentTabPage: 'AxForm/MZNAG_DetailsMaster/Design/Controls/MainTab/DetailsTabPage/DetailsTab/PaymentTabPage' has not specified a pattern. Please apply one of the available patterns.
+FormPatternValidation Warning: AxForm/MZNAG_DetailsMasterForm/Design/Controls/MainTab/FormTabPageControl1/FormTabControl2/FormTabPageControl3: 'AxForm/MZNAG_DetailsMasterForm/Design/Controls/MainTab/FormTabPageControl1/FormTabControl2/FormTabPageControl3' has not specified a pattern. Please apply one of the available patterns.
+FormPatternValidation Warning: AxForm/MZNAGCourseSchedule/Design/Controls/DetailsHeader: 'AxForm/MZNAGCourseSchedule/Design/Controls/DetailsHeader' has not specified a pattern. Please apply one of the available patterns.
+FormPatternValidation Warning: AxForm/MZNAGCourseSchedule/Design/Controls/DetailsTabs/EnrollmentLines: 'AxForm/MZNAGCourseSchedule/Design/Controls/DetailsTabs/EnrollmentLines' has not specified a pattern. Please apply one of the available patterns.
+FormPatternValidation Warning: AxForm/MZNAG_DialogForm/Design/Controls/FormGroupControl1: 'AxForm/MZNAG_DialogForm/Design/Controls/FormGroupControl1' has not specified a pattern. Please apply one of the available patterns.
+FormPatternValidation Warning: AxForm/MZNAGStudent/Design: 'FormDesign' has not specified a pattern. Please apply one of the available patterns.
+==================================
+Errors: 2
+Warnings: 8
